@@ -1,0 +1,13 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<Computer id="testProxy2" name="Test Proxy 2" type="4" ip="5.6.7.102">
+
+  <portsForCrack val="4" />
+  <ports>80, 1433, 21</ports>
+  <trace time="12" />
+  <firewall level="6" solution="REMEMBERTHIS"/>
+
+  <dlink target="testGateway"/>
+  <dlink target="testMainframe"/>
+  <file path="bin" name="TorrentStreamInjector.exe">#TORRENT_EXE#</file>
+  
+</Computer>

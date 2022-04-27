@@ -1,0 +1,13 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<TraceV2 name="test" head="testMainframe">
+	<trace time="600"/>
+	<reboot time="10"/>
+	<onStart action="Actions/warn.xml" DelayHost="testMainframe" Delay="2.0"/>
+	<onCrash action="Actions/warn.xml" DelayHost="testMainframe" Delay="2.0"/>
+	<onComplete RequireLogsOnSource="true" action="Actions/do.xml" DelayHost="testMainframe" Delay="2.0"/>
+	<afterComplete every="25" offAfter="3" RequireLogsOnSource="true" action="Actions/do.xml" DelayHost="testMainframe" Delay="2.0"/>
+	<Computer name="testProxy1"/>
+	<Computer name="testProxy2"/>
+	<Computer name="testProxy3"/>
+	<Computer name="testGateway"/>
+</TraceV2>

@@ -1,0 +1,13 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<Computer id="testGateway" name="Test Gateway" type="2" ip="5.6.7.8">
+
+  <portsForCrack val="1" />
+  <ports>22</ports>
+  <trace time="-1" />
+
+  <dlink target="testProxy1"/>
+  <dlink target="testProxy2"/>
+  <dlink target="testProxy3"/>
+  <file path="bin" name="FTPSprint.exe">#FTP_FAST_EXE#</file>
+  
+</Computer>

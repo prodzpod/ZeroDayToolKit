@@ -1,0 +1,7 @@
+<ConditionalActions>
+  
+  <Instantly>
+	<AddIRCMessage Author="guy" TargetComp="test" Delay="0.0">this is a test warn message</AddIRCMessage>
+  </Instantly>
+
+</ConditionalActions>

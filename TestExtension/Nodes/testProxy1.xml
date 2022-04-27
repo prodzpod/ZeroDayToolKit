@@ -1,0 +1,13 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<Computer id="testProxy1" name="Test Proxy 1" type="4" ip="5.6.7.101">
+
+  <portsForCrack val="3" />
+  <ports>22, 21</ports>
+  <trace time="-1" />
+  <firewall level="6" solution="FREEPORTS"/>
+
+  <dlink target="testGateway"/>
+  <dlink target="testMainframe"/>
+  <file path="bin" name="SMTPOverflow.exe">#SMTP_CRACK#</file>
+  
+</Computer>

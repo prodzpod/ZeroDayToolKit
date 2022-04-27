@@ -1,0 +1,11 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<Computer id="test" ip="1.2.3.4" name="Test IRC" type="empty">
+<ports>22, 25, 80, 6881, 443, 554</ports>
+<firewall level="6" solution="BASAKEXE"/>
+<portsForCrack val="6" />
+<trace time="100" />
+<IRCDaemon themeColor="127,127,127" name="IRC" needsLogin="false">
+<user name="CONSOLE" color="111,111,111" />
+<user name="DEBUG" color="127,127,127" />
+</IRCDaemon>
+</Computer>

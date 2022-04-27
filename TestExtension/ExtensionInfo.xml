@@ -1,0 +1,93 @@
+<HacknetExtension>
+  <!-- Max name length is 128 characters -->
+	<Language>ko-kr</Language>
+	<Name>TEST</Name>
+	<AllowSaves>true</AllowSaves>
+  
+  <!-- a coma separated list of notes that start out as being visible-->
+	<StartingVisibleNodes></StartingVisibleNodes>
+  
+  <!-- the mission (if any) that loads in as soon as the player starts -->
+  <StartingMission>Missions/StartingMission.xml</StartingMission>
+
+  <!-- Conditional action set that is loaded in as soon as a new session is created
+  This is useful to do setup stuff, like giving the player programs, assigning them a faction etc.
+  If you don't need this, set it to "NONE", or just delete the tag.-->
+  <StartingActions>Actions/StartingActions.xml</StartingActions>
+
+  <!-- Description that appears within Hacknet -->
+  <Description> --- Blank Extension ---
+Edit this with your own extension info and start building!</Description>
+  
+  <!-- Factions involved in this extension! You can define as many or as few as you like -->
+  <Faction>Factions/StartingFaction.xml</Faction>
+  
+  <StartsWithTutorial>False</StartsWithTutorial>
+  
+  <!-- this makes the extension start with the standard restart bootup sequence -->
+  <HasIntroStartup>false</HasIntroStartup>
+  
+  <StartingTheme>Themes/ExampleTheme.xml</StartingTheme>
+  <!-- 
+  Base Themes are named:
+  TerminalOnlyBlack, HacknetBlue, HacknetTeal, HacknetYellow, HackerGreen, HacknetWhite, HacknetPurple, HacknetMint
+  -->
+  
+  <!-- You can reference songs from the original game here, or your own .ogg files by path.
+  To reference original songs, use their name in the files! You don't need the path, just the filename. This works for any songs in these folders:
+  Content/Music
+  Content/DLC/Music
+  
+  To Play your own songs, use the path to that song in your extension.
+  For example, try changing the song name below to "Music/Chemical_Burns.ogg" - it'll start with that instead for new saves! -->
+  <IntroStartupSong>The_Quickening</IntroStartupSong>
+
+  <!-- Sequencer stuff. You won't need this till later.-->
+  <!--
+  <SequencerTargetID>advExamplePC</SequencerTargetID>
+  <SequencerSpinUpTime>10.5</SequencerSpinUpTime>
+  <SequencerFlagRequiredForStart>testFlag</SequencerFlagRequiredForStart>
+  <ActionsToRunOnSequencerStart>Actions/ThemeSwapActions.xml</ActionsToRunOnSequencerStart>
+  -->
+  
+  <!-- Steam workshop fields -->
+  <!-- 
+  public string WorkshopDescription;
+        public string WorkshopLanguage;
+        public byte WorhsopVisibility = 2;
+        public string WorkshopTags;
+        public string WorkshopPreviewImagePath;
+  -->
+  <WorkshopDescription>This is the description of the extension that will appear in Steam Workshop and any other mod platforms this gets ported to. Max 8000 characters.
+You can use newlines in this as normal etc.</WorkshopDescription>
+
+  <!-- Language that this is set to. -->
+  <WorkshopLanguage>English</WorkshopLanguage>
+
+  <!-- Sets the visibility of this item on the workshop.
+  0 = public
+  1 = friends only
+  2 = private (self only)-->
+  <WorkshopVisibility>2</WorkshopVisibility>
+
+  <!-- Comma separated list of tags that this should be listed under in the workshop. This is not currently used, as the only category
+  of workshop item in Hacknet is "Extension", so leave this as-is for now.-->
+  <WorkshopTags>Extension</WorkshopTags>
+
+  <!-- Path to the preview image used on the steam workshop for your extension.
+  This must be within your mod folder, be 16x9 aspect ratio and less than 1MB in size. 
+  I recommend the highest resolution you can provide that fits that criteria, 
+  though steam will likely use a version less than 512x512 in size, and will auto resize it for you.
+  
+  This can be different to the provided Logo.png if you want, as this will not be transparently backed on steam.
+  Supported formats are .png, .jpg and .gif
+  -->
+  <WorkshopPreviewImagePath>Logo.png</WorkshopPreviewImagePath>
+
+  <!-- This is the workshop publish ID. The first time your extension is published to Steam, this will be automatically populated with the ID that steam assigns it.
+  When this happens, make sure that you keep that version of the file and store the ID somewhere - without it, you wont be able to push out updates to your extension,
+  and if it's removed, publishing to the workshop will submit it as a new entry, and you'll lose all of your subscribers. Be careful!
+  Do not manually modify this unless you already know your Publish ID from a previous submission. A new ID will only be generated if this says "NONE"-->
+  <WorkshopPublishID>NONE</WorkshopPublishID>
+  
+</HacknetExtension>

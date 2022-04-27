@@ -1,0 +1,7 @@
+<ConditionalActions>
+  
+  <Instantly>
+    <LaunchHackScript Filepath="HackerScripts/ExampleHack.txt" SourceComp="testGateway" TargetComp="playerComp"/>
+  </Instantly>
+
+</ConditionalActions>

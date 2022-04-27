@@ -1,0 +1,17 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<Computer id="testMainframe" name="Test Mainframe" type="2" ip="5.6.7.255">
+
+  <portsForCrack val="8" />
+  <ports>25, 6881, 554, 1433, 22, 21, 80</ports>
+  <trace time="-1" />
+  <firewall level="6" solution="REBOOTME"/>
+  <proxy time="3" />
+  <adminPass pass="password" />
+
+  <dlink target="testProxy1"/>
+  <dlink target="testProxy2"/>
+  <dlink target="testProxy3"/>
+  <file path="bin" name="Clock.exe">#CLOCK_PROGRAM#</file>
+  <FastActionHost/>
+  
+</Computer>

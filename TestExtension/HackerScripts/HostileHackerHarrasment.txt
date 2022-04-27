@@ -1,0 +1,46 @@
+config [TARGET_COMP] [SOURCE_COMP] 0.2 $#%#$
+connect $#%#$
+delay 1.0 $#%#$
+writel  $#%#$
+writel  $#%#$
+writel  $#%#$
+writel  $#%#$
+writel  $#%#$
+writel  $#%#$
+delay 0.1 $#%#$
+writel  $#%#$
+writel  $#%#$
+writel HEY! $#%#$
+writel  $#%#$
+writel  $#%#$
+delay 3.0 $#%#$
+stopMusic $#%#$
+delay 1.0 $#%#$
+write WHAT $#%#$
+write DO $#%#$
+write YOU $#%#$
+write THINK $#%#$
+write YOU'RE $#%#$
+write DOING $#%#$
+write ? $#%#$
+delay 2.3 $#%#$
+clearTerminal $#%#$
+delay 1.3 $#%#$
+writel  $#%#$
+writel You left logs! $#%#$
+writel Now my script has you. . $#%#$
+delay 1.3 $#%#$
+write .  $#%#$
+delay 0.3 $#%#$
+write .  $#%#$
+delay 0.3 $#%#$
+write .  $#%#$
+delay 0.3 $#%#$
+write .  $#%#$
+delay 0.3 $#%#$
+write .  $#%#$
+delay 2.3 $#%#$
+writel Just kidding, you can go. This is how Hacker scripts work though! $#%#$
+startMusic $#%#$
+delay 1.3 $#%#$
+disconnect $#%#$

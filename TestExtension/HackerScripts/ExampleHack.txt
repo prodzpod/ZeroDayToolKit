@@ -1,0 +1,10 @@
+config [TARGET_COMP] [SOURCE_COMP] 0.2 $#%#$
+connect $#%#$
+stopMusic $#%#$
+openPort 21 $#%#$
+openPort 22 $#%#$
+openPort 25 $#%#$
+openPort 80 $#%#$
+trackseq $#%#$
+forkbomb $#%#$
+disconnect $#%#$

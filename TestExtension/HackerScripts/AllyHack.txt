@@ -1,0 +1,9 @@
+config [TARGET_COMP] [SOURCE_COMP] 0.2 $#%#$
+connect $#%#$
+delay 3.3 $#%#$
+openPort 3724 $#%#$
+delay 1.3 $#%#$
+openPort 22 $#%#$
+delay 1.3 $#%#$
+openPort 9418 $#%#$
+disconnect $#%#$

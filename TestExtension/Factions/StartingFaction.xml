@@ -1,0 +1,7 @@
+<CustomFaction name="Starting Faction" id="startingfac" playerVal="0">
+  
+  <Action ValueRequired="1">
+    <AddAsset FileName="FTPBounce.exe" FileContents="#FTP_CRACK#" TargetComp="playerComp" TargetFolderpath="bin" />
+  </Action>
+
+</CustomFaction>

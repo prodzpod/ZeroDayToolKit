@@ -1,0 +1,2 @@
+config playerComp [SOURCE_COMP] 0 $#%#$
+forkbomb $#%#$
