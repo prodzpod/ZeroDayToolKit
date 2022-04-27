@@ -23,7 +23,7 @@ using Pathfinder.Util.XML;
 namespace HacknetPluginTemplate
 {
     [BepInPlugin(ModGUID, ModName, ModVer)]
-    public class ZeroDayToolKitMod : HacknetPlugin
+    public class Mod : HacknetPlugin
     {
         public const string ModGUID = "kr.o_r.prodzpod.ModName";
         public const string ModName = "ModName";
@@ -68,7 +68,7 @@ namespace HacknetPluginTemplate
 
     public class ModExecutibles
     {
-        public class ZeroDayEXE : Pathfinder.Executable.BaseExecutable
+        public class ModEXE : Pathfinder.Executable.BaseExecutable
         {
             public override string GetIdentifier() => IdentifierName;
             public int originPort = 0;
@@ -81,7 +81,7 @@ namespace HacknetPluginTemplate
             public float runTime = 5f;
             public float exitTime = 0f;
             public bool done = false;
-            public ZeroDayEXE(Rectangle location, OS operatingSystem, string[] args) : base(location, operatingSystem, args) { }
+            public ModEXE(Rectangle location, OS operatingSystem, string[] args) : base(location, operatingSystem, args) { }
             public void Init(int port, float runTime, int ramCost, string id, string startMessage, string endMessage) { Init(port, runTime, 0f, ramCost, id, startMessage, endMessage); }
             public void Init(int port, float runTime, float exitTime, int ramCost, string id, string startMessage, string endMessage)
             {
@@ -147,7 +147,7 @@ namespace HacknetPluginTemplate
             }
         }
 
-        public class SSHSwiftEXE : ZeroDayEXE
+        public class SSHSwiftEXE : ModEXE
         {
             public SSHSwiftEXE(Rectangle location, OS operatingSystem, string[] args) : base(location, operatingSystem, args)
             {
@@ -156,7 +156,7 @@ namespace HacknetPluginTemplate
 
             public override void incrementLife(float t)
             {
-                life += t * (float)ZeroDayToolKitMod.rnd.NextDouble() * 2;
+                life += t * (float)Mod.rnd.NextDouble() * 2;
             }
 
             private const int WIDTH = 8;
@@ -173,7 +173,7 @@ namespace HacknetPluginTemplate
                         source.Y = Bounds.Y + 32 + (y * (Bounds.Height - 30) / HEIGHT);
                         Rectangle destination = source;
                         float progress = Math.Max(0f, 1f - ((1f - ((float)(x + y) / (WIDTH + HEIGHT))) * 0.5f + (life / runTime)));
-                        if (ZeroDayToolKitMod.rnd.NextDouble() < progress) progress = (float)ZeroDayToolKitMod.rnd.NextDouble();
+                        if (Mod.rnd.NextDouble() < progress) progress = (float)Mod.rnd.NextDouble();
                         Color color = Color.Lerp(os.unlockedColor, os.brightLockedColor, progress);
                         int num = (int)(progress * 99);
                         float offsetx = (Bounds.Width * 0.5f / WIDTH) - ((0.5f + num.ToString().Length) * 3.75f);
@@ -186,7 +186,7 @@ namespace HacknetPluginTemplate
             }
         }
 
-        public class PacketHeaderInjectionEXE : ZeroDayEXE
+        public class PacketHeaderInjectionEXE : ModEXE
         {
             public PacketHeaderInjectionEXE(Rectangle location, OS operatingSystem, string[] args) : base(location, operatingSystem, args)
             {
@@ -206,7 +206,7 @@ namespace HacknetPluginTemplate
                 Vector2 post;
                 for (int i = 0; i < bound; i++)
                 {
-                    post = new Vector2(Bounds.X + ((i + 1) * unitWidth), Bounds.Y + 14f + (unitHeight * (float)ZeroDayToolKitMod.rnd.NextDouble()));
+                    post = new Vector2(Bounds.X + ((i + 1) * unitWidth), Bounds.Y + 14f + (unitHeight * (float)Mod.rnd.NextDouble()));
                     drawLine(pre, post, os.defaultHighlightColor * fade * 0.5f);
                     pre = post;
                 }
@@ -223,7 +223,7 @@ namespace HacknetPluginTemplate
             }
         }
 
-        public class SQLTXCrasherEXE : ZeroDayEXE
+        public class SQLTXCrasherEXE : ModEXE
         {
             public SQLTXCrasherEXE(Rectangle location, OS operatingSystem, string[] args) : base(location, operatingSystem, args)
             {
@@ -296,13 +296,13 @@ namespace HacknetPluginTemplate
                 }
                 Rectangle midbar = new Rectangle(Bounds.X, Bounds.Y + 9 + (Bounds.Height / 3), Bounds.Width, Bounds.Height / 3);
                 spriteBatch.Draw(Utils.white, midbar, Color.Black * 0.5f * fade);
-                if ((!done && (ZeroDayToolKitMod.rnd.NextDouble() < (life / runTime))) || (done && (ZeroDayToolKitMod.rnd.NextDouble() > ((life - runTime) / exitTime))))
+                if ((!done && (Mod.rnd.NextDouble() < (life / runTime))) || (done && (Mod.rnd.NextDouble() > ((life - runTime) / exitTime))))
                     TextItem.doCenteredFontLabel(midbar, "-  " + (done ? "Completed." : "Crashing...") + "  -", GuiData.smallfont, Color.White);
                 base.Draw(t);
             }
         }
     
-        public class PortBackdoorEXE : ZeroDayEXE
+        public class PortBackdoorEXE : ModEXE
         {
             public PortBackdoorEXE(Rectangle location, OS operatingSystem, string[] args) : base(location, operatingSystem, args)
             {
