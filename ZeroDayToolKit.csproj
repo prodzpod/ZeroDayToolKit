@@ -7,8 +7,8 @@
     <ProjectGuid>{8F66B2F8-F985-4B27-ABAD-42E9CD52B911}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HacknetPluginTemplate</RootNamespace>
-    <AssemblyName>HacknetPluginTemplate</AssemblyName>
+    <RootNamespace>ZeroDayToolKit</RootNamespace>
+    <AssemblyName>ZeroDayToolKit</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -68,9 +68,50 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HacknetPluginTemplate.cs" />
+    <Compile Include="Commands\Touch.cs" />
+    <Compile Include="Commands\MakeDir.cs" />
+    <Compile Include="Commands\ZeroDayCommand.cs" />
+    <Compile Include="Commands\SendIRC.cs" />
+    <Compile Include="Conditions\SAResetIRCDelay.cs" />
+    <Compile Include="Conditions\SCOnCrash.cs" />
+    <Compile Include="Conditions\SCOnRebootCompleted.cs" />
+    <Compile Include="Conditions\SASetNumberOfChoices.cs" />
+    <Compile Include="Conditions\SASetRAM.cs" />
+    <Compile Include="Conditions\SARunCommand.cs" />
+    <Compile Include="Conditions\SCOnIRCMessageAny.cs" />
+    <Compile Include="Conditions\SCOnIRCMessage.cs" />
+    <Compile Include="Conditions\SCOnIRCMessageTone.cs" />
+    <Compile Include="Conditions\SCOnHostileActionTaken.cs" />
+    <Compile Include="Conditions\SCOnReboot.cs" />
+    <Compile Include="Conditions\ZeroDayCondition.cs" />
+    <Compile Include="Executibles\PortBackdoorEXE.cs" />
+    <Compile Include="Executibles\SQLTXCrasherEXE.cs" />
+    <Compile Include="Executibles\PacketHeaderInjectionEXE.cs" />
+    <Compile Include="Executibles\SSHSwiftEXE.cs" />
+    <Compile Include="Executibles\ZeroDayEXE.cs" />
+    <Compile Include="Patches\ComputerCrash.cs" />
+    <Compile Include="Patches\ComputerHostileActionTaken.cs" />
+    <Compile Include="Patches\ComputerReboot.cs" />
+    <Compile Include="Patches\OSDrawModules.cs" />
+    <Compile Include="Patches\OSLoadContent.cs" />
+    <Compile Include="Patches\OSUpdate.cs" />
+    <Compile Include="Patches\ProgramsConnect.cs" />
+    <Compile Include="Patches\ProgramsDisconnect.cs" />
+    <Compile Include="Patches\TrackerCheckLogs.cs" />
+    <Compile Include="TraceV2\AfterCompleteTrigger.cs" />
+    <Compile Include="TraceV2\InitialLoadTraceV2.cs" />
+    <Compile Include="TraceV2\LoadTraceV2.cs" />
+    <Compile Include="TraceV2\Network.cs" />
+    <Compile Include="TraceV2\NetworkTrigger.cs" />
+    <Compile Include="TraceV2\SaveTraceV2.cs" />
+    <Compile Include="TraceV2\TraceV2Tracker.cs" />
+    <Compile Include="Utils\DrawUtils.cs" />
+    <Compile Include="Utils\MathUtils.cs" />
+    <Compile Include="Utils\ComUtils.cs" />
+    <Compile Include="ZeroDayToolKit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.

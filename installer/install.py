@@ -52,14 +52,14 @@ def install_pathfinder(gen_event_callback, hacknet_directory):
         gen_event_callback('<<InstallFailure>>')
         return
 
-    for asset in requests.get('https://api.github.com/repos/prodzpod/ModName/releases').json()[0]['assets']:
-        if 'ModName.Release' in asset['name']:
+    for asset in requests.get('https://api.github.com/repos/prodzpod/ZeroDayToolKit/releases').json()[0]['assets']:
+        if 'ZeroDayToolKit' in asset['name']:
             modURL = asset['browser_download_url']
         elif 'KRPatch' in asset['name']:
             krPatchURL = asset['browser_download_url']
     
     with requests.get(modURL) as mod_dll:
-        with open(os.path.join(hacknet_directory, 'BepinEx', 'plugins', 'ModName.Release.dll'), 'wb') as f:
+        with open(os.path.join(hacknet_directory, 'BepinEx', 'plugins', 'ZeroDayToolKit.dll'), 'wb') as f:
             f.write(mod_dll.content)
     with ZipFile(BytesIO(requests.get(krPatchURL).content)) as krpatch_zip:
         krpatch_zip.extractall(path=os.path.join(hacknet_directory, 'Content', 'Locales', 'ko-kr', 'Fonts'))
@@ -167,7 +167,7 @@ class App(Frame):
         self.progress = None
 
     def setup_grid(self):
-        self.master.title('Pathfinder + Project 0DTK / Korean Locale Patch Installer')
+        self.master.title('Pathfinder + 0DTK + KRPatch Installer')
         self.master.geometry("750x75")
         self.master.resizable(FALSE, FALSE)
 
