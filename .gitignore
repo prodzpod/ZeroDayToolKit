@@ -6,3 +6,6 @@ riderModule.iml
 .idea/
 vs/
 *.user
+installer/__pycache__/
+installer/build/
+installer/dist/

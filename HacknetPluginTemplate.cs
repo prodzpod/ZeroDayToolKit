@@ -4,6 +4,7 @@ using System.Xml;
 using System.Linq;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,13 +20,15 @@ using Pathfinder.Meta.Load;
 using Pathfinder.Event.Saving;
 using Pathfinder.Replacements;
 using Pathfinder.Util.XML;
+using Pathfinder.Executable;
+using Pathfinder.Command;
 
 namespace HacknetPluginTemplate
 {
     [BepInPlugin(ModGUID, ModName, ModVer)]
     public class Mod : HacknetPlugin
     {
-        public const string ModGUID = "kr.o_r.prodzpod.ModName";
+        public const string ModGUID = "kr.o_r.prodzpod.modname";
         public const string ModName = "ModName";
         public const string ModVer = "0.1.0";
         static public Random rnd;
@@ -34,18 +37,19 @@ namespace HacknetPluginTemplate
         public override bool Load()
         {
             rnd = new Random();
+            HarmonyInstance.PatchAll();
             PortManager.RegisterPort("backdoor", "Backdoor Connection", 0);
             PortManager.RegisterPort("mqtt", "MQTT Protocol", 1883); // IoT Devices
             PortManager.RegisterPort("ntp", "Network Time Protocol", 123); // Digital Clocks > Timezones > VPN
             PortManager.RegisterPort("docker", "Docker Plaintext API", 2375);
             PortManager.RegisterPort("telnet", "Telnet Protocol", 23); // obviously these ports aint done yet
-            Pathfinder.Executable.ExecutableManager.RegisterExecutable<ModExecutibles.SSHSwiftEXE>("#SSH_SWIFT#");
-            Pathfinder.Executable.ExecutableManager.RegisterExecutable<ModExecutibles.PacketHeaderInjectionEXE>("#PACKET_HEADER_INJECTION#");
-            Pathfinder.Executable.ExecutableManager.RegisterExecutable<ModExecutibles.SQLTXCrasherEXE>("#SQL_TX_CRASHER#");
-            Pathfinder.Executable.ExecutableManager.RegisterExecutable<ModExecutibles.PortBackdoorEXE>("#PORT_BACKDOOR#");
-            Pathfinder.Command.CommandManager.RegisterCommand("mkdir", cmd.mkdir);
-            Pathfinder.Command.CommandManager.RegisterCommand("touch", cmd.touch);
-            Pathfinder.Command.CommandManager.RegisterCommand(">", cmd.sendIRC);
+            ExecutableManager.RegisterExecutable<ModExecutibles.SSHSwiftEXE>("#SSH_SWIFT#");
+            ExecutableManager.RegisterExecutable<ModExecutibles.PacketHeaderInjectionEXE>("#PACKET_HEADER_INJECTION#");
+            ExecutableManager.RegisterExecutable<ModExecutibles.SQLTXCrasherEXE>("#SQL_TX_CRASHER#");
+            ExecutableManager.RegisterExecutable<ModExecutibles.PortBackdoorEXE>("#PORT_BACKDOOR#");
+            CommandManager.RegisterCommand("mkdir", cmd.mkdir, false);
+            CommandManager.RegisterCommand("touch", cmd.touch, false);
+            CommandManager.RegisterCommand("/", cmd.sendIRC, false);
             Pathfinder.Action.ActionManager.RegisterAction<ModConditions.SAResetIRCDelay>("ResetIRCDelay");
             Pathfinder.Action.ActionManager.RegisterAction<ModConditions.SASetNumberOfChoices>("SetNumberOfChoices");
             Pathfinder.Action.ActionManager.RegisterAction<ModConditions.SARunCommand>("RunCommand");
@@ -61,14 +65,13 @@ namespace HacknetPluginTemplate
             Console.WriteLine("//////////////////////////////////// PRODZPOD");
             Console.WriteLine("/////////////////////////////////// ZERODAY");
             Console.WriteLine("////////////////////////////////// TOOLKIT");
-            HarmonyInstance.PatchAll();
             return true;
         }
     }
 
     public class ModExecutibles
     {
-        public class ModEXE : Pathfinder.Executable.BaseExecutable
+        public class ModEXE : BaseExecutable
         {
             public override string GetIdentifier() => IdentifierName;
             public int originPort = 0;
@@ -1118,7 +1121,8 @@ namespace HacknetPluginTemplate
                 recentRebootCompleted = null;
                 recentHostileActionTaken = null;
                 // nulling everything so unrelated hacking from ages ago dont trigger new conditions
-                if (tracker.active == 1) {
+                if (tracker.active == 1)
+                {
                     bool tracked = false;
                     foreach (Computer c in tracker.network.tail) if (ModConditions.hasLogOnSource(os, c)) tracked = true;
                     if (!tracked) tracker.RebootComplete();
@@ -1221,91 +1225,91 @@ namespace HacknetPluginTemplate
                 {
                     Utils.ActOnAllFilesRevursivley(info.FolderPath + "/Networks", filename =>
                     {
-                    if (!filename.EndsWith(".xml")) return;
-                    Console.WriteLine("Reading " + filename);
-                    XmlReader rdr = XmlReader.Create(File.OpenRead(LocalizedFileLoader.GetLocalizedFilepath(filename)));
-                    while (rdr.Name != "TraceV2")
-                    {
+                        if (!filename.EndsWith(".xml")) return;
+                        Console.WriteLine("Reading " + filename);
+                        XmlReader rdr = XmlReader.Create(File.OpenRead(LocalizedFileLoader.GetLocalizedFilepath(filename)));
+                        while (rdr.Name != "TraceV2")
+                        {
+                            rdr.Read();
+                            if (rdr.EOF) return;
+                        }
+                        Network network = new Network();
+                        string name;
+                        if (rdr.MoveToAttribute("name"))
+                        {
+                            name = rdr.ReadContentAsString();
+                            networks[name] = network;
+                            postLoadComputerCache[name] = new List<string>();
+                        }
+                        else return;
+                        if (rdr.MoveToAttribute("head")) postLoadComputerCache[name].Add(rdr.ReadContentAsString());
+                        else return;
                         rdr.Read();
-                        if (rdr.EOF) return;
-                    }
-                    Network network = new Network();
-                    string name;
-                    if (rdr.MoveToAttribute("name"))
-                    {
-                        name = rdr.ReadContentAsString();
-                        networks[name] = network;
-                        postLoadComputerCache[name] = new List<string>();
-                    }
-                    else return;
-                    if (rdr.MoveToAttribute("head")) postLoadComputerCache[name].Add(rdr.ReadContentAsString());
-                    else return;
-                    rdr.Read();
-                    while (rdr.Name != "TraceV2")
-                    {
-                        if (rdr.Name.ToLower().Equals("trace") && rdr.MoveToAttribute("time")) network.traceTime = rdr.ReadContentAsFloat();
-                        if (rdr.Name.ToLower().Equals("reboot") && rdr.MoveToAttribute("time")) network.rebootTime = rdr.ReadContentAsFloat();
-                        if (rdr.Name.ToLower().Equals("computer") && rdr.MoveToAttribute("name")) postLoadComputerCache[name].Add(rdr.ReadContentAsString());
-                        if (rdr.Name.ToLower().Equals("onstart") && rdr.MoveToAttribute("action"))
+                        while (rdr.Name != "TraceV2")
                         {
-                            NetworkTrigger onStart = new NetworkTrigger();
-                            onStart.action = rdr.ReadContentAsString();
-                            if (rdr.MoveToAttribute("RequireLogsOnSource")) onStart.requireLogs = rdr.ReadContentAsBoolean();
-                            if (rdr.MoveToAttribute("RequireSourceIntact")) onStart.sourceIntact = rdr.ReadContentAsBoolean();
-                            if (rdr.MoveToAttribute("DelayHost")) onStart.delayHost = rdr.ReadContentAsString();
-                            if (rdr.MoveToAttribute("Delay")) onStart.delay = rdr.ReadContentAsFloat();
-                            network.onStart = onStart;
+                            if (rdr.Name.ToLower().Equals("trace") && rdr.MoveToAttribute("time")) network.traceTime = rdr.ReadContentAsFloat();
+                            if (rdr.Name.ToLower().Equals("reboot") && rdr.MoveToAttribute("time")) network.rebootTime = rdr.ReadContentAsFloat();
+                            if (rdr.Name.ToLower().Equals("computer") && rdr.MoveToAttribute("name")) postLoadComputerCache[name].Add(rdr.ReadContentAsString());
+                            if (rdr.Name.ToLower().Equals("onstart") && rdr.MoveToAttribute("action"))
+                            {
+                                NetworkTrigger onStart = new NetworkTrigger();
+                                onStart.action = rdr.ReadContentAsString();
+                                if (rdr.MoveToAttribute("RequireLogsOnSource")) onStart.requireLogs = rdr.ReadContentAsBoolean();
+                                if (rdr.MoveToAttribute("RequireSourceIntact")) onStart.sourceIntact = rdr.ReadContentAsBoolean();
+                                if (rdr.MoveToAttribute("DelayHost")) onStart.delayHost = rdr.ReadContentAsString();
+                                if (rdr.MoveToAttribute("Delay")) onStart.delay = rdr.ReadContentAsFloat();
+                                network.onStart = onStart;
+                            }
+                            if (rdr.Name.ToLower().Equals("oncrash") && rdr.MoveToAttribute("action"))
+                            {
+                                NetworkTrigger onCrash = new NetworkTrigger();
+                                onCrash.action = rdr.ReadContentAsString();
+                                if (rdr.MoveToAttribute("RequireLogsOnSource")) onCrash.requireLogs = rdr.ReadContentAsBoolean();
+                                if (rdr.MoveToAttribute("RequireSourceIntact")) onCrash.sourceIntact = rdr.ReadContentAsBoolean();
+                                if (rdr.MoveToAttribute("DelayHost")) onCrash.delayHost = rdr.ReadContentAsString();
+                                if (rdr.MoveToAttribute("Delay")) onCrash.delay = rdr.ReadContentAsFloat();
+                                network.onCrash = onCrash;
+                            }
+                            if (rdr.Name.ToLower().Equals("oncomplete") && rdr.MoveToAttribute("action"))
+                            {
+                                NetworkTrigger onComplete = new NetworkTrigger();
+                                onComplete.action = rdr.ReadContentAsString();
+                                if (rdr.MoveToAttribute("RequireLogsOnSource")) onComplete.requireLogs = rdr.ReadContentAsBoolean();
+                                if (rdr.MoveToAttribute("RequireSourceIntact")) onComplete.sourceIntact = rdr.ReadContentAsBoolean();
+                                if (rdr.MoveToAttribute("DelayHost")) onComplete.delayHost = rdr.ReadContentAsString();
+                                if (rdr.MoveToAttribute("Delay")) onComplete.delay = rdr.ReadContentAsFloat();
+                                network.onComplete = onComplete;
+                            }
+                            if (rdr.Name.ToLower().Equals("aftercomplete") && rdr.MoveToAttribute("action"))
+                            {
+                                AfterCompleteTrigger afterComplete = new AfterCompleteTrigger();
+                                afterComplete.action = rdr.ReadContentAsString();
+                                if (rdr.MoveToAttribute("RequireLogsOnSource")) afterComplete.requireLogs = rdr.ReadContentAsBoolean();
+                                if (rdr.MoveToAttribute("RequireSourceIntact")) afterComplete.sourceIntact = rdr.ReadContentAsBoolean();
+                                if (rdr.MoveToAttribute("DelayHost")) afterComplete.delayHost = rdr.ReadContentAsString();
+                                if (rdr.MoveToAttribute("Delay")) afterComplete.delay = rdr.ReadContentAsFloat();
+                                if (rdr.MoveToAttribute("every")) afterComplete.every = rdr.ReadContentAsInt();
+                                if (rdr.MoveToAttribute("offAfter")) afterComplete.every = rdr.ReadContentAsInt();
+                                network.afterComplete = afterComplete;
+                            }
+                            if (rdr.EOF) return;
+                            rdr.Read();
                         }
-                        if (rdr.Name.ToLower().Equals("oncrash") && rdr.MoveToAttribute("action"))
+                        rdr.Close();
+                        ComputerLoader.postAllLoadedActions += () =>
                         {
-                            NetworkTrigger onCrash = new NetworkTrigger();
-                            onCrash.action = rdr.ReadContentAsString();
-                            if (rdr.MoveToAttribute("RequireLogsOnSource")) onCrash.requireLogs = rdr.ReadContentAsBoolean();
-                            if (rdr.MoveToAttribute("RequireSourceIntact")) onCrash.sourceIntact = rdr.ReadContentAsBoolean();
-                            if (rdr.MoveToAttribute("DelayHost")) onCrash.delayHost = rdr.ReadContentAsString();
-                            if (rdr.MoveToAttribute("Delay")) onCrash.delay = rdr.ReadContentAsFloat();
-                            network.onCrash = onCrash;
-                        }
-                        if (rdr.Name.ToLower().Equals("oncomplete") && rdr.MoveToAttribute("action"))
-                        {
-                            NetworkTrigger onComplete = new NetworkTrigger();
-                            onComplete.action = rdr.ReadContentAsString();
-                            if (rdr.MoveToAttribute("RequireLogsOnSource")) onComplete.requireLogs = rdr.ReadContentAsBoolean();
-                            if (rdr.MoveToAttribute("RequireSourceIntact")) onComplete.sourceIntact = rdr.ReadContentAsBoolean();
-                            if (rdr.MoveToAttribute("DelayHost")) onComplete.delayHost = rdr.ReadContentAsString();
-                            if (rdr.MoveToAttribute("Delay")) onComplete.delay = rdr.ReadContentAsFloat();
-                            network.onComplete = onComplete;
-                        }
-                        if (rdr.Name.ToLower().Equals("aftercomplete") && rdr.MoveToAttribute("action"))
-                        {
-                            AfterCompleteTrigger afterComplete = new AfterCompleteTrigger();
-                            afterComplete.action = rdr.ReadContentAsString();
-                            if (rdr.MoveToAttribute("RequireLogsOnSource")) afterComplete.requireLogs = rdr.ReadContentAsBoolean();
-                            if (rdr.MoveToAttribute("RequireSourceIntact")) afterComplete.sourceIntact = rdr.ReadContentAsBoolean();
-                            if (rdr.MoveToAttribute("DelayHost")) afterComplete.delayHost = rdr.ReadContentAsString();
-                            if (rdr.MoveToAttribute("Delay")) afterComplete.delay = rdr.ReadContentAsFloat();
-                            if (rdr.MoveToAttribute("every")) afterComplete.every = rdr.ReadContentAsInt();
-                            if (rdr.MoveToAttribute("offAfter")) afterComplete.every = rdr.ReadContentAsInt();
-                            network.afterComplete = afterComplete;
-                        }
-                        if (rdr.EOF) return;
-                        rdr.Read();
-                    }
-                    rdr.Close();
-                    ComputerLoader.postAllLoadedActions += () =>
-                    {
-                        if (postLoadComputerCache.Count != 0) foreach (string key in postLoadComputerCache.Keys)
-                        {
-                            var value = postLoadComputerCache[key];
-                            networks[key].head = Programs.getComputer(ComputerLoader.os, value[0]);
-                            foreach (string id in value) networks[key].tail.Add(Programs.getComputer(ComputerLoader.os, id));
-                        }
-                    };
+                            if (postLoadComputerCache.Count != 0) foreach (string key in postLoadComputerCache.Keys)
+                                {
+                                    var value = postLoadComputerCache[key];
+                                    networks[key].head = Programs.getComputer(ComputerLoader.os, value[0]);
+                                    foreach (string id in value) networks[key].tail.Add(Programs.getComputer(ComputerLoader.os, id));
+                                }
+                        };
                     });
                 }
             }
         }
-    
+
         [Event] // save from os to save
         public static void SaveNetworkHandler(SaveEvent e)
         {
@@ -1374,7 +1378,7 @@ namespace HacknetPluginTemplate
         }
 
         // load from save to os
-        public class NetworkExecutor : SaveLoader.SaveExecutor 
+        public class NetworkExecutor : SaveLoader.SaveExecutor
         {
             public override void Execute(EventExecutor exec, ElementInfo info)
             {
@@ -1436,5 +1440,62 @@ namespace HacknetPluginTemplate
                 }
             }
         }
+
+        //public static List<string> CustomExeHacks = new List<string>();
+        //public static Dictionary<string, Type> CustomExeTypeHacks = new Dictionary<string, Type>();
+        //[HarmonyLib.HarmonyPatch(typeof(ExecutableManager), nameof(ExecutableManager.RegisterExecutable), typeof(Type), typeof(string))] // add exe
+        //class PatchRegisterExecutable
+        //{
+        //    static void Postfix(Type executableType, string xmlName)
+        //    {
+        //        Console.WriteLine("Registering " + xmlName);
+        //        CustomExeHacks.Add(xmlName);
+        //        CustomExeTypeHacks.Add(xmlName, executableType);
+        //    }
+        //}
+
+        //[HarmonyLib.HarmonyPatch(typeof(ExecutableManager), nameof(ExecutableManager.UnregisterExecutable), typeof(string))] // remove exe
+        //class PatchUnregisterExecutable
+        //{
+        //    public static void Postfix(string xmlName)
+        //    {
+        //        CustomExeHacks.Remove(xmlName);
+        //        CustomExeTypeHacks.Remove(xmlName);
+        //    }
+        //}
+
+        //[HarmonyLib.HarmonyPatch(typeof(ExecutableManager), nameof(ExecutableManager.UnregisterExecutable), typeof(Type))] // remove exe
+        //class PatchUnregisterExecutableTyped
+        //{
+        //    static void Postfix(Type exeType)
+        //    {
+        //        string xmlName = null;
+        //        foreach (string key in CustomExeTypeHacks.Keys) if (CustomExeTypeHacks[key] == exeType) xmlName = key;
+        //        if (xmlName != null) PatchUnregisterExecutable.Postfix(xmlName);
+        //    }
+        //}
+
+        //[HarmonyLib.HarmonyPatch(typeof(Programs), nameof(Programs.execute))] // list exes
+        //class PatchEXEList
+        //{
+        //    static bool Prefix(OS os)
+        //    {
+        //        Folder binary = os.thisComputer.files.root.searchForFolder("bin");
+        //        Console.WriteLine(CustomExeHacks.Count);
+        //        os.write("Available Executables:\n");
+        //        os.write("PortHack");
+        //        os.write("ForkBomb");
+        //        os.write("Shell");
+        //        os.write("Tutorial");
+        //        foreach (FileEntry file in binary.files)
+        //        {
+        //            if (PortExploits.crackExeData.Values.Contains(file.data)) os.write(file.name.Replace(".exe", ""));
+        //            else if (PortExploits.crackExeDataLocalRNG.Values.Contains(file.data)) os.write(file.name.Replace(".exe", ""));
+        //            else foreach (string xmlName in CustomExeHacks) if (ExecutableManager.GetCustomExeData(xmlName).Equals(file.data)) os.write(file.name.Replace(".exe", ""));
+        //        }
+        //        os.write(" ");
+        //        return false; // total replacement
+        //    }
+        //}
     }
 }

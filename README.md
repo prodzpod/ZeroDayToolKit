@@ -1,23 +1,11 @@
-Suggest me names
+"Project 0DTK / No mod name yet"
 ===
-haccle net mod
+a [Hacknet](https://store.steampowered.com/app/365450/Hacknet/) [Pathfinder](https://github.com/Arkhist/Hacknet-Pathfinder) mod that aims to introduce new depth to the gameplay.
 
-## IRC
-Condition: <OnIrcMessageAny>, <OnIrcMessage>, <OnIrcMessageTone>
-
-## Trace V2
-Network-wide trace that doesnt go away when you disconnect
-
-## Commands (wip)
-Command: touch, mkdir, mail, prune, grep
-Condition: <OnFileCreated>, <OnFileDeleted>, <OnMailSent>, <OnIRCPruned>
-
-## New Encryption types (wip)
-.zip, Base64 (will add more)
-Command: zip, unzip, atob, btoa
-
-## New Executables
-SSHSwift: SSH(22), 8→4 second
-PacketHeaderInjection: Web(80), 30s, 50mb memory
-SQLTXCrasher: SQL(1433), 12→10s, Reenables firewall and proxy
-PortBackdoor: "Free port", 40s/400mb
+Features include:
+- IRC chatting/response
+- Proper korean patch
+- New, network-wide trace timer that doesn't go away when you disconnect
+- More executables with unique quirks
+- More commands that handles files, irc and mails
+- other things
