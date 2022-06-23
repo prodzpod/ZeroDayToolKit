@@ -39,5 +39,36 @@ namespace ZeroDayToolKit.Utils
             foreach (FileEntry file in sys.files) if (file.name == "netcfgx.dll" && file.data.Contains("0") && file.data.Contains("1")) return true;
             return false;
         }
+
+        public static string getNoDupeFileName(string name, OS os)
+        {
+            Folder folder = Programs.getCurrentFolder(os);
+            if (!folder.containsFile(name) && folder.searchForFolder(name) == null) return name;
+            for (int i = 1;; i++)
+            {
+                string newName = name + "(" + i + ")";
+                if (!folder.containsFile(newName) && folder.searchForFolder(newName) == null) return newName;
+            }
+        }
+
+        public static string getExtension(string data)
+        {
+            if (PortExploits.crackExeData.ContainsValue(data)) return ".exe";
+            if (PortExploits.crackExeDataLocalRNG.ContainsValue(data)) return ".exe";
+            // detect custom exe
+            if (ThemeManager.fileData.ContainsValue(data)) return ".sys";
+            if (data.Contains("<GitCommitEntry>")) return ".rec";
+            if (data.Contains("##DHS_CONFIG")) return ".sys";
+            if (data.Contains("RequireAuth:")) return ".cfg";
+            if (data.EndsWith("--------------------")) return ".tm";
+            if (data.Contains("<html>")) return ".html";
+            if (data.StartsWith("@")) return "";
+            if (data.Contains("MEMORY_DUMP : FORMAT")) return ".md";
+            if (data.Contains("Archived Via : http://Bash.org")) return "";
+            if (data.Contains("#DEC_ENC")) return ".dec";
+            if (data.EndsWith("\n//")) return ".zip";
+            if (MathUtils.decodeBinary(data) != null) return ".bin";
+            return ".txt";
+        }
     }
 }

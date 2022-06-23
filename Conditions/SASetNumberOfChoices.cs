@@ -10,7 +10,7 @@ namespace ZeroDayToolKit.Conditions
 
         public override void Trigger(OS os)
         {
-            ZeroDayCondition.choice = choices;
+            ZeroDayConditions.choice = choices;
         }
     }
 }

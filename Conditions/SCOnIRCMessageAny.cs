@@ -36,9 +36,9 @@ namespace ZeroDayToolKit.Conditions
             if (!string.IsNullOrWhiteSpace(user) && c.currentUser.name != user) return false;
             if (notUser == "#PLAYERNAME#" && (c.currentUser.name == null || c.currentUser.name == os.SaveUserAccountName)) return false;
             if (!string.IsNullOrWhiteSpace(notUser) && c.currentUser.name == notUser) return false;
-            if (ZeroDayCondition.times.ContainsKey(target))
+            if (ZeroDayConditions.times.ContainsKey(target))
             {
-                float delay = (float)(os.lastGameTime.TotalGameTime - ZeroDayCondition.times[target]).TotalSeconds;
+                float delay = (float)(os.lastGameTime.TotalGameTime - ZeroDayConditions.times[target]).TotalSeconds;
                 if (minDelay > delay || delay > maxDelay) return false;
             }
             IRCSystem irc = ComUtils.getIRC(c);

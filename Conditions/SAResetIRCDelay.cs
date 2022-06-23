@@ -11,7 +11,7 @@ namespace ZeroDayToolKit.Conditions
         public override void Trigger(object os_obj)
         {
             OS os = (OS)os_obj;
-            ZeroDayCondition.times[target] = os.lastGameTime.TotalGameTime;
+            ZeroDayConditions.times[target] = os.lastGameTime.TotalGameTime;
         }
     }
 }

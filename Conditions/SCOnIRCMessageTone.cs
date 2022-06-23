@@ -14,8 +14,8 @@ namespace ZeroDayToolKit.Conditions
             OS os = (OS)os_obj;
             string msg = os.terminal.lastRunCommand;
             #region tone detection
-            if (tone == "no" && checkForWord(msg, "no|na|eh|sorry|can't|cant|decline|no can|off")) return true; // early exit so "no can do" is "no"
-            if (tone == "yes" && checkForWord(msg, "ye|yup|ok|alr|aight|lets|les|let's|leg|sure|wish me|got it|got this|cool|ready|can do|will|accept|bring|here i|here we")) return true;
+            if (tone == "no" && checkForWord(msg, "no|na|eh|sorry|can't|cant|decline|no can|off|won't|wont|couldn't|couldnt|shouldn't|shouldnt|shant|shan't")) return true; // early exit so "no can do" is "no"
+            if (tone == "yes" && checkForWord(msg, "ye|yup|ok|alr|aight|lets|les|let's|leg|sure|wish me|got it|got this|cool|ready|can do|will|accept|bring|here i|here we|could|would|should|ought|shall")) return true;
             if (tone == "help" && checkForWord(msg, "stuck|can't|cant|what|hm|huh|?|not|help|aid|idea|how|hint|clue|doesn|nudge")) return true;
             if (tone == "hey" && checkForWord(msg, "guy|boy|girl|dude|folk|people|@channel|yall|hey|sup")) return true;
             if (tone == "1" && checkForWord(msg, "1|one|first|former")) return true;
@@ -28,8 +28,8 @@ namespace ZeroDayToolKit.Conditions
             if (tone == "8" && checkForWord(msg, "8|eight|eighth")) return true;
             if (tone == "9" && checkForWord(msg, "9|nine|ninth")) return true;
             if (tone == "10" && checkForWord(msg, "10|ten|tenth")) return true;
-            if (tone == ZeroDayCondition.choice.ToString() && checkForWord(msg, "last|latter|bottom")) return true;
-            if (tone == ((ZeroDayCondition.choice + 1) / 2).ToString() && checkForWord(msg, "any|whatever|random|middle|center")) return true;
+            if (tone == ZeroDayConditions.choice.ToString() && checkForWord(msg, "last|latter|bottom")) return true;
+            if (tone == ((ZeroDayConditions.choice + 1) / 2).ToString() && checkForWord(msg, "any|whatever|random|middle|center")) return true;
             #endregion
             return false;
         }
