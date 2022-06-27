@@ -14,9 +14,10 @@ from io import BytesIO
 import re
 import pathlib
 
+# installer appropriately stolen from https://github.com/Arkhist/Hacknet-Pathfinder btw
+
 if platform.system() == 'Windows':
     from winreg import *
-
 
 def install_pathfinder(gen_event_callback, hacknet_directory):
     for asset in requests.get('https://api.github.com/repos/Arkhist/Hacknet-Pathfinder/releases').json()[0]['assets']:
@@ -57,12 +58,19 @@ def install_pathfinder(gen_event_callback, hacknet_directory):
             modURL = asset['browser_download_url']
         elif 'KRPatch' in asset['name']:
             krPatchURL = asset['browser_download_url']
+        elif '0dtk-global' in asset['name']:
+            localeURL = asset['browser_download_url']
     
     with requests.get(modURL) as mod_dll:
         with open(os.path.join(hacknet_directory, 'BepinEx', 'plugins', 'ZeroDayToolKit.dll'), 'wb') as f:
             f.write(mod_dll.content)
     with ZipFile(BytesIO(requests.get(krPatchURL).content)) as krpatch_zip:
         krpatch_zip.extractall(path=os.path.join(hacknet_directory, 'Content', 'Locales', 'ko-kr', 'Fonts'))
+    with requests.get(localeURL) as locale_url:
+        if not os.path.isdir(os.path.join(hacknet_directory, 'locales', 'Custom')):
+            os.mkdir(os.path.join(hacknet_directory, 'locales', 'Custom'))
+        with open(os.path.join(hacknet_directory, 'locales', 'Custom', '0dtk-global.xml'), 'wb') as f:
+            f.write(locale_url.content)
 
     gen_event_callback('<<InstallComplete>>')
 

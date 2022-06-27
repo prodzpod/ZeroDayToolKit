@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['install.py'],
-             pathex=['F:\\339\\Projects\\Developments\\cs\\project\\hacknet\\ModName\\installer'],
+             pathex=['F:\\339\\Projects\\Developments\\cs\\project\\hacknet\\ZeroDayToolKit\\installer'],
              binaries=[],
              datas=[],
              hiddenimports=[],
