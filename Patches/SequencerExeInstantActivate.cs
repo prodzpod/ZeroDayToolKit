@@ -16,7 +16,6 @@ namespace ZeroDayToolKit.Patches
         {
             static MethodBase TargetMethod()
             {
-                Console.WriteLine(typeof(SequencerExe).GetConstructor(new Type[] { typeof(Rectangle), typeof(OS), typeof(string[]) }));
                 return typeof(SequencerExe).GetConstructor(new Type[] { typeof(Rectangle), typeof(OS), typeof(string[]) });
             }
 

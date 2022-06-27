@@ -34,7 +34,6 @@ namespace ZeroDayToolKit.Executibles
                 Computer c = Programs.getComputer(os, targetIP);
                 c.openPort(port, os.thisComputer.ip);
                 foreach (string line in endMessage.Split('\n')) os.write(line);
-                Console.WriteLine(c.hasProxy.ToString() + ", " + c.firewall.ToString());
                 if (c.hasProxy)
                 {
                     c.proxyOverloadTicks = c.startingOverloadTicks;

@@ -6,6 +6,19 @@ namespace ZeroDayToolKit.Utils
 {
     public class DrawUtils
     {
+        public static Vector2 correctBounds(Rectangle bound, Vector2 point)
+        {
+            return point * bound.Width / 2 + new Vector2(bound.Width / 2 + bound.X, bound.Height / 2 + bound.Y);
+        }
+        public static Rectangle correctBounds(Rectangle bound, Vector4 point)
+        {
+            int vs = Math.Min(bound.Width, bound.Height);
+            return new Rectangle(bound.X + ((bound.Width - vs) / 2) + (int)(vs * (point.X / 2 + 0.5f)), bound.Y + ((bound.Height - vs) / 2) + (int)(vs * (point.Y / 2 + 0.5f)), (int)(vs * (point.Z / 2)), (int)(vs * (point.W / 2)));
+        }
+        public static Vector2 toPolar(float r, float theta)
+        {
+            return new Vector2(r * (float)Math.Cos(theta), r * (float)Math.Sin(theta));
+        }
         public static void drawLine(SpriteBatch spriteBatch, Vector2 origin, Vector2 dest, Color c)
         {
             float y = Vector2.Distance(origin, dest);
@@ -91,6 +104,40 @@ namespace ZeroDayToolKit.Utils
                 }
                 b = new Vector2(MathUtils.Ratio(left.Y, left.X, right.Y, right.X, bound.Y + bound.Height), bound.Y + bound.Height);
             }
+        }
+
+        public static void ColorToHSV(Color color, out float h, out float s, out float v)
+        {
+            float r = color.R, g = color.G, b = color.B;
+            float max = Math.Max(r, Math.Max(g, b)), min = Math.Min(r, Math.Min(g, b)), d = max - min;
+            h = 0;
+            s = (max == 0 ? 0 : d / max);
+            v = max / 255;
+            if (max == min) h = 0;
+            else if (max == r) h = (g - b) + d * (g < b ? 6 : 0);
+            else if (max == g) h = (b - r) + d * 2;
+            else if (max == b) h = (r - g) + d * 4;
+            h /= 6 * d;
+        }
+
+        public static Color ColorFromHSV(float h, float s, float v)
+        {
+            float r = 0, g = 0, b = 0, 
+                i = (float)Math.Floor(h * 6),
+                f = h * 6 - i,
+                p = v * (1 - s),
+                q = v * (1 - f * s),
+                t = v * (1 - (1 - f) * s);
+            switch (i % 6)
+            {
+                case 0: r = v; g = t; b = p; break;
+                case 1: r = q; g = v; b = p; break;
+                case 2: r = p; g = v; b = t; break;
+                case 3: r = p; g = q; b = v; break;
+                case 4: r = t; g = p; b = v; break;
+                case 5: r = v; g = p; b = q; break;
+            }
+            return new Color(r, g, b);
         }
     }
 }

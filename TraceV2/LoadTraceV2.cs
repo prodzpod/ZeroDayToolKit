@@ -10,7 +10,6 @@ namespace ZeroDayToolKit.TraceV2
     {
         public override void Execute(EventExecutor exec, ElementInfo info)
         {
-            Console.WriteLine(info.Name + " > " + info.Attributes.ContainsKey("name"));
             if (!info.Attributes.ContainsKey("name")) return;
             Network network = new Network();
             Network.networks[info.Attributes["name"]] = network;

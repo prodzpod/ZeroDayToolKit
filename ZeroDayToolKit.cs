@@ -12,20 +12,28 @@ using ZeroDayToolKit.Commands;
 using ZeroDayToolKit.Conditions;
 using ZeroDayToolKit.TraceV2;
 using ZeroDayToolKit.Utils;
+using BepInEx.Configuration;
+using Pathfinder.Meta;
+using ZeroDayToolKit.Options;
 
 namespace ZeroDayToolKit
 {
     [BepInPlugin(ModGUID, ModName, ModVer)]
+    [Updater("https://api.github.com/repos/prodzpod/ZeroDayToolKit/releases", "ZeroDayToolKit.Release.zip", "BepInEx/plugins/ZeroDayToolKit.dll", false)]
     public class ZeroDayToolKit : HacknetPlugin
     {
         public const string ModGUID = "kr.o_r.prodzpod.zerodaytoolkit";
         public const string ModName = "ZeroDayToolKit";
-        public const string ModVer = "0.1.1";
+        public const string ModVer = "0.2.0";
+        public new static ConfigFile Config;
         static public Random rnd;
 
         public override bool Load()
         {
             rnd = new Random();
+            Config = base.Config;
+            ZeroDayToolKitOptions.Initialize();
+            ExtensionInfoLoader.AddLanguage("dynamic");
             HarmonyInstance.PatchAll();
 
             Console.WriteLine("[ZeroDayToolKit] Registering Ports");

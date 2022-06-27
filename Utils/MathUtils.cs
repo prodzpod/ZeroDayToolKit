@@ -14,6 +14,8 @@ namespace ZeroDayToolKit.Utils
             return b1 + ((a3 - a1) * (b1 - b2) / (a1 - a2));
         }
 
+        public static float lerp(float a, float b, float t) { return a + (b - a) * t; }
+
         public static string encodeBase64(string txt)
         {
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(txt));

@@ -73,6 +73,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Locales\LocaleActivatorSupportDynamicLocale.cs" />
+    <Compile Include="Options\OptionSlider.cs" />
+    <Compile Include="Options\ZeroDayToolKitOptions.cs" />
     <Compile Include="Commands\Encode.cs" />
     <Compile Include="Commands\Decode.cs" />
     <Compile Include="Commands\Touch.cs" />
@@ -104,8 +107,11 @@
     <Compile Include="Executibles\PacketHeaderInjectionEXE.cs" />
     <Compile Include="Executibles\SSHSwiftEXE.cs" />
     <Compile Include="Executibles\ZeroDayEXE.cs" />
+    <Compile Include="Locales\ExtensionLoaderReadCustomLocale.cs" />
     <Compile Include="Patches\ExtensionSequencerExeInstantActivate.cs" />
     <Compile Include="Patches\DLCIntroExeInstantActivate.cs" />
+    <Compile Include="Locales\LocaleActivatorReadCustomGlobals.cs" />
+    <Compile Include="Patches\OptionsMenuSoundEffectVanillaScreen.cs" />
     <Compile Include="Patches\SequencerExeInstantActivate.cs" />
     <Compile Include="Patches\ShellOverloaderExeComshellTrap.cs" />
     <Compile Include="Patches\ComputerCrash.cs" />
@@ -119,7 +125,9 @@
     <Compile Include="Patches\OSUpdate.cs" />
     <Compile Include="Patches\ProgramsConnect.cs" />
     <Compile Include="Patches\ProgramsDisconnect.cs" />
+    <Compile Include="Patches\SoundEffectVolume.cs" />
     <Compile Include="Patches\TrackerCheckLogs.cs" />
+    <Compile Include="Locales\XmlReaderSettingsLocalizeExtensions.cs" />
     <Compile Include="TraceV2\AfterCompleteTrigger.cs" />
     <Compile Include="TraceV2\InitialLoadTraceV2.cs" />
     <Compile Include="TraceV2\LoadTraceV2.cs" />
