@@ -81,7 +81,7 @@ namespace ZeroDayToolKit.TraceV2
                             if (rdr.MoveToAttribute("DelayHost")) afterComplete.delayHost = rdr.ReadContentAsString();
                             if (rdr.MoveToAttribute("Delay")) afterComplete.delay = rdr.ReadContentAsFloat();
                             if (rdr.MoveToAttribute("every")) afterComplete.every = rdr.ReadContentAsInt();
-                            if (rdr.MoveToAttribute("offAfter")) afterComplete.every = rdr.ReadContentAsInt();
+                            if (rdr.MoveToAttribute("offAfter")) afterComplete.offAfter = rdr.ReadContentAsInt();
                             network.afterComplete = afterComplete;
                         }
                         if (rdr.EOF) return;

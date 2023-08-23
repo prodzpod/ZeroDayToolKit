@@ -11,6 +11,7 @@ namespace ZeroDayToolKit.Conditions
         public override void Trigger(OS os)
         {
             ZeroDayConditions.disabledCommands.Add(command.ToLower());
+            Helpfile.init();
         }
     }
 }

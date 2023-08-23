@@ -21,11 +21,14 @@ namespace ZeroDayToolKit.Locales
             {
                 if (Directory.Exists("locales/Custom"))
                 {
+                    ExtensionLoaderReadCustomLocale.GlobalLocales.Clear();
+                    ExtensionLoaderReadCustomLocale.LocaleKeys2.Clear();
                     foreach (var file in Directory.GetFiles("locales/Custom"))
                     {
                         Console.WriteLine("[ZeroDayToolKit] Reading Global Locale " + file);
                         LocaleAddXmlFile(file, localeCode);
                     }
+                    ExtensionLoaderReadCustomLocale.LocaleKeys2.Sort((a, b) => b.Length - a.Length);
                 }
             });
         }
@@ -49,13 +52,22 @@ namespace ZeroDayToolKit.Locales
                     string value = rdr.ReadElementContentAsString();
                     if (toExtension)
                     {
-                        if (ExtensionLoaderReadCustomLocale.ExtensionLocales.ContainsKey(key)) ExtensionLoaderReadCustomLocale.ExtensionLocales[key] = value;
-                        else ExtensionLoaderReadCustomLocale.ExtensionLocales.Add(key, value);
+                        if (ExtensionLoaderReadCustomLocale.LocaleKeys.Contains(key)) ExtensionLoaderReadCustomLocale.ExtensionLocales[key] = value;
+                        else
+                        {
+                            ExtensionLoaderReadCustomLocale.LocaleKeys.Add(key);
+                            ExtensionLoaderReadCustomLocale.ExtensionLocales.Add(key, value);
+                        }
                     }
                     else
                     {
                         if (LocaleTerms.ActiveTerms.ContainsKey(key)) LocaleTerms.ActiveTerms[key] = value;
                         else LocaleTerms.ActiveTerms.Add(key, value);
+                        if (!ExtensionLoaderReadCustomLocale.LocaleKeys2.Contains(key))
+                        {
+                            ExtensionLoaderReadCustomLocale.LocaleKeys2.Add(key);
+                            ExtensionLoaderReadCustomLocale.GlobalLocales.Add(key, value);
+                        }
                     }
                     ret = true;
                 }

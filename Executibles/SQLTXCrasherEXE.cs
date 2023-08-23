@@ -81,7 +81,7 @@ namespace ZeroDayToolKit.Executibles
             Rectangle midbar = new Rectangle(Bounds.X, Bounds.Y + 9 + (Bounds.Height / 3), Bounds.Width, Bounds.Height / 3);
             spriteBatch.Draw(Hacknet.Utils.white, midbar, Color.Black * 0.5f * fade);
             if ((!done && (ZeroDayToolKit.rnd.NextDouble() < (life / runTime))) || (done && (ZeroDayToolKit.rnd.NextDouble() > ((life - runTime) / exitTime))))
-                TextItem.doCenteredFontLabel(midbar, "-  " + (done ? "Completed." : "Crashing...") + "  -", GuiData.smallfont, Color.White);
+                TextItem.doCenteredFontLabel(midbar, LocaleTerms.Loc("-  " + (done ? "Completed." : "Crashing...") + "  -"), GuiData.smallfont, Color.White);
             base.Draw(t);
         }
     }

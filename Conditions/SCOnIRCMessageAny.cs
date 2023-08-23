@@ -44,7 +44,7 @@ namespace ZeroDayToolKit.Conditions
             IRCSystem irc = ComUtils.getIRC(c);
             if (irc == null) return false;
             string[] args = os.terminal.lastRunCommand.Split(Hacknet.Utils.WhitespaceDelim, StringSplitOptions.RemoveEmptyEntries);
-            return args[0] == ">";
+            return args[0] == "/";
         }
 
         public static bool checkForWord(string msg, string parse)

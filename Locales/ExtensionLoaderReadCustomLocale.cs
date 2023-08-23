@@ -9,11 +9,15 @@ namespace ZeroDayToolKit.Locales
     [HarmonyLib.HarmonyPatch(typeof(ExtensionLoader), nameof(ExtensionLoader.LoadNewExtensionSession))]
     public class ExtensionLoaderReadCustomLocale
     {
+        public static List<string> LocaleKeys = new List<string>();
+        public static List<string> LocaleKeys2 = new List<string>();
+        public static Dictionary<string, string> GlobalLocales = new Dictionary<string, string>();
         public static Dictionary<string, string> ExtensionLocales = new Dictionary<string, string>();
         static void Prefix(ref ExtensionInfo info, object os_obj)
         {
             OS os = (OS)os_obj;
             ExtensionLocales.Clear();
+            LocaleKeys.Clear();
             if (Directory.Exists(info.FolderPath + "/Locales"))
             {
                 bool found = false;
@@ -30,6 +34,7 @@ namespace ZeroDayToolKit.Locales
                     Settings.ActiveLocale = info.Language;
                 }
             }
+            LocaleKeys.Sort((a, b) => b.Length - a.Length);
         }
     }
 }

@@ -108,6 +108,7 @@
     <Compile Include="Executibles\SSHSwiftEXE.cs" />
     <Compile Include="Executibles\ZeroDayEXE.cs" />
     <Compile Include="Locales\ExtensionLoaderReadCustomLocale.cs" />
+    <Compile Include="Patches\BetterHelp.cs" />
     <Compile Include="Patches\ExtensionSequencerExeInstantActivate.cs" />
     <Compile Include="Patches\DLCIntroExeInstantActivate.cs" />
     <Compile Include="Locales\LocaleActivatorReadCustomGlobals.cs" />

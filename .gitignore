@@ -9,3 +9,5 @@ vs/
 installer/__pycache__/
 installer/build/
 installer/dist/
+libs/
+.vs/

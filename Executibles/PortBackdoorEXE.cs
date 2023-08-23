@@ -98,9 +98,9 @@ namespace ZeroDayToolKit.Executibles
                     -vertX[edgeB[r]] + ((float)ZeroDayToolKit.rnd.NextDouble() * 0.02f - 0.01f))), c * fade);
             }
             spriteBatch.Draw(Hacknet.Utils.white, DrawUtils.correctBounds(Bounds, new Vector4(-1, -0.5f, 2, 0.68f)), (done ? os.brightUnlockedColor : os.lockedColor) * 0.5f * fade);
-            TextItem.doFontLabel(DrawUtils.correctBounds(Bounds, new Vector2(-0.9f, -0.45f)), done ? "P R O C E S S" : "H A C K I N G", GuiData.smallfont, Color.White * fade);
-            TextItem.doFontLabel(DrawUtils.correctBounds(Bounds, new Vector2(-0.85f, -0.25f)), done ? "F I N I S H E D" : "I N", GuiData.smallfont, Color.White * fade);
-            TextItem.doFontLabel(DrawUtils.correctBounds(Bounds, new Vector2(-0.8f, -0.05f)), done ? "*kill this pls" : "P R O G R E S S . .", GuiData.smallfont, Color.White * fade);
+            TextItem.doFontLabel(DrawUtils.correctBounds(Bounds, new Vector2(-0.9f, -0.45f)), LocaleTerms.Loc(done ? "P R O C E S S" : "H A C K I N G"), GuiData.smallfont, Color.White * fade);
+            TextItem.doFontLabel(DrawUtils.correctBounds(Bounds, new Vector2(-0.85f, -0.25f)), LocaleTerms.Loc(done ? "F I N I S H E D" : "I N"), GuiData.smallfont, Color.White * fade);
+            TextItem.doFontLabel(DrawUtils.correctBounds(Bounds, new Vector2(-0.8f, -0.05f)), LocaleTerms.Loc(done ? "*kill this pls" : "P R O G R E S S . ."), GuiData.smallfont, Color.White * fade);
             base.Draw(t);
         }
     }

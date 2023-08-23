@@ -1,6 +1,11 @@
 ﻿using Hacknet;
+using HarmonyLib;
+using MonoMod.Cil;
+using Pathfinder.Port;
 using System;
 using System.IO;
+using System.Reflection;
+using System.Text;
 using System.Xml;
 
 namespace ZeroDayToolKit.Locales
@@ -13,65 +18,121 @@ namespace ZeroDayToolKit.Locales
         {
             if (input == null) return;
             string replMe = input.ReadToEnd();
-            string res = "";
-            bool mode = false;
-            string key = "";
-            for (var i = 0; i < replMe.Length; i++)
+            input.Close();
+            if (replMe.Contains("Language=\"dynamic\""))
             {
-                if (mode)
+                StringBuilder res = new StringBuilder("", replMe.Length);
+                bool mode = false;
+                string key = "";
+                for (var i = 0; i < replMe.Length; i++)
                 {
-                    if (i < replMe.Length - 3 && replMe.Substring(i, 4) == "\\\\}}")
+                    replMe = replMe.Replace("Language=\"dynamic\"", "Language=\"" + Settings.ActiveLocale + "\"");
+                    if (mode)
                     {
-                        key += "\\";
-                        mode = false;
-                        res += localizeThis(key);
-                        key = "";
-                        i += 3;
+                        if (i < replMe.Length - 3 && replMe.Substring(i, 4) == "\\\\}}")
+                        {
+                            mode = false;
+                            res.Append("\\");
+                            key = "";
+                            i += 3;
+                        }
+                        else if (i < replMe.Length - 2 && replMe.Substring(i, 3) == "\\}}")
+                        {
+                            key += "}}";
+                            i += 2;
+                        }
+                        else if (i < replMe.Length - 1 && replMe.Substring(i, 2) == "}}")
+                        {
+                            mode = false;
+                            res.Append(localizeThis(key));
+                            key = "";
+                            i++;
+                        }
+                        else key += replMe[i];
                     }
-                    else if (i < replMe.Length - 2 && replMe.Substring(i, 3) == "\\}}")
+                    else
                     {
-                        key += "}}";
-                        i += 2;
+                        if (i < replMe.Length - 3 && replMe.Substring(i, 4) == "\\\\{{")
+                        {
+                            mode = true;
+                            res.Append("\\");
+                            i += 3;
+                        }
+                        else if (i < replMe.Length - 2 && replMe.Substring(i, 3) == "\\{{")
+                        {
+                            res.Append("{{");
+                            i += 2;
+                        }
+                        else if (i < replMe.Length - 1 && replMe.Substring(i, 2) == "{{")
+                        {
+                            mode = true;
+                            i++;
+                        }
+                        else res.Append(replMe[i]);
                     }
-                    else if (i < replMe.Length - 1 && replMe.Substring(i, 2) == "}}")
-                    {
-                        mode = false;
-                        res += localizeThis(key);
-                        key = "";
-                        i++;
-                    }
-                    else key += replMe[i];
                 }
-                else
-                {
-                    if (i < replMe.Length - 3 && replMe.Substring(i, 4) == "\\\\{{")
-                    {
-                        mode = true;
-                        res += "\\";
-                        i += 3;
-                    }
-                    else if (i < replMe.Length - 2 && replMe.Substring(i, 3) == "\\{{")
-                    {
-                        res += "{{";
-                        i += 2;
-                    }
-                    else if (i < replMe.Length - 1 && replMe.Substring(i, 2) == "{{")
-                    {
-                        mode = true;
-                        i++;
-                    }
-                    else res += replMe[i];
-                }
+                res.Append(localizeThis(key));
+                input = new StringReader(res.ToString());
             }
-            res += localizeThis(key);
-            input = new StringReader(res);
+            else input = new StringReader(replMe);
         }
 
         public static string localizeThis(string key)
         {
             if (key == "") return "";
-            if (ExtensionLoaderReadCustomLocale.ExtensionLocales.ContainsKey(key)) return ExtensionLoaderReadCustomLocale.ExtensionLocales[key];
-            return LocaleTerms.Loc(key);
+            var ret = LocaleTerms.Loc(key); // complete overlaps (i.e. overrides) are covered below
+            if (!key.Equals(ret)) return ret;
+            foreach (string k in ExtensionLoaderReadCustomLocale.LocaleKeys) key = key.Replace(k, ExtensionLoaderReadCustomLocale.ExtensionLocales[k]);
+            foreach (string k in ExtensionLoaderReadCustomLocale.LocaleKeys2) key = key.Replace(k, ExtensionLoaderReadCustomLocale.GlobalLocales[k]);
+            return key;
+        }
+    }
+
+    [HarmonyLib.HarmonyPatch(typeof(LocaleTerms), nameof(LocaleTerms.Loc))]
+    public class LocalizeOverride
+    {
+        public static bool Prefix(string input, ref string __result)
+        {
+            if (ExtensionLoaderReadCustomLocale.ExtensionLocales.ContainsKey(input))
+            {
+                __result = ExtensionLoaderReadCustomLocale.ExtensionLocales[input];
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyLib.HarmonyPatch(typeof(OS), nameof(OS.write))]
+    public class LocalizeOSWrites
+    {
+        static void Prefix(ref string text)
+        {
+            text = XmlReaderSettingsLocalizeExtensions.localizeThis(text);
+        }
+    }
+
+    [HarmonyLib.HarmonyPatch(typeof(OS), nameof(OS.writeSingle))]
+    public class LocalizeOSWriteSingles
+    {
+        static void Prefix(ref string text)
+        {
+            text = XmlReaderSettingsLocalizeExtensions.localizeThis(text);
+        }
+    }
+
+    [HarmonyLib.HarmonyPatch]
+    public class LocalizePortString
+    {
+        static void ILManipulator(ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+            if (c.TryGotoNext(x => x.MatchLdstr("Port#: {0}")) && c.TryGotoNext(x => x.MatchStloc(out _))) c.EmitDelegate<Func<string, string>>(a => XmlReaderSettingsLocalizeExtensions.localizeThis(a));
+            if (c.TryGotoNext(x => x.MatchLdstr(" - ")) && c.TryGotoNext(x => x.MatchStloc(out _))) c.EmitDelegate<Func<string, string>>(a => XmlReaderSettingsLocalizeExtensions.localizeThis(a));
+        }
+
+        static MethodBase TargetMethod()
+        {
+            return AccessTools.GetDeclaredMethods(typeof(ComputerExtensions).GetNestedType("<>c", AccessTools.all)).Find(x => x.GetParameters().Length == 4);
         }
     }
 }
