@@ -1,4 +1,5 @@
 ﻿using Hacknet;
+using Pathfinder.Command;
 using Pathfinder.Util;
 
 namespace ZeroDayToolKit.Conditions
@@ -12,6 +13,7 @@ namespace ZeroDayToolKit.Conditions
         {
             ZeroDayConditions.disabledCommands.Remove(command.ToLower());
             Helpfile.init();
+            ProgramList.init();
         }
     }
 }

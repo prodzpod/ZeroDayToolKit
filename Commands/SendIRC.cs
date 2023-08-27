@@ -15,12 +15,12 @@ namespace ZeroDayToolKit.Commands
             if (irc == null)
             {
                 os.write("This computer does not have an IRC Daemon.");
+                os.validCommand = false;
                 return;
             }
             string user = c.currentUser.name;
             if (user == null) user = os.SaveUserAccountName;
             irc.AddLog(user, string.Join(" ", args.Skip(1)));
-
         }
     }
 }

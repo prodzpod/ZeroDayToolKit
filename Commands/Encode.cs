@@ -26,11 +26,13 @@ namespace ZeroDayToolKit.Commands
             if (!c.PlayerHasAdminPermissions())
             {
                 os.write("Insufficient Permissions");
+                os.validCommand = false;
                 return;
             }
             if (args.Length < 2)
             {
                 os.write("You must input the file name");
+                os.validCommand = false;
                 return;
             }
             Folder folder = Programs.getCurrentFolder(os);
@@ -39,6 +41,7 @@ namespace ZeroDayToolKit.Commands
             if (file == null)
             {
                 os.write("File does not exist");
+                os.validCommand = false;
                 return;
             }
             c.makeFile(os.thisComputer.ip, ComUtils.getNoDupeFileName(truncName + ext, os), func.Invoke(file.data), os.navigationPath);

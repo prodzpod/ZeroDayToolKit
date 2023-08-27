@@ -14,11 +14,13 @@ namespace ZeroDayToolKit.Commands
             if (!c.PlayerHasAdminPermissions())
             {
                 os.write("Insufficient Permissions");
+                os.validCommand = false;
                 return;
             }
             if (args.Length < 2)
             {
                 os.write("You must input the folder name");
+                os.validCommand = false;
                 return;
             }
             Folder source = Programs.getCurrentFolder(os);
@@ -26,6 +28,7 @@ namespace ZeroDayToolKit.Commands
             if (target == null)
             {
                 os.write("Target folder does not exist");
+                os.validCommand = false;
                 return;
             }
             c.makeFile(os.thisComputer.ip, ComUtils.getNoDupeFileName(args[1] + ".zip", os), zipFolder(target), os.navigationPath);

@@ -1,10 +1,12 @@
 ﻿using Hacknet;
+using Hacknet.Gui;
 using Hacknet.Localization;
 using HarmonyLib;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
 using System.IO;
+using System.Linq;
 using System.Xml;
 
 namespace ZeroDayToolKit.Locales
@@ -37,25 +39,27 @@ namespace ZeroDayToolKit.Locales
         {
             bool ret = false;
             XmlReader rdr = XmlReader.Create(File.OpenRead(LocalizedFileLoader.GetLocalizedFilepath(file)));
-            while (rdr.Name != localeCode)
+            while (rdr.Name != localeCode && rdr.Name != "default")
             {
                 rdr.Read();
                 if (rdr.EOF) { rdr.Close(); return false; }
             }
             rdr.Read();
-            while (rdr.Name != localeCode)
+            while (rdr.Name != localeCode && rdr.Name != "default")
             {
                 if (rdr.Name.ToLower().Equals("l") && rdr.MoveToAttribute("key"))
                 {
                     string key = rdr.ReadContentAsString();
+                    bool exact = false;
+                    if (rdr.MoveToAttribute("exact")) exact = rdr.ReadContentAsBoolean();
                     rdr.MoveToContent();
                     string value = rdr.ReadElementContentAsString();
                     if (toExtension)
                     {
-                        if (ExtensionLoaderReadCustomLocale.LocaleKeys.Contains(key)) ExtensionLoaderReadCustomLocale.ExtensionLocales[key] = value;
+                        if (ExtensionLoaderReadCustomLocale.ExtensionLocales.ContainsKey(key)) ExtensionLoaderReadCustomLocale.ExtensionLocales[key] = value;
                         else
                         {
-                            ExtensionLoaderReadCustomLocale.LocaleKeys.Add(key);
+                            if (!exact) ExtensionLoaderReadCustomLocale.LocaleKeys.Add(key);
                             ExtensionLoaderReadCustomLocale.ExtensionLocales.Add(key, value);
                         }
                     }
@@ -63,9 +67,9 @@ namespace ZeroDayToolKit.Locales
                     {
                         if (LocaleTerms.ActiveTerms.ContainsKey(key)) LocaleTerms.ActiveTerms[key] = value;
                         else LocaleTerms.ActiveTerms.Add(key, value);
-                        if (!ExtensionLoaderReadCustomLocale.LocaleKeys2.Contains(key))
+                        if (!ExtensionLoaderReadCustomLocale.GlobalLocales.ContainsKey(key))
                         {
-                            ExtensionLoaderReadCustomLocale.LocaleKeys2.Add(key);
+                            if (!exact) ExtensionLoaderReadCustomLocale.LocaleKeys2.Add(key);
                             ExtensionLoaderReadCustomLocale.GlobalLocales.Add(key, value);
                         }
                     }
@@ -76,6 +80,15 @@ namespace ZeroDayToolKit.Locales
             }
             rdr.Close();
             return ret;
+        }
+
+        [HarmonyPatch(typeof(SelectableTextList), nameof(SelectableTextList.doFancyList))]
+        public class LocalizeDropdown
+        {
+            public static void Prefix(ref string[] text)
+            {
+                text = text.Select(x => XmlReaderSettingsLocalizeExtensions.localizeThis(x)).ToArray();
+            }
         }
     }
 }

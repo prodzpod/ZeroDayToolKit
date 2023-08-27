@@ -5,12 +5,21 @@ a [Hacknet](https://store.steampowered.com/app/365450/Hacknet/) [Pathfinder](htt
 Please DM or mention **@pr_d** on discord if you encounter any bugs or weirdness using the mod.
 
 ## New Commands
+Some commands are DISABLED BY DEFAULT as it can either ruin the immersion, or vastly change how one approaches cracking, and can be considered cheating if used in a non-0DTK extension / basegame. you may enable these features via `<EnableCommand>` explained below.
+- `/ <message...>`: Send chat in IRC/DHS. (DISABLED BY DEFAULT)
 - `btoa <file>` / `atob <file>`: Encode/Decode files to Base64.
-- `binencode <file>` / `bindecode <file>`: Encode/Decode files to Binary.
-- `zip <folder>` / `unzip <folder>`: Zip/Unzip folder via gZip.
-- `touch <filename> [content...]`: Create a file.
+- `binary <-e/-d> <file>`: Encode/Decode files to Binary.
+- `date`: Prints current time to console. (DISABLED BY DEFAULT)
+- `echo [content...]`: Prints content to console.
+- `expr <expression>`: Resolve a math expression.
+- `head <file> [line]` / `tail <file> [line]`: Prints first/last (default: 10) lines of the file to console.
+- `history`: Prints command history to console.
+- `hostname [-i]`: Prints the name (or IP address if -i is provided) of the connected device.
+- `man <command>`: Prints help for that command.
 - `mkdir <foldername>`: Create a folder.
-- `/ <message...>`: Chat in IRC/DHS.
+- `more <file>`: Alias of `cat`.
+- `touch <filename> [content...]`: Create a file.
+- `zip <folder>` / `unzip <folder>`: Zip/Unzip folder via gZip.
 
 ## New Executables
 Every executables except for the ones labelled feature custom-made Hacknet-style graphics.
@@ -25,7 +34,18 @@ Every executables except for the ones labelled feature custom-made Hacknet-style
   - Port `0 (Backdoor Connection)` can be opened on **ANY OS**, essentially working as a free port.
   - This process takes a long, **long** time.
 - `#GIT_TUNNEL#` / `GitTunnel For Hacknet BETA`: Opens port `9418 (GitTunnel)`. (NO GRAPHICS YET)
+  - deletes the `/log` folder upon successful hack. MAY LOSE INFORMATION!
 - `#MQTT_INTERCEPTOR` / `mqttpwn:r63`: Opens port `1883 (MQTT Protocol)`. (NO GRAPHICS YET)
+  - if MQTT port is present, you must connect to it before you can open SSH or FTP ports. (NOT IMPLEMENTED)
+- `#CLOCK_V3#`: ???
+- `#VPN_BYPASS#`: ???
+- `#SANDBOX_ESCAPE#`: ???
+- `#TELE_SMOOTH#`: ???
+- `#EOS_ROOTKIT#`: ???
+- `#ANTI_ANTIVIRUS#`: ???
+- `#SOFT_SNOOZE#`: ???
+- `#TRACE_FREEZER#`: ???
+- `#NETMAP_EXPLOIT#`: ???
 
 ## New Extension Actions
 - `<SetRAM ram="float">`: Sets the RAM amount of the player.
@@ -33,11 +53,13 @@ Every executables except for the ones labelled feature custom-made Hacknet-style
 - `<ResetIRCDelay target="computer_id">`: Resets the IRC Delay for that OS, useful for branching IRC logs. (see Conditions)
 - `<SetNumberOfChoices choices="int">`: Sets the number of choices for interactive IRC logs. (see Conditions)
 - `<DisableCommand command="string">` / `<EnableCommand command="string">`: Prohibits usage of certain commands, useful for blocking chat by disabling `/`. (see Conditions)
+- `<EnableStrictLog targetComp="computer_id">` / `<DisableStrictLog targetComp="computer_id">`: Makes it so that this PC also detects (dis)connection logs. you MUST delete all logs and `ForkBomb` yourself out to be hidden if strict log is on.
 
 ## New Extension Conditions
 - `<OnFileCreation [target="computer_id" path="path" name="string" content="string"]>` / `<OnFileDeletion [target="computer_id" path="path" name="string" content="string"]>`: Triggered when a specific file is created or deleted on an OS.
 - `<OnIRCMessageAny [target="computer_id" user="string" notUser="string" minDelay="float" maxDelay="float" requiredFlags="string" doesNotHaveFlags="string"]>`: Triggered when a user sends a message to the IRC chat. set `user="#PLAYERNAME#` to have it trigger when a user sends something.
 - `<OnIRCMessage [target="computer_id" user="string" notUser="string" minDelay="float" maxDelay="float" requiredFlags="string" doesNotHaveFlags="string" word="string"]>`: Triggered when a specific word is said on IRC. Case and spacing insensitive.
+  - You may use `&` and `|` to create AND / OR operation between words. for example, `what&this|that` would match `what is this` and `what is that` but not `this and that`.
 - `<OnIRCMessageTone [target="computer_id" user="string" notUser="string" minDelay="float" maxDelay="float" requiredFlags="string" doesNotHaveFlags="string" tone="string"]>`: Triggered when a user responds with a specific type of message. currently supported tones are `no`, `yes`, `help`, `hey` and number `1` through `10`.
 
 The Following conditions are meant to be used alongside the TraceV2 system. see below for more information.
@@ -64,7 +86,7 @@ Trace V2 is a Network-wide trace that does not go away when `connect`ed away fro
 
 Once any OS in the system detects hostile activity, a cyan `Track` timer turns on that fails similarly to Trace.
 
-Once the `head` of the Network is `ForkBomb`ed, `Track` timer will change to a gray `Retrace` timer, letting you close connections and forkbomb the rest of the OSes, delete the logs, etc.
+Once the `head` of the Network is shut off, `Track` timer will change to a gray `Retrace` timer, letting you close connections and forkbomb the rest of the OSes, delete the logs, etc.
 
 Once the `Retrace` period is over and everything is good, it is considered that the player has won.
 
@@ -78,12 +100,14 @@ Include `{{key}}` in place of the text to make it be influenced by locales.
 create a `/Locales` folder in your extension, and put xml files in there.
 here is an example of such a file.
 
+setting the `exact` attribute to true makes it so that it does not partially replace letters.
+
 ```xml
 <Locale>
   <en-us>
     <l key="back">Back</l>
     <l key="ok">OK</l>
-    <l key="cancel">Cancel</l>
+    <l key="cancel" exact="true">Cancel</l>
   </en-us>
 </Locale>
 ```
@@ -97,9 +121,10 @@ If downloaded via the installer, the mod also adds **complete font support** for
 - You can now use `Sequencer.exe -i` (also applies to Kaguya's Trial) to instantly start the challenge.
 - You can now use `ComShell.exe -t` to trap all shells.
 - A typo in usage message for `ComShell` is fixed.
-- Tracking Logs are smarter. (does not count connect/disconnect logs)
+- Tracking Logs are smarter. (does not count connect/disconnect logs UNLESS `<EnableStrictLog>` is enabled for that device.)
 
 ## Changelog
+- 0.2.2: Fixed command disables not being saved, added strict log functionality, added exact locale functionality, specified some things in README, fixed some korean locale things, changed `bindecode` and `binencode` to `binary [-d/-e]`, added `echo`, `date`, `expr`, `history`, `man`, `hostname`, `head` and `tail`, added `<EnableStrictLog>`/`<DisableStrictLog>`, `help` is properly sorted, autocomplete is properly disabled for disabled commands, added initial disabled command list 
 - 0.2.1: Updated to PF 5.3.0, Fixed IRC condition bug, made dynamic locale read a lot faster (appearantly +=ing string a million times is not good for your OS), added custom command description, and change description based on disabled commands for `help` menu. Added proper README.
 - 0.2.0: Added graphics for PortBackdoor, Dynamic locale support, Sound Effect Volume setting
 - 0.0.2: Refactored half the mod

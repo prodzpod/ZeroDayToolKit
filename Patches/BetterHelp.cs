@@ -57,6 +57,7 @@ namespace ZeroDayToolKit.Patches
                 if (ZeroDayConditions.disabledCommands.Contains(k)) continue;
                 Helpfile.help.Add(k + " " + LocaleTerms.Loc(Usages[k]) + ln + LocaleTerms.Loc(Descriptions[k]).Replace("\n", ln));
             }
+            Helpfile.help.Sort();
             Helpfile.LoadedLanguage = Settings.ActiveLocale;
             return false;
         }

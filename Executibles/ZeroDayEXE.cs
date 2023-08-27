@@ -7,7 +7,7 @@ using ZeroDayToolKit.Utils;
 
 namespace ZeroDayToolKit.Executibles
 {
-    public class ZeroDayEXE : BaseExecutable
+    public abstract class ZeroDayEXE : BaseExecutable
     {
         [System.Obsolete]
         public override string GetIdentifier() => IdentifierName;

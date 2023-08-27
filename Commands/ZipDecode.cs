@@ -15,11 +15,13 @@ namespace ZeroDayToolKit.Commands
             if (!c.PlayerHasAdminPermissions())
             {
                 os.write("Insufficient Permissions");
+                os.validCommand = false;
                 return;
             }
             if (args.Length < 2)
             {
                 os.write("You must input the file name");
+                os.validCommand = false;
                 return;
             }
             Folder folder = Programs.getCurrentFolder(os);
@@ -27,6 +29,7 @@ namespace ZeroDayToolKit.Commands
             if (file == null)
             {
                 os.write("Target file does not exist");
+                os.validCommand = false;
                 return;
             }
             unzipFolder(os, c, folder, file.data.Split('\n'));

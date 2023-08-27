@@ -1,11 +1,13 @@
 ﻿using System;
 using Hacknet;
+using Pathfinder.Meta.Load;
 using Pathfinder.Replacements;
 using Pathfinder.Util.XML;
 
 namespace ZeroDayToolKit.TraceV2
 {
     // load from save to os
+    [SaveExecutor("HacknetSave.TraceV2", ParseOption.ParseInterior)]
     public class LoadTraceV2 : SaveLoader.SaveExecutor
     {
         public override void Execute(EventExecutor exec, ElementInfo info)

@@ -73,6 +73,15 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Catlike.cs" />
+    <Compile Include="Commands\Hostname.cs" />
+    <Compile Include="Commands\Man.cs" />
+    <Compile Include="Commands\History.cs" />
+    <Compile Include="Commands\Expr.cs" />
+    <Compile Include="Commands\Date.cs" />
+    <Compile Include="Commands\Echo.cs" />
+    <Compile Include="Conditions\SADisableStrictLog.cs" />
+    <Compile Include="Conditions\SAEnableStrictLog.cs" />
     <Compile Include="Locales\LocaleActivatorSupportDynamicLocale.cs" />
     <Compile Include="Options\OptionSlider.cs" />
     <Compile Include="Options\ZeroDayToolKitOptions.cs" />
@@ -129,6 +138,8 @@
     <Compile Include="Patches\SoundEffectVolume.cs" />
     <Compile Include="Patches\TrackerCheckLogs.cs" />
     <Compile Include="Locales\XmlReaderSettingsLocalizeExtensions.cs" />
+    <Compile Include="Savedatas\StrictLogs.cs" />
+    <Compile Include="Savedatas\DisabledCommands.cs" />
     <Compile Include="TraceV2\AfterCompleteTrigger.cs" />
     <Compile Include="TraceV2\InitialLoadTraceV2.cs" />
     <Compile Include="TraceV2\LoadTraceV2.cs" />
@@ -139,6 +150,7 @@
     <Compile Include="Utils\DrawUtils.cs" />
     <Compile Include="Utils\MathUtils.cs" />
     <Compile Include="Utils\ComUtils.cs" />
+    <Compile Include="Utils\SaveUtils.cs" />
     <Compile Include="ZeroDayToolKit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

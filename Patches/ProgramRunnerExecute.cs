@@ -1,5 +1,6 @@
 ﻿using Hacknet;
-
+using Pathfinder.Command;
+using Pathfinder.Event.Gameplay;
 using ZeroDayToolKit.Conditions;
 
 namespace ZeroDayToolKit.Patches
@@ -18,6 +19,15 @@ namespace ZeroDayToolKit.Patches
                 return false; // return now
             }
             return true; // otherwise continue executing
+        }
+    }
+
+    [HarmonyLib.HarmonyPatch(typeof(CommandManager), "OnCommandExecute")]
+    public class DisableCustomCommand
+    {
+        public static bool Prefix(CommandExecuteEvent args)
+        {
+            return !ZeroDayConditions.disabledCommands.Contains(args.Args[0].ToLower());
         }
     }
 }
