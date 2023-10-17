@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Catlike.cs" />
+    <Compile Include="Commands\Pwd.cs" />
     <Compile Include="Commands\Hostname.cs" />
     <Compile Include="Commands\Man.cs" />
     <Compile Include="Commands\History.cs" />

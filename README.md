@@ -18,6 +18,7 @@ Some commands are DISABLED BY DEFAULT as it can either ruin the immersion, or va
 - `man <command>`: Prints help for that command.
 - `mkdir <foldername>`: Create a folder.
 - `more <file>`: Alias of `cat`.
+- `pwd`: Prints the current working directory
 - `touch <filename> [content...]`: Create a file.
 - `zip <folder>` / `unzip <folder>`: Zip/Unzip folder via gZip.
 
@@ -124,6 +125,7 @@ If downloaded via the installer, the mod also adds **complete font support** for
 - Tracking Logs are smarter. (does not count connect/disconnect logs UNLESS `<EnableStrictLog>` is enabled for that device.)
 
 ## Changelog
+- 0.2.3: added `pwd`
 - 0.2.2: Fixed command disables not being saved, added strict log functionality, added exact locale functionality, specified some things in README, fixed some korean locale things, changed `bindecode` and `binencode` to `binary [-d/-e]`, added `echo`, `date`, `expr`, `history`, `man`, `hostname`, `head` and `tail`, added `<EnableStrictLog>`/`<DisableStrictLog>`, `help` is properly sorted, autocomplete is properly disabled for disabled commands, added initial disabled command list 
 - 0.2.1: Updated to PF 5.3.0, Fixed IRC condition bug, made dynamic locale read a lot faster (appearantly +=ing string a million times is not good for your OS), added custom command description, and change description based on disabled commands for `help` menu. Added proper README.
 - 0.2.0: Added graphics for PortBackdoor, Dynamic locale support, Sound Effect Volume setting

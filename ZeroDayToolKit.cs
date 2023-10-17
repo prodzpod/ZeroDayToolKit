@@ -33,7 +33,7 @@ namespace ZeroDayToolKit
     {
         public const string ModGUID = "kr.o_r.prodzpod.zerodaytoolkit";
         public const string ModName = "ZeroDayToolKit";
-        public const string ModVer = "0.2.2";
+        public const string ModVer = "0.2.3";
         public new static ConfigFile Config;
         public static ZeroDayToolKit Instance;
         static public Random rnd;
@@ -95,6 +95,7 @@ namespace ZeroDayToolKit
             ZeroDayCommand.Add("history", History.Trigger, "", "Prints the history of commands executed");
             ZeroDayCommand.Add("man", Man.Trigger, "[command]", "Prints the usage of that command");
             ZeroDayCommand.Add("hostname", Hostname.Trigger, "[OPTIONAL: -i]", "Prints the name or ip of the connected device");
+            ZeroDayCommand.Add("pwd", Pwd.Trigger, "", "Prints the current working directory");
 
             Console.WriteLine("[ZeroDayToolKit] Registering Actions");
             Pathfinder.Action.ActionManager.RegisterAction<SAResetIRCDelay>("ResetIRCDelay");
