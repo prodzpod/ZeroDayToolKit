@@ -39,21 +39,15 @@ namespace ZeroDayToolKit.Executibles
             base.LoadContent();
             Computer c = ComputerLookup.FindByIp(targetIP);
             port = c.GetDisplayPortNumberFromCodePort(originPort);
-            if (noProxy && c.proxyActive)
+            int status = -1;
+            if (noProxy && c.proxyActive) status = 0;
+            else if (Args.Length <= 1) status = 1;
+            else if (!int.TryParse(Args[1], out _)) status = 2;
+            else if (int.Parse(Args[1]) != port) status = ComUtils.isPortOpen(c, c.GetCodePortNumberFromDisplayPort(int.Parse(Args[1]))) ? 3 : 2;
+            else if (!ComUtils.isPortOpen(c, originPort)) status = 2;
+            if (status != -1) 
             {
-                os.write("Proxy Active");
-                os.write("Execution failed");
-                needsRemoval = true;
-            }
-            else if (Args.Length <= 1)
-            {
-                os.write("No port number Provided");
-                os.write("Execution failed");
-                needsRemoval = true;
-            }
-            else if (!int.TryParse(Args[1], out _) || int.Parse(Args[1]) != port || !ComUtils.isPortOpen(c, originPort))
-            {
-                os.write("Target Port is Closed");
+                os.write(new string[] {"Proxy Active", "No port number Provided", "Target Port is Closed", "Target Port running incompatible service for this executable"}[status]);
                 os.write("Execution failed");
                 needsRemoval = true;
             }
