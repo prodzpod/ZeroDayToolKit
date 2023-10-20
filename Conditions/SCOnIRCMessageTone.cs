@@ -15,7 +15,7 @@ namespace ZeroDayToolKit.Conditions
             string msg = os.terminal.lastRunCommand;
             #region tone detection
             if (tone == "no" && checkForWord(msg, "no|na|eh|sorry|can't|cant|decline|no can|off|won't|wont|couldn't|couldnt|shouldn't|shouldnt|shant|shan't")) return true; // early exit so "no can do" is "no"
-            if (tone == "yes" && checkForWord(msg, "ye|yup|ok|alr|aight|lets|les|let's|leg|sure|wish me|got it|got this|cool|ready|can do|will|accept|bring|here i|here we|could|would|should|ought|shall")) return true;
+            if (tone == "yes" && checkForWord(msg, "ye|yup|ok|alr|aight|lets|les|let's|leg|sure|wish me|got it|got this|cool|ready|rdy|can do|will|accept|bring|here i|here we|could|would|should|ought|shall")) return true;
             if (tone == "help" && checkForWord(msg, "stuck|can't|cant|what|hm|huh|?|not|help|aid|idea|how|hint|clue|doesn|nudge")) return true;
             if (tone == "hey" && checkForWord(msg, "guy|boy|girl|dude|folk|people|@channel|yall|hey|sup")) return true;
             if (tone == "1" && checkForWord(msg, "1|one|first|former")) return true;
