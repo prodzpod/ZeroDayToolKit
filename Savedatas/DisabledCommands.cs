@@ -26,4 +26,13 @@ namespace ZeroDayToolKit.Savedatas
             ZeroDayConditions.disabledCommands.Add(info.Attributes["command"]);
         }
     }
+
+    [HarmonyLib.HarmonyPatch(typeof(Hacknet.PlatformAPI.Storage.SaveFileManager), nameof(Hacknet.PlatformAPI.Storage.SaveFileManager.GetSaveReadStream))]
+    public class InitializeDisabledCommands
+    {
+        public static void Prefix()
+        {
+            ZeroDayConditions.disabledCommands.Clear();
+        }
+    }
 }
