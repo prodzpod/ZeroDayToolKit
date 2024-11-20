@@ -13,20 +13,41 @@ namespace ZeroDayToolKit.Conditions
         [XMLStorage]
         public string target = null;
         [XMLStorage]
+        public string Target = null;
+        [XMLStorage]
         public string user = null;
+        [XMLStorage]
+        public string User = null;
         [XMLStorage]
         public string notUser = null;
         [XMLStorage]
+        public string NotUser = null;
+        [XMLStorage]
         public float minDelay = 0.0f;
+        [XMLStorage]
+        public float MinDelay = 0.0f;
         [XMLStorage]
         public float maxDelay = float.MaxValue;
         [XMLStorage]
-        public string requiredFlags;
+        public float MaxDelay = float.MaxValue;
         [XMLStorage]
-        public string doesNotHaveFlags;
+        public string requiredFlags = null;
+        [XMLStorage]
+        public string RequiredFlags = null;
+        [XMLStorage]
+        public string doesNotHaveFlags = null;
+        [XMLStorage]
+        public string DoesNotHaveFlags = null;
 
         public override bool Check(object os_obj)
         {
+            var target = this.target ?? Target;
+            var user = this.user ?? User;
+            var notUser = this.notUser ?? NotUser;
+            var minDelay = (this.minDelay != 0 ? this.minDelay : MinDelay);
+            var maxDelay = (this.maxDelay != float.MaxValue ? this.maxDelay : MaxDelay);
+            var requiredFlags = this.requiredFlags ?? RequiredFlags;
+            var doesNotHaveFlags = this.doesNotHaveFlags ?? DoesNotHaveFlags;
             OS os = (OS)os_obj;
             Computer c = ComUtils.getComputer(os);
             if (!string.IsNullOrWhiteSpace(requiredFlags)) foreach (string flag in requiredFlags.Split(Hacknet.Utils.commaDelim, StringSplitOptions.RemoveEmptyEntries)) if (!os.Flags.HasFlag(flag)) return false;

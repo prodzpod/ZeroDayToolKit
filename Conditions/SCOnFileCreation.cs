@@ -8,17 +8,25 @@ namespace ZeroDayToolKit.Conditions
         [XMLStorage]
         public string target;
         [XMLStorage]
-        public string path = "";
+        public string Target;
         [XMLStorage]
-        public string name = "";
+        public string path;
         [XMLStorage]
-        public string content = "";
+        public string Path = "";
+        [XMLStorage]
+        public string name;
+        [XMLStorage]
+        public string Name = "";
+        [XMLStorage]
+        public string content;
+        [XMLStorage]
+        public string Content = "";
 
         public override bool Check(object os_obj)
         {
-            Computer c = ComputerLookup.FindById(target);
-            if (path == "") return CheckWholePC(c.files.root);
-            else return CheckFolder(c.getFolderFromPath(path));
+            Computer c = ComputerLookup.FindById(target ?? Target);
+            if ((path ?? Path) == "") return CheckWholePC(c.files.root);
+            else return CheckFolder(c.getFolderFromPath((path ?? Path)));
         }
 
         private bool CheckWholePC(Folder folder)
@@ -27,12 +35,11 @@ namespace ZeroDayToolKit.Conditions
             foreach (Folder child in folder.folders) if (CheckWholePC(child)) return true;
             return false;
         }
-
         private bool CheckFolder(Folder folder)
         {
             if (folder.files.Count == 0) return false;
-            if (name != "" && !folder.containsFile(name)) return false;
-            if (content != "" && !folder.containsFileWithData(content)) return false;
+            if ((name ?? Name) != "" && !folder.containsFile((name ?? Name))) return false;
+            if ((content ?? Content) != "" && !folder.containsFileWithData((content ?? Content))) return false;
             return true;
         }
     }

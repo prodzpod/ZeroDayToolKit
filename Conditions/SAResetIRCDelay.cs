@@ -7,11 +7,13 @@ namespace ZeroDayToolKit.Conditions
     {
         [XMLStorage]
         public string target;
+        [XMLStorage]
+        public string Target;
 
         public override void Trigger(object os_obj)
         {
             OS os = (OS)os_obj;
-            ZeroDayConditions.times[target] = os.lastGameTime.TotalGameTime;
+            ZeroDayConditions.times[target ?? Target] = os.lastGameTime.TotalGameTime;
         }
     }
 }

@@ -54,7 +54,7 @@ namespace ZeroDayToolKit.Executibles
             else foreach (string line in startMessage.Split('\n')) os.write(line);
             if (!noHostile) Programs.getComputer(os, targetIP).hostileActionTaken();
         }
-        public override void Update(float t)
+        public override void Update(float t)    
         {
             if (!done && life >= runTime)
             {

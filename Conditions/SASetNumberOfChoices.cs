@@ -7,10 +7,12 @@ namespace ZeroDayToolKit.Conditions
     {
         [XMLStorage]
         public int choices;
+        [XMLStorage]
+        public int Choices;
 
         public override void Trigger(OS os)
         {
-            ZeroDayConditions.choice = choices;
+            ZeroDayConditions.choice = choices == default ? Choices : choices;
         }
     }
 }

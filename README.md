@@ -26,27 +26,27 @@ Some commands are DISABLED BY DEFAULT as it can either ruin the immersion, or va
 Every executables except for the ones labelled feature custom-made Hacknet-style graphics.
 - `#SSH_SWIFT#` / `>S>.SSH.$w!f7.>S>`: Opens port `22 (SSH)`.
   - Counterpart to `FTPSprint`, it vastly speeds up SSH break-in compared to vanilla.
+- `#TELE_SMOOTH#`: ??? `23 (Telnet)`
 - `#PACKET_HEADER_INJECTION#` / `:pkthdr::`: Opens port `80 (HTTP WebServer)`.
   - Takes more time, but vastly less RAM compared to vanilla. Useful for packing in remaining spaces.
+- `#CLOCK_V3#`: ??? `123 (NTP)`
 - `#SQL_TX_CRASHER#` / `THE_LAST_RESORT`: Opens port `1433 (SQL Server)`.
   - This program will **re-enable** firewall and proxy if the target has any.
   - This program stays for long after the process is completed, encouraging players to manually `kill` it.
+- `#MQTT_INTERCEPTOR` / `mqttpwn:r63`: Opens port `1883 (MQTT Protocol)`. (NO GRAPHICS YET)
+  - if MQTT port is present, you must connect to it before you can open SSH or FTP ports. (NOT IMPLEMENTED)
+- `#SANDBOX_ESCAPE#`: ??? `2375 (Docker)`
+- `#EOS_ROOTKIT#`: ??? `3659 (eOS)`
+- `#GIT_TUNNEL#` / `GitTunnel For Hacknet BETA`: Opens port `9418 (GitTunnel)`.
+  - deletes the `/log` folder upon successful hack. MAY LOSE INFORMATION!
+- `#ANTI_ANTIVIRUS#`: ??? `16324 (Amos Updater)`
 - `#PORT_BACKDOOR#` / `thanks from /el/ <3`: Opens port `0 (Backdoor Connection)`.
   - Port `0 (Backdoor Connection)` can be opened on **ANY OS**, essentially working as a free port.
   - This process takes a long, **long** time.
-- `#GIT_TUNNEL#` / `GitTunnel For Hacknet BETA`: Opens port `9418 (GitTunnel)`. (NO GRAPHICS YET)
-  - deletes the `/log` folder upon successful hack. MAY LOSE INFORMATION!
-- `#MQTT_INTERCEPTOR` / `mqttpwn:r63`: Opens port `1883 (MQTT Protocol)`. (NO GRAPHICS YET)
-  - if MQTT port is present, you must connect to it before you can open SSH or FTP ports. (NOT IMPLEMENTED)
-- `#CLOCK_V3#`: ???
 - `#VPN_BYPASS#`: ???
-- `#SANDBOX_ESCAPE#`: ???
-- `#TELE_SMOOTH#`: ???
-- `#EOS_ROOTKIT#`: ???
-- `#ANTI_ANTIVIRUS#`: ???
+- `#NET_SPOOF#`: ???
 - `#SOFT_SNOOZE#`: ???
 - `#TRACE_FREEZER#`: ???
-- `#NETMAP_EXPLOIT#`: ???
 
 ## New Extension Actions
 - `<SetRAM ram="float">`: Sets the RAM amount of the player.

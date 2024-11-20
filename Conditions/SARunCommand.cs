@@ -7,10 +7,12 @@ namespace ZeroDayToolKit.Conditions
     {
         [XMLStorage]
         public string command;
+        [XMLStorage]
+        public string Command;
 
         public override void Trigger(OS os)
         {
-            os.runCommand(command);
+            os.runCommand(command ?? Command);
         }
     }
 }

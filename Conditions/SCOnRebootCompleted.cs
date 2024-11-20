@@ -17,12 +17,21 @@ namespace ZeroDayToolKit.Conditions
         [XMLStorage]
         public string requiredFlags = null;
         [XMLStorage]
+        public string RequiredFlags = null;
+        [XMLStorage]
         public string doesNotHaveFlags = null;
         [XMLStorage]
-        public string targetNetwork;
+        public string DoesNotHaveFlags = null;
+        [XMLStorage]
+        public string targetNetwork = null;
+        [XMLStorage]
+        public string TargetNetwork = null;
 
         public override bool Check(object os_obj)
         {
+            var requiredFlags = this.requiredFlags ?? RequiredFlags;
+            var doesNotHaveFlags = this.doesNotHaveFlags ?? DoesNotHaveFlags;
+            var targetNetwork = this.targetNetwork ?? TargetNetwork;
             OS os = (OS)os_obj;
             if (targetNetwork != null || !Network.networks.ContainsKey(targetNetwork)) return false;
             if (!string.IsNullOrWhiteSpace(requiredFlags)) foreach (string flag in requiredFlags.Split(Hacknet.Utils.commaDelim, StringSplitOptions.RemoveEmptyEntries)) if (!os.Flags.HasFlag(flag)) return false;

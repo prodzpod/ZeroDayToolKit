@@ -8,6 +8,7 @@
     <AddAsset FileName="ForkBomb.exe" FileContents="#FORK_BOMB#" TargetComp="playerComp" TargetFolderpath="bin" />
     <RunFunction FunctionName="setFaction:introfac" FunctionValue="0" />
 	<SetRAM ram="1200.0" />
+  <EnableCommand command="/" />
   </Instantly>
   
   <OnConnect target="test">

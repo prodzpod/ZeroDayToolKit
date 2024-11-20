@@ -10,16 +10,28 @@ namespace ZeroDayToolKit.Conditions
     public class SCOnHostileActionTaken : Pathfinder.Action.PathfinderCondition
     {
         [XMLStorage]
-        public string requiredFlags;
+        public string requiredFlags = null;
         [XMLStorage]
-        public string doesNotHaveFlags;
+        public string RequiredFlags = null;
+        [XMLStorage]
+        public string doesNotHaveFlags = null;
+        [XMLStorage]
+        public string DoesNotHaveFlags = null;
         [XMLStorage]
         public string targetComp = null;
         [XMLStorage]
+        public string TargetComp = null;
+        [XMLStorage]
         public string targetNetwork = null;
+        [XMLStorage]
+        public string TargetNetwork = null;
 
         public override bool Check(object os_obj)
         {
+            var requiredFlags = this.requiredFlags ?? RequiredFlags;
+            var doesNotHaveFlags = this.doesNotHaveFlags ?? DoesNotHaveFlags;
+            var targetComp = this.targetComp ?? TargetComp;
+            var targetNetwork = this.targetNetwork ?? TargetNetwork;
             OS os = (OS)os_obj;
             Computer c = ComUtils.getComputer(os);
             if (!string.IsNullOrWhiteSpace(requiredFlags)) foreach (string flag in requiredFlags.Split(Hacknet.Utils.commaDelim, StringSplitOptions.RemoveEmptyEntries)) if (!os.Flags.HasFlag(flag)) return false;
