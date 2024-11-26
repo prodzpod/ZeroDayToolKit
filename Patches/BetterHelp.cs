@@ -1,7 +1,6 @@
 ﻿using Hacknet;
 using System.Collections.Generic;
 using ZeroDayToolKit.Conditions;
-using ZeroDayToolKit.Locales;
 
 namespace ZeroDayToolKit.Patches
 {

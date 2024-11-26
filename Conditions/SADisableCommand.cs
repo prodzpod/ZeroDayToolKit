@@ -14,9 +14,12 @@ namespace ZeroDayToolKit.Conditions
 
         public override void Trigger(OS os)
         {
-            ZeroDayConditions.disabledCommands.Add((command ?? Command).ToLower());
-            Helpfile.init();
-            ProgramList.init();
+            if (ZeroDayConditions.disabledCommands.Contains(command ?? Command))
+            {
+                ZeroDayConditions.disabledCommands.Add((command ?? Command).ToLower());
+                Helpfile.init();
+                ProgramList.init();
+            }
         }
 
         [HarmonyPatch(typeof(CommandManager), "RebuildAutoComplete")]

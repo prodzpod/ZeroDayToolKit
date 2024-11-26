@@ -3,9 +3,7 @@ using BepInEx;
 using BepInEx.Hacknet;
 using Pathfinder.Port;
 using Pathfinder.Replacements;
-using Pathfinder.Util.XML;
 using Pathfinder.Executable;
-using Pathfinder.Command;
 
 using ZeroDayToolKit.Executibles;
 using ZeroDayToolKit.Commands;
@@ -19,12 +17,9 @@ using System.Reflection;
 using System.Linq;
 using HarmonyLib;
 using ZeroDayToolKit.Patches;
-using Hacknet.Localization;
 using Hacknet;
-using Hacknet.Extensions;
 using System.Collections.Generic;
 using Hacknet.PlatformAPI.Storage;
-using BepInEx.Logging;
 
 namespace ZeroDayToolKit
 {
@@ -34,7 +29,7 @@ namespace ZeroDayToolKit
     {
         public const string ModGUID = "kr.o_r.prodzpod.zerodaytoolkit";
         public const string ModName = "ZeroDayToolKit";
-        public const string ModVer = "0.2.4";
+        public const string ModVer = "0.2.5";
         public new static ConfigFile Config;
         public static ZeroDayToolKit Instance;
         static public Random rnd;

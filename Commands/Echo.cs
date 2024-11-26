@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using Hacknet;
 
-using ZeroDayToolKit.Utils;
-
 namespace ZeroDayToolKit.Commands
 {
     public class Echo : ZeroDayCommand

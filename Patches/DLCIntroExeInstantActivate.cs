@@ -1,5 +1,4 @@
 ﻿using Hacknet;
-using Hacknet.Gui;
 using Microsoft.Xna.Framework;
 using System;
 using System.Reflection;

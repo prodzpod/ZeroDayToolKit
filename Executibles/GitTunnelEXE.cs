@@ -4,7 +4,6 @@ using Hacknet;
 using Hacknet.Gui;
 
 using ZeroDayToolKit.Utils;
-using System.Security.Policy;
 
 namespace ZeroDayToolKit.Executibles
 {

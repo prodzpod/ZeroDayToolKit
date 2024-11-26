@@ -4,7 +4,6 @@ using System.Xml;
 using System.Collections.Generic;
 using Hacknet;
 using Hacknet.Extensions;
-using ZeroDayToolKit.Conditions;
 
 namespace ZeroDayToolKit.TraceV2
 {

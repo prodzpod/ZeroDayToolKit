@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Pathfinder.GUI;
 using Pathfinder.Options;
-using System;
 
 namespace ZeroDayToolKit.Options
 {

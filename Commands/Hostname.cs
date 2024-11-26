@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using Hacknet;
-
-using ZeroDayToolKit.Utils;
+﻿using Hacknet;
 
 namespace ZeroDayToolKit.Commands
 {

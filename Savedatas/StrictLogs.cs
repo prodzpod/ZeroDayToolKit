@@ -3,14 +3,6 @@ using Pathfinder.Event.Saving;
 using Pathfinder.Meta.Load;
 using Pathfinder.Replacements;
 using Pathfinder.Util.XML;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using ZeroDayToolKit.Conditions;
 using ZeroDayToolKit.Patches;
 using ZeroDayToolKit.Utils;
 

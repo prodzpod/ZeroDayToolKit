@@ -1,5 +1,4 @@
 ﻿using Hacknet;
-using Pathfinder.Command;
 using Pathfinder.Util;
 
 namespace ZeroDayToolKit.Conditions
