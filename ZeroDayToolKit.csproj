@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -51,9 +53,6 @@
     <Reference Include="Mono.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
       <HintPath>libs\Mono.Cecil.dll</HintPath>
     </Reference>
-    <Reference Include="MonoMod.RuntimeDetour, Version=21.9.19.1, Culture=neutral, PublicKeyToken=null">
-      <HintPath>libs\MonoMod.RuntimeDetour.dll</HintPath>
-    </Reference>
     <Reference Include="MonoMod.Utils, Version=21.9.19.1, Culture=neutral, PublicKeyToken=null">
       <HintPath>libs\MonoMod.Utils.dll</HintPath>
     </Reference>
@@ -69,6 +68,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -122,6 +122,7 @@
     <Compile Include="Patches\ExtensionSequencerExeInstantActivate.cs" />
     <Compile Include="Patches\DLCIntroExeInstantActivate.cs" />
     <Compile Include="Locales\LocaleActivatorReadCustomGlobals.cs" />
+    <Compile Include="Patches\IME.cs" />
     <Compile Include="Patches\OptionsMenuSoundEffectVanillaScreen.cs" />
     <Compile Include="Patches\SequencerExeInstantActivate.cs" />
     <Compile Include="Patches\ShellOverloaderExeComshellTrap.cs" />
@@ -160,6 +161,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\MonoGame.Framework.DesktopGL.3.8.2.1105\build\MonoGame.Framework.DesktopGL.targets" Condition="Exists('packages\MonoGame.Framework.DesktopGL.3.8.2.1105\build\MonoGame.Framework.DesktopGL.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\MonoGame.Framework.DesktopGL.3.8.2.1105\build\MonoGame.Framework.DesktopGL.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\MonoGame.Framework.DesktopGL.3.8.2.1105\build\MonoGame.Framework.DesktopGL.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">

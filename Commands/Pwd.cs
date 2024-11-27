@@ -1,4 +1,5 @@
 ﻿using Hacknet;
+using ZeroDayToolKit.Patches;
 
 namespace ZeroDayToolKit.Commands
 {
