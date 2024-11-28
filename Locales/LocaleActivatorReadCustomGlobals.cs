@@ -14,25 +14,19 @@ namespace ZeroDayToolKit.Locales
     [HarmonyPatch(typeof(LocaleActivator), nameof(LocaleActivator.ActivateLocale))]
     public class LocaleActivatorReadCustomGlobals
     {
-        internal static void ILManipulator(ILContext il)
+        internal static void Postfix(string localeCode)
         {
-            var c = new ILCursor(il);
-            c.GotoNext(MoveType.After, x => x.MatchCall(AccessTools.Method(typeof(LocaleTerms), nameof(LocaleTerms.ReadInTerms))), x => x.MatchNop(), x => x.MatchNop(), x => x.MatchNop(), x => x.MatchNop());
-            c.Emit(OpCodes.Ldarg_0);
-            c.EmitDelegate<Action<string>>((localeCode) =>
+            if (Directory.Exists("locales/Custom"))
             {
-                if (Directory.Exists("locales/Custom"))
+                ExtensionLoaderReadCustomLocale.GlobalLocales.Clear();
+                ExtensionLoaderReadCustomLocale.LocaleKeys2.Clear();
+                foreach (var file in Directory.GetFiles("locales/Custom"))
                 {
-                    ExtensionLoaderReadCustomLocale.GlobalLocales.Clear();
-                    ExtensionLoaderReadCustomLocale.LocaleKeys2.Clear();
-                    foreach (var file in Directory.GetFiles("locales/Custom"))
-                    {
-                        Console.WriteLine("[ZeroDayToolKit] Reading Global Locale " + file);
-                        LocaleAddXmlFile(file, localeCode);
-                    }
-                    ExtensionLoaderReadCustomLocale.LocaleKeys2.Sort((a, b) => b.Length - a.Length);
+                    Console.WriteLine("[ZeroDayToolKit] Reading Global Locale " + file);
+                    LocaleAddXmlFile(file, localeCode);
                 }
-            });
+                ExtensionLoaderReadCustomLocale.LocaleKeys2.Sort((a, b) => b.Length - a.Length);
+            }
         }
 
         public static bool LocaleAddXmlFile(string file, string localeCode, bool toExtension = false)

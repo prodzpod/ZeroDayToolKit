@@ -10,11 +10,9 @@ namespace ZeroDayToolKit.Conditions
         [XMLStorage]
         public string Word = "";
 
-        public override bool Check(object os_obj)
+        public override bool Filter(string msg)
         {
-            if (!base.Check(os_obj)) return false;
-            OS os = (OS)os_obj;
-            return checkForWord(os.terminal.lastRunCommand, word ?? Word);
+            return checkForWord(msg, word ?? Word);
         }
     }
 }

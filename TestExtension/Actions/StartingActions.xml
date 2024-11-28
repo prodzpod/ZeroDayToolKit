@@ -12,26 +12,8 @@
   </Instantly>
   
   <OnConnect target="test">
-	<ResetIRCDelay target="test" />
 	<SaveGame DelayHost="test" Delay="0.0"/>
-	<AddIRCMessage Author="guy" TargetComp="test" Delay="0.0">yo</AddIRCMessage>
-	<AddIRCMessage Author="guy" TargetComp="test" Delay="1.0">i need your help</AddIRCMessage>
-	<AddIRCMessage Author="guy" TargetComp="test" Delay="2.0">you in?</AddIRCMessage>
+  <AddConditionalActions Filepath="Actions/1.xml" />
   </OnConnect>
-  
-  <OnIRCMessageTone doesNotHaveFlags="saidYes" target="test" minDelay="1.0" tone="yes">
-	<RunFunction FunctionName="addFlags:saidYes"/>
-	<AddIRCMessage Author="guy" TargetComp="test" Delay="1.0">thanks bro</AddIRCMessage>
-	<AddIRCMessage Author="guy" TargetComp="test" Delay="2.0">i count on you 괅몕 한글패치테스트ㅋ</AddIRCMessage>
-	<AddIRCMessage Author="guy" TargetComp="test" Delay="3.0">!ATTACHMENT:link#%#Test Gateway#%#5.6.7.8</AddIRCMessage>
-	<AddIRCMessage Author="guy" TargetComp="test" Delay="4.0">!ATTACHMENT:note#%#Trace V2 Tutorial#%#1. Trace V2 will activate when you try to hack any of their devices.
-2. Your goal is to get to the network's mainframe, and crash it.
-3. When the mainframe is rebooted, you will be disconnected from the network. make sure to remove all logs before it happens.</AddIRCMessage>
-  </OnIRCMessageTone>
-  
-  <OnIRCMessageTone doesNotHaveFlags="saidYes" target="test" minDelay="1.0" tone="no">
-	<AddIRCMessage Author="guy" TargetComp="test" Delay="1.0">aw man</AddIRCMessage>
-	<AddIRCMessage Author="guy" TargetComp="test" Delay="2.0">tell me when ur ready</AddIRCMessage>
-  </OnIRCMessageTone>
 
 </ConditionalActions>

@@ -29,6 +29,7 @@ namespace ZeroDayToolKit.Commands
                 }
             }
             string user = c.currentUser.name;
+            SCOnIRCMessageAny.lastChatMessage = msg;
             if (user == null) user = os.SaveUserAccountName;
             irc.AddLog(user, msg);
         }

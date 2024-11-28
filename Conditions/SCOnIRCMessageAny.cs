@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Configuration;
 using Hacknet;
 using Hacknet.Daemons.Helpers;
 using Pathfinder.Util;
@@ -39,6 +40,8 @@ namespace ZeroDayToolKit.Conditions
         [XMLStorage]
         public string DoesNotHaveFlags = null;
 
+        public static string lastChatMessage = "";
+
         public override bool Check(object os_obj)
         {
             var target = this.target ?? Target;
@@ -64,9 +67,13 @@ namespace ZeroDayToolKit.Conditions
             }
             IRCSystem irc = ComUtils.getIRC(c);
             if (irc == null) return false;
-            string[] args = os.terminal.lastRunCommand.Split(Hacknet.Utils.WhitespaceDelim, StringSplitOptions.RemoveEmptyEntries);
-            return args[0] == "/";
+            if (string.IsNullOrWhiteSpace(lastChatMessage)) return false;
+            var ret = Filter(lastChatMessage);
+            if (ret) lastChatMessage = "";
+            return ret;
         }
+
+        public virtual bool Filter(string msg) => true;
 
         public static bool checkForWord(string msg, string parse)
         {

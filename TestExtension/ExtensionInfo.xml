@@ -1,6 +1,6 @@
 <HacknetExtension>
   <!-- Max name length is 128 characters -->
-	<Language>ko-kr</Language>
+	<Language>dynamic</Language>
 	<Name>TEST</Name>
 	<AllowSaves>true</AllowSaves>
   

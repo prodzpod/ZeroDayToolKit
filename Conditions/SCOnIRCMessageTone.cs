@@ -12,11 +12,8 @@ namespace ZeroDayToolKit.Conditions
         [XMLStorage]
         public string Tone = "";
 
-        public override bool Check(object os_obj)
+        public override bool Filter(string msg)
         {
-            if (!base.Check(os_obj)) return false;
-            OS os = (OS)os_obj;
-            string msg = os.terminal.lastRunCommand;
             #region tone detection
             var t = tone ?? Tone;
             foreach (var term in LocaleTerms.ActiveTerms.Where(x => x.Key.StartsWith("0dtk::tone_")))

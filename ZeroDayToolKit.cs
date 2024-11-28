@@ -29,7 +29,7 @@ namespace ZeroDayToolKit
     {
         public const string ModGUID = "kr.o_r.prodzpod.zerodaytoolkit";
         public const string ModName = "ZeroDayToolKit";
-        public const string ModVer = "0.2.6";
+        public const string ModVer = "0.2.7";
         public new static ConfigFile Config;
         public static ZeroDayToolKit Instance;
         static public Random rnd;
@@ -160,6 +160,7 @@ namespace ZeroDayToolKit
             TrackerCheckLogs.stricts = new List<Computer>();
             ExtensionSequencerExeInstantActivate.queue = new List<ExtensionSequencerExe>();
             SequencerExeInstantActivate.queue = new List<SequencerExe>();
+            SCOnIRCMessageAny.lastChatMessage = "";
         }
     }
 }

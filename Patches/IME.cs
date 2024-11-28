@@ -20,7 +20,7 @@ namespace ZeroDayToolKit.Patches
             {
                 var ch = buffer[i];
                 // todo: filter better
-                return false;
+                return !(ch >= ' ');
             });
         }
     }

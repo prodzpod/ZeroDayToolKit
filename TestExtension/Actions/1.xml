@@ -1,0 +1,26 @@
+<ConditionalActions>
+  
+  <Instantly>
+    <ResetIRCDelay target="test" />
+    <AddIRCMessage Author="guy" TargetComp="test" Delay="0.0">test</AddIRCMessage>
+    <AddIRCMessage Author="guy" TargetComp="test" Delay="1.0">test2</AddIRCMessage>
+    <RunFunction FunctionName="addFlags:f1ready" DelayHost="test" Delay="1.0"/>
+  </Instantly>
+  
+  <OnIRCMessageTone requiredFlags="f1ready" doesNotHaveFlags="f1done" target="test" minDelay="1.0" tone="yes">
+	<ResetIRCDelay target="test" />
+	<RunFunction FunctionName="addFlags:f1done"/>
+	<AddIRCMessage Author="guy" TargetComp="test" Delay="0.0">yes 1</AddIRCMessage>
+	<AddIRCMessage Author="guy" TargetComp="test" Delay="1.0">test3</AddIRCMessage>
+  <AddConditionalActions Filepath="Actions/2.xml" DelayHost="test" Delay="1.0"/>
+  </OnIRCMessageTone>
+  
+  <OnIRCMessageTone requiredFlags="f1ready" doesNotHaveFlags="f1done" target="test" minDelay="1.0" tone="no">
+	<ResetIRCDelay target="test" />
+	<RunFunction FunctionName="addFlags:f1done"/>
+	<AddIRCMessage Author="guy" TargetComp="test" Delay="0.0">no 1</AddIRCMessage>
+	<AddIRCMessage Author="guy" TargetComp="test" Delay="1.0">test3</AddIRCMessage>
+  <AddConditionalActions Filepath="Actions/2.xml" DelayHost="test" Delay="1.0"/>
+  </OnIRCMessageTone>
+
+</ConditionalActions>

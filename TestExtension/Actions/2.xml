@@ -1,0 +1,22 @@
+<ConditionalActions>
+  
+  <Instantly>
+    <ResetIRCDelay target="test" />
+    <AddIRCMessage Author="guy" TargetComp="test" Delay="0.0">test3</AddIRCMessage>
+    <AddIRCMessage Author="guy" TargetComp="test" Delay="1.0">test4</AddIRCMessage>
+    <RunFunction FunctionName="addFlags:f2ready" DelayHost="test" Delay="1.0"/>
+  </Instantly>
+  
+  <OnIRCMessageTone requiredFlags="f2ready" doesNotHaveFlags="f2done" target="test" minDelay="1.0" tone="yes">
+	<ResetIRCDelay target="test" />
+	<RunFunction FunctionName="addFlags:f2done"/>
+	<AddIRCMessage Author="guy" TargetComp="test" Delay="0.0">yes 2</AddIRCMessage>
+  </OnIRCMessageTone>
+  
+  <OnIRCMessageTone requiredFlags="f2ready" doesNotHaveFlags="f2done" target="test" minDelay="1.0" tone="no">
+	<ResetIRCDelay target="test" />
+	<RunFunction FunctionName="addFlags:f2done"/>
+	<AddIRCMessage Author="guy" TargetComp="test" Delay="0.0">no 2</AddIRCMessage>
+  </OnIRCMessageTone>
+
+</ConditionalActions>
