@@ -142,8 +142,6 @@ See [This Video](https://youtu.be/uQaObgut0p0) for a visual showcase of Trace V2
 
 ## New Extension Conditions
 - `<OnFileCreation [target="computer_id" path="path" name="string" content="string"]>` / `<OnFileDeletion [target="computer_id" path="path" name="string" content="string"]>`: Triggered when a specific file is created or deleted on an OS.
-
-The Following conditions are meant to be used alongside the TraceV2 system. see below for more information.
 - `<OnCrash [requiredFlags="string" doesNotHaveFlags="string" targetComp="computer_id" targetNetwork="network_id"]>`: When that OS or Network's "Head" has crashed due to `ForkBomb` and such. Defaults to the current OS/Network if written within a `TraceV2` or `Computer` tag.
 - `<OnReboot [requiredFlags="string" doesNotHaveFlags="string" targetComp="computer_id" targetNetwork="network_id"]>`: When that OS or Network's "Head" has rebooted after a crash.
 - `<OnRebootCompleted [requiredFlags="string" doesNotHaveFlags="string" targetNetwork="network_id" RequireLogsOnSource="bool" RequireSourceIntact="bool"]`: When that Network has finished its Retrace timer. only fires `RequireLogsOnSource` if any of the Network's devices have logs on them, and only fires `RequireSourceIntact` if `sys/netcfgx.dll` is still on any of the devices.
