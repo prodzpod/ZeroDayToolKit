@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Configuration;
 using Hacknet;
 using Hacknet.Daemons.Helpers;
 using Pathfinder.Util;

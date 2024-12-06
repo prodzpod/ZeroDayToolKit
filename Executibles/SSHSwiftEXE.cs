@@ -22,7 +22,7 @@ namespace ZeroDayToolKit.Executibles
         public override void Draw(float t)
         {
             TextItem.doFontLabel(new Vector2(bounds.X + 2, bounds.Y + 14), LocaleTerms.Loc(done ? "And done." : "Sit back and watch it go."), GuiData.UITinyfont, new Color?(Hacknet.Utils.AddativeWhite * 0.8f * fade), bounds.Width - 6);
-            Rectangle source = new Rectangle(0, 0, Bounds.Width / WIDTH - 4, Bounds.Height / HEIGHT - 8);
+            Rectangle source = new(0, 0, Bounds.Width / WIDTH - 4, Bounds.Height / HEIGHT - 8);
             for (int x = 0; x < WIDTH; x++)
             {
                 source.X = Bounds.X + 4 + (x * (Bounds.Width - 4) / WIDTH);

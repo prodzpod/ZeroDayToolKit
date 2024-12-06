@@ -1,4 +1,5 @@
 ﻿using Hacknet;
+using ZeroDayToolKit.Conditions;
 using ZeroDayToolKit.Patches;
 
 namespace ZeroDayToolKit.Commands
@@ -7,11 +8,12 @@ namespace ZeroDayToolKit.Commands
     {
         public static new void Trigger(OS os, string[] args)
         {
-            if (args.Length < 2) { os.validCommand = false; os.write("Usage: hostname [-i]"); }
+            if (args.Length < 2) { os.validCommand = false; os.write("Usage: man [command]"); }
             else
             {
-                var cmd = args[1].ToLower();
-                if (BetterHelp.Descriptions.ContainsKey(cmd)) os.write("Usage: " + cmd + " " + BetterHelp.Usages[cmd] + "\n  " + BetterHelp.Descriptions[cmd]);
+                var cmd = args[1].ToLower(); var _cmd = cmd;
+                if (ZeroDayConditions.defaultAliases.ContainsKey(cmd)) cmd = ZeroDayConditions.defaultAliases[cmd];
+                if (BetterHelp.Descriptions.ContainsKey(cmd)) os.write("Usage: " + _cmd + " " + BetterHelp.Usages[cmd] + "\n  " + BetterHelp.Descriptions[cmd]);
                 else
                 {
                     os.validCommand = false; 

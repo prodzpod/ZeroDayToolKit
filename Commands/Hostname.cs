@@ -1,4 +1,5 @@
 ﻿using Hacknet;
+using ZeroDayToolKit.Utils;
 
 namespace ZeroDayToolKit.Commands
 {
@@ -6,7 +7,7 @@ namespace ZeroDayToolKit.Commands
     {
         public static new void Trigger(OS os, string[] args)
         {
-            var c = os.connectedComp ?? os.thisComputer;
+            var c = ComUtils.getComputer(os);
             if (args.Length > 1 && args[1] == "-i") os.write(c.ip);
             else os.write(c.name);
         }

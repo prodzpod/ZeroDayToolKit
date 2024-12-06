@@ -9,8 +9,10 @@ namespace ZeroDayToolKit.Commands
         public bool isTail = false;
         public static Action<OS, string[]> generate(bool isTail)
         {
-            Catlike ret = new Catlike();
-            ret.isTail = isTail;
+            Catlike ret = new()
+            {
+                isTail = isTail
+            };
             return ret.Trigger;
         }
         public new void Trigger(OS os, string[] args)

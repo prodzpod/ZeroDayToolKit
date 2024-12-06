@@ -10,7 +10,7 @@ namespace ZeroDayToolKit.Utils
         public static XElement Path(this SaveEvent e, string _path, Func<XElement, bool> fn = null)
         {
             if (_path.StartsWith("HacknetSave.")) _path = _path.Substring("HacknetSave.".Length);
-            if (fn == null) fn = x => true;
+            fn ??= x => true;
             string[] path = _path.Split('.');
             return loop(e.Save, path, fn);
         }

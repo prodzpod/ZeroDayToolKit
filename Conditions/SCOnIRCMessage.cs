@@ -1,5 +1,4 @@
-﻿using Hacknet;
-using Pathfinder.Util;
+﻿using Pathfinder.Util;
 
 namespace ZeroDayToolKit.Conditions
 {
@@ -12,6 +11,7 @@ namespace ZeroDayToolKit.Conditions
 
         public override bool Filter(string msg)
         {
+            if (string.IsNullOrWhiteSpace(word ?? Word)) return true;
             return checkForWord(msg, word ?? Word);
         }
     }

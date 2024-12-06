@@ -21,7 +21,7 @@ namespace ZeroDayToolKit.Locales
             input.Close();
             if (replMe.Contains("Language=\"dynamic\""))
             {
-                StringBuilder res = new StringBuilder("", replMe.Length);
+                StringBuilder res = new("", replMe.Length);
                 bool mode = false;
                 string key = "";
                 for (var i = 0; i < replMe.Length; i++)
@@ -125,9 +125,9 @@ namespace ZeroDayToolKit.Locales
     {
         static void ILManipulator(ILContext il)
         {
-            ILCursor c = new ILCursor(il);
-            if (c.TryGotoNext(x => x.MatchLdstr("Port#: {0}")) && c.TryGotoNext(x => x.MatchStloc(out _))) c.EmitDelegate<Func<string, string>>(a => XmlReaderSettingsLocalizeExtensions.localizeThis(a));
-            if (c.TryGotoNext(x => x.MatchLdstr(" - ")) && c.TryGotoNext(x => x.MatchStloc(out _))) c.EmitDelegate<Func<string, string>>(a => XmlReaderSettingsLocalizeExtensions.localizeThis(a));
+            ILCursor c = new(il);
+            if (c.TryGotoNext(x => x.MatchLdstr("Port#: {0}")) && c.TryGotoNext(x => x.MatchStloc(out _))) c.EmitDelegate<Func<string, string>>(XmlReaderSettingsLocalizeExtensions.localizeThis);
+            if (c.TryGotoNext(x => x.MatchLdstr(" - ")) && c.TryGotoNext(x => x.MatchStloc(out _))) c.EmitDelegate<Func<string, string>>(XmlReaderSettingsLocalizeExtensions.localizeThis);
         }
 
         static MethodBase TargetMethod()

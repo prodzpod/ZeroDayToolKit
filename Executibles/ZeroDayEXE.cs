@@ -59,12 +59,18 @@ namespace ZeroDayToolKit.Executibles
             if (!done && life >= runTime)
             {
                 done = true;
-                Programs.getComputer(os, targetIP).openPort(port, os.thisComputer.ip);
+                Completed();
                 foreach (string line in endMessage.Split('\n')) os.write(line);
             }
             else if (!isExiting && life >= (runTime + exitTime)) isExiting = true;
             incrementLife(t);
             base.Update(t);
+        }
+
+        public override void Completed()
+        {
+            base.Completed();
+            Programs.getComputer(os, targetIP).openPort(port, os.thisComputer.ip);
         }
 
         public virtual void incrementLife(float t)

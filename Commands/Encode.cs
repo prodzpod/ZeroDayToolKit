@@ -13,10 +13,12 @@ namespace ZeroDayToolKit.Commands
         public Func<string, string> func;
         public static Action<OS, string[]> generate(string name, Func<string, string> func, string ext = "_ENCODED.txt")
         {
-            Encode encode = new Encode();
-            encode.func = func;
-            encode.name = name;
-            encode.ext = ext;
+            Encode encode = new()
+            {
+                func = func,
+                name = name,
+                ext = ext
+            };
             return encode.Trigger;
         }
 

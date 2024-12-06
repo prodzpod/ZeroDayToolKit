@@ -13,10 +13,12 @@ namespace ZeroDayToolKit.Commands
         public Func<string, string> func;
         public static Action<OS, string[]> generate(string name, Func<string, string> func, string ext = "_DECODED[EXT]")
         {
-            Decode decode = new Decode();
-            decode.func = func;
-            decode.name = name;
-            decode.ext = ext;
+            Decode decode = new()
+            {
+                func = func,
+                name = name,
+                ext = ext
+            };
             return decode.Trigger;
         }
 

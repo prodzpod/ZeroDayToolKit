@@ -13,7 +13,7 @@ namespace ZeroDayToolKit.Patches
         {
             static MethodBase TargetMethod()
             {
-                return typeof(DLCIntroExe).GetConstructor(new Type[] { typeof(Rectangle), typeof(OS), typeof(string[]) });
+                return typeof(DLCIntroExe).GetConstructor([typeof(Rectangle), typeof(OS), typeof(string[])]);
             }
 
             static void Postfix(DLCIntroExe __instance, Rectangle location, OS operatingSystem, string[] p)

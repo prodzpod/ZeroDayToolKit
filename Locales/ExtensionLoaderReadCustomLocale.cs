@@ -9,10 +9,10 @@ namespace ZeroDayToolKit.Locales
     [HarmonyLib.HarmonyPatch(typeof(ExtensionLoader), nameof(ExtensionLoader.LoadNewExtensionSession))]
     public class ExtensionLoaderReadCustomLocale
     {
-        public static List<string> LocaleKeys = new List<string>();
-        public static List<string> LocaleKeys2 = new List<string>();
-        public static Dictionary<string, string> GlobalLocales = new Dictionary<string, string>();
-        public static Dictionary<string, string> ExtensionLocales = new Dictionary<string, string>();
+        public static List<string> LocaleKeys = [];
+        public static List<string> LocaleKeys2 = [];
+        public static Dictionary<string, string> GlobalLocales = [];
+        public static Dictionary<string, string> ExtensionLocales = [];
         static void Prefix(ref ExtensionInfo info, object os_obj)
         {
             OS os = (OS)os_obj;

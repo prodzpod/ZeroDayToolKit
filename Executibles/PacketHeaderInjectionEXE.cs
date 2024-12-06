@@ -19,7 +19,7 @@ namespace ZeroDayToolKit.Executibles
             int bound = (int)(120f * (1f - (temp * temp))) + 1;
             float unitWidth = Bounds.Width / bound;
             float unitHeight = Bounds.Height - 14;
-            Vector2 pre = new Vector2(Bounds.X, Bounds.Y + 14f + (flip ? (offset * unitHeight) : ((1 - offset) * unitHeight)));
+            Vector2 pre = new(Bounds.X, Bounds.Y + 14f + (flip ? (offset * unitHeight) : ((1 - offset) * unitHeight)));
             Vector2 post;
             for (int i = 0; i < bound; i++)
             {

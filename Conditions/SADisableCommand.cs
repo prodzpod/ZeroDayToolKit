@@ -2,6 +2,8 @@
 using HarmonyLib;
 using Pathfinder.Command;
 using Pathfinder.Util;
+using System.Linq;
+using ZeroDayToolKit.Commands;
 
 namespace ZeroDayToolKit.Conditions
 {
@@ -14,9 +16,12 @@ namespace ZeroDayToolKit.Conditions
 
         public override void Trigger(OS os)
         {
-            if (ZeroDayConditions.disabledCommands.Contains(command ?? Command))
+            var c = (command ?? Command).Trim();
+            if (ZeroDayConditions.defaultAliases.ContainsKey(c)) c = ZeroDayConditions.defaultAliases[c].Split(' ')[0];
+            ZeroDayToolKit.Instance.Log.LogInfo("Disabling Command: " + c);
+            if (!ZeroDayConditions.disabledCommands.Contains(c))
             {
-                ZeroDayConditions.disabledCommands.Add((command ?? Command).ToLower());
+                ZeroDayConditions.disabledCommands.Add(c);
                 Helpfile.init();
                 ProgramList.init();
             }
@@ -28,6 +33,9 @@ namespace ZeroDayToolKit.Conditions
             public static void PostFix()
             {
                 foreach (var command in ZeroDayConditions.disabledCommands) ProgramList.programs.Remove(command);
+                foreach (var alias in ZeroDayConditions.aliases)
+                    if (ZeroDayConditions.disabledCommands.All(x => Alias.FindAlias(alias.Value, x) == -1))
+                        ProgramList.programs.Add(alias.Key);
             }
         }
     }

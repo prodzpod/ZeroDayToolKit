@@ -12,9 +12,14 @@ namespace ZeroDayToolKit.Conditions
 
         public override void Trigger(OS os)
         {
-            ZeroDayConditions.disabledCommands.Remove((command ?? Command).ToLower());
-            Helpfile.init();
-            ProgramList.init();
+            var c = (command ?? Command).Trim();
+            if (ZeroDayConditions.defaultAliases.ContainsKey(c)) c = ZeroDayConditions.defaultAliases[c].Split(' ')[0];
+            ZeroDayToolKit.Instance.Log.LogInfo("Enabling Command: " + c);
+            if (ZeroDayConditions.disabledCommands.Remove(c))
+            {
+                Helpfile.init();
+                ProgramList.init();
+            }
         }
     }
 }

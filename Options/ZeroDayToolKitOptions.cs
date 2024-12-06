@@ -9,7 +9,7 @@ namespace ZeroDayToolKit.Options
     public static class ZeroDayToolKitOptions
     {
         public const string OPTION_TAG = "ZeroDayToolKit";
-        internal static OptionSlider SFXVolume = new OptionSlider("Sound Effect Volume", "");
+        internal static OptionSlider SFXVolume = new("Sound Effect Volume", "");
         public static void Initialize()
         {
             OptionsManager.AddOption(OPTION_TAG, SFXVolume);

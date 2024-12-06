@@ -3,6 +3,8 @@ using Hacknet.Input;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace ZeroDayToolKit.Patches
 {
@@ -11,7 +13,7 @@ namespace ZeroDayToolKit.Patches
     {
         public static void ILManipulator(ILContext il)
         {
-            ILCursor c = new ILCursor(il);
+            ILCursor c = new(il);
             c.GotoNext(x => x.MatchBrtrue(out _));
             c.Emit(OpCodes.Pop);
             c.Emit(OpCodes.Ldloc, 1);
@@ -24,4 +26,14 @@ namespace ZeroDayToolKit.Patches
             });
         }
     }
+    [HarmonyLib.HarmonyPatch(typeof(TextInputHook), nameof(TextInputHook.OnTextInput))]
+    public class IMESpecialKeyCheck
+    {
+        public static bool Prefix(char c)
+        {
+            if (c == '\u007F') return false;
+            return true;
+        }
+    }
+
 }

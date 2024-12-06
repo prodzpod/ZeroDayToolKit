@@ -1,7 +1,6 @@
 ﻿using Hacknet;
 using Hacknet.Extensions;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -9,14 +8,14 @@ namespace ZeroDayToolKit.Patches
 {
     public class ExtensionSequencerExeInstantActivate
     {
-        public static List<ExtensionSequencerExe> queue = new List<ExtensionSequencerExe>();
+        public static List<ExtensionSequencerExe> queue = [];
 
         [HarmonyLib.HarmonyPatch]
         public class PatchConstructor
         {
             static MethodBase TargetMethod()
             {
-                return typeof(ExtensionSequencerExe).GetConstructor(new Type[] { typeof(Rectangle), typeof(OS), typeof(string[]) });
+                return typeof(ExtensionSequencerExe).GetConstructor([typeof(Rectangle), typeof(OS), typeof(string[])]);
             }
 
             static void Postfix(ExtensionSequencerExe __instance, Rectangle location, OS operatingSystem, string[] p)

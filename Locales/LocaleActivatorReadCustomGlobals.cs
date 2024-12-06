@@ -2,8 +2,6 @@
 using Hacknet.Gui;
 using Hacknet.Localization;
 using HarmonyLib;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
 using System;
 using System.IO;
 using System.Linq;
@@ -81,7 +79,7 @@ namespace ZeroDayToolKit.Locales
         {
             public static void Prefix(ref string[] text)
             {
-                text = text.Select(x => XmlReaderSettingsLocalizeExtensions.localizeThis(x)).ToArray();
+                text = text.Select(XmlReaderSettingsLocalizeExtensions.localizeThis).ToArray();
             }
         }
     }

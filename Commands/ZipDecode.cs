@@ -37,7 +37,7 @@ namespace ZeroDayToolKit.Commands
 
         public static void unzipFolder(OS os, Computer c, Folder source, string[] zip)
         {
-            Folder folder = new Folder(ComUtils.getNoDupeFileName(zip[0], os));
+            Folder folder = new(ComUtils.getNoDupeFileName(zip[0], os));
             string idLog = "@" + (int)OS.currentElapsedTime;
             c.files.root.searchForFolder("log").files.Add(new FileEntry(idLog + " FolderCreated: by " + os.thisComputer.ip + " - folder:" + folder.name, idLog + "_FolderCreated:_by_" + os.thisComputer.ip + "_-_folder:" + folder.name));
             os.write("Unzipping " + folder.name);
@@ -47,9 +47,11 @@ namespace ZeroDayToolKit.Commands
                 if (zip[i].Contains(DELIM)) 
                 {
                     string[] q = zip[i].Split(new[] { DELIM }, System.StringSplitOptions.None);
-                    FileEntry file = new FileEntry();
-                    file.name = ComUtils.getNoDupeFileName(q[0], os);
-                    file.data = MathUtils.decodeZip(q[1]);
+                    FileEntry file = new()
+                    {
+                        name = ComUtils.getNoDupeFileName(q[0], os),
+                        data = MathUtils.decodeZip(q[1])
+                    };
                     idLog = "@" + (int)OS.currentElapsedTime;
                     c.files.root.searchForFolder("log").files.Add(new FileEntry(idLog + " FileCreated: by " + os.thisComputer.ip + " - file:" + file.name, idLog + "_FileCreated:_by_" + os.thisComputer.ip + "_-_file:" + file.name));
                     os.write("Unzipping " + file.name);

@@ -7,10 +7,10 @@ namespace ZeroDayToolKit.TraceV2
 {
     public class Network
     {
-        public static Dictionary<string, Network> networks = new Dictionary<string, Network>();
-        public static Dictionary<string, List<string>> postLoadComputerCache = new Dictionary<string, List<string>>();
-        public static List<AfterCompleteTrigger> afterCompleteTriggers = new List<AfterCompleteTrigger>();
-        public static TraceV2Tracker tracker = new TraceV2Tracker();
+        public static Dictionary<string, Network> networks = [];
+        public static Dictionary<string, List<string>> postLoadComputerCache = [];
+        public static List<AfterCompleteTrigger> afterCompleteTriggers = [];
+        public static TraceV2Tracker tracker = new();
         public static Computer recentHostileActionTaken = null;
         public static Computer recentReboot = null;
         public static Computer recentCrash = null;
@@ -18,7 +18,7 @@ namespace ZeroDayToolKit.TraceV2
         public static int connections = 0;
 
         public Computer head;
-        public List<Computer> tail = new List<Computer>();
+        public List<Computer> tail = [];
         public float traceTime = -1;
         public float rebootTime = -1;
         public NetworkTrigger onStart;

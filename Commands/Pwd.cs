@@ -1,5 +1,5 @@
 ﻿using Hacknet;
-using ZeroDayToolKit.Patches;
+using ZeroDayToolKit.Utils;
 
 namespace ZeroDayToolKit.Commands
 {
@@ -7,7 +7,7 @@ namespace ZeroDayToolKit.Commands
     {
         public static new void Trigger(OS os, string[] args)
         {
-            Folder f = (os.connectedComp ?? os.thisComputer).files.root;
+            Folder f = ComUtils.getComputer(os).files.root;
             string ret = "";
             for (int i = 0; i < os.navigationPath.Count; i++)
             {

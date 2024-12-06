@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Xml;
-using System.Collections.Generic;
 using Hacknet;
 using Hacknet.Extensions;
 
@@ -25,13 +24,13 @@ namespace ZeroDayToolKit.TraceV2
                         rdr.Read();
                         if (rdr.EOF) return;
                     }
-                    Network network = new Network();
+                    Network network = new();
                     string name;
                     if (rdr.MoveToAttribute("name"))
                     {
                         name = rdr.ReadContentAsString();
                         Network.networks[name] = network;
-                        Network.postLoadComputerCache[name] = new List<string>();
+                        Network.postLoadComputerCache[name] = [];
                     }
                     else return;
                     if (rdr.MoveToAttribute("head")) Network.postLoadComputerCache[name].Add(rdr.ReadContentAsString());
@@ -44,8 +43,10 @@ namespace ZeroDayToolKit.TraceV2
                         if (rdr.Name.ToLower().Equals("computer") && rdr.MoveToAttribute("name")) Network.postLoadComputerCache[name].Add(rdr.ReadContentAsString());
                         if (rdr.Name.ToLower().Equals("onstart") && rdr.MoveToAttribute("action"))
                         {
-                            NetworkTrigger onStart = new NetworkTrigger();
-                            onStart.action = rdr.ReadContentAsString();
+                            NetworkTrigger onStart = new()
+                            {
+                                action = rdr.ReadContentAsString()
+                            };
                             if (rdr.MoveToAttribute("RequireLogsOnSource")) onStart.requireLogs = rdr.ReadContentAsBoolean();
                             if (rdr.MoveToAttribute("RequireSourceIntact")) onStart.sourceIntact = rdr.ReadContentAsBoolean();
                             if (rdr.MoveToAttribute("DelayHost")) onStart.delayHost = rdr.ReadContentAsString();
@@ -54,8 +55,10 @@ namespace ZeroDayToolKit.TraceV2
                         }
                         if (rdr.Name.ToLower().Equals("oncrash") && rdr.MoveToAttribute("action"))
                         {
-                            NetworkTrigger onCrash = new NetworkTrigger();
-                            onCrash.action = rdr.ReadContentAsString();
+                            NetworkTrigger onCrash = new()
+                            {
+                                action = rdr.ReadContentAsString()
+                            };
                             if (rdr.MoveToAttribute("RequireLogsOnSource")) onCrash.requireLogs = rdr.ReadContentAsBoolean();
                             if (rdr.MoveToAttribute("RequireSourceIntact")) onCrash.sourceIntact = rdr.ReadContentAsBoolean();
                             if (rdr.MoveToAttribute("DelayHost")) onCrash.delayHost = rdr.ReadContentAsString();
@@ -64,8 +67,10 @@ namespace ZeroDayToolKit.TraceV2
                         }
                         if (rdr.Name.ToLower().Equals("oncomplete") && rdr.MoveToAttribute("action"))
                         {
-                            NetworkTrigger onComplete = new NetworkTrigger();
-                            onComplete.action = rdr.ReadContentAsString();
+                            NetworkTrigger onComplete = new()
+                            {
+                                action = rdr.ReadContentAsString()
+                            };
                             if (rdr.MoveToAttribute("RequireLogsOnSource")) onComplete.requireLogs = rdr.ReadContentAsBoolean();
                             if (rdr.MoveToAttribute("RequireSourceIntact")) onComplete.sourceIntact = rdr.ReadContentAsBoolean();
                             if (rdr.MoveToAttribute("DelayHost")) onComplete.delayHost = rdr.ReadContentAsString();
@@ -74,8 +79,10 @@ namespace ZeroDayToolKit.TraceV2
                         }
                         if (rdr.Name.ToLower().Equals("aftercomplete") && rdr.MoveToAttribute("action"))
                         {
-                            AfterCompleteTrigger afterComplete = new AfterCompleteTrigger();
-                            afterComplete.action = rdr.ReadContentAsString();
+                            AfterCompleteTrigger afterComplete = new()
+                            {
+                                action = rdr.ReadContentAsString()
+                            };
                             if (rdr.MoveToAttribute("RequireLogsOnSource")) afterComplete.requireLogs = rdr.ReadContentAsBoolean();
                             if (rdr.MoveToAttribute("RequireSourceIntact")) afterComplete.sourceIntact = rdr.ReadContentAsBoolean();
                             if (rdr.MoveToAttribute("DelayHost")) afterComplete.delayHost = rdr.ReadContentAsString();

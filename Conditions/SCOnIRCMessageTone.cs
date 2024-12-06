@@ -1,5 +1,4 @@
 ﻿using Hacknet;
-using Hacknet.Localization;
 using Pathfinder.Util;
 using System.Linq;
 

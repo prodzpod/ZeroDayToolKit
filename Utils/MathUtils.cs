@@ -72,7 +72,7 @@ namespace ZeroDayToolKit.Utils
         public static string decodeZip(string txt)
         {
             if ((txt.Length % 8) != 0) return null;
-            List<byte> binary = new List<byte>();
+            List<byte> binary = [];
             try
             {
                 for (int i = 0; i < txt.Length; i += 8) binary.Add(Convert.ToByte(txt.Substring(i, 8), 2));

@@ -27,10 +27,12 @@ namespace ZeroDayToolKit.TraceV2
             Console.WriteLine("Something Triggered");
             if (requireLogs && !Network.doesNetworkHaveLogsLeft(os, network)) return;
             if (sourceIntact && !Network.doesNetworkHaveSourceIntact(os, network)) return;
-            SAAddConditionalActions action = new SAAddConditionalActions();
-            action.Filepath = this.action;
-            action.DelayHost = delayHost ?? source.idName;
-            action.Delay = delay;
+            SAAddConditionalActions action = new()
+            {
+                Filepath = this.action,
+                DelayHost = delayHost ?? source.idName,
+                Delay = delay
+            };
             DelayableActionSystem.FindDelayableActionSystemOnComputer(Programs.getComputer(os, delayHost)).AddAction(action, delay);
         }
     }

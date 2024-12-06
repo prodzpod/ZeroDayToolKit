@@ -23,7 +23,7 @@ namespace ZeroDayToolKit.TraceV2
         public SoundEffect BreakSound;
         public Color color;
         public string prefix;
-        public List<TraceKillExe.PointImpactEffect> ImpactEffects = new List<TraceKillExe.PointImpactEffect>();
+        public List<TraceKillExe.PointImpactEffect> ImpactEffects = [];
         public Texture2D circle;
 
         public void Start(OS os, Network network, Computer source)
@@ -121,7 +121,7 @@ namespace ZeroDayToolKit.TraceV2
                 network.afterComplete.Start(os, network, source);
                 Network.afterCompleteTriggers.Add(network.afterComplete);
             }
-            if (network.tail.Contains(os.connectedComp)) Programs.disconnect(new string[0], os);
+            if (network.tail.Contains(os.connectedComp)) Programs.disconnect([], os);
             Stop();
         }
 
@@ -131,7 +131,7 @@ namespace ZeroDayToolKit.TraceV2
             if (active == 0) return;
             string text = (timer / startTimer * 100.0).ToString("00.00");
             Vector2 vector2 = TraceTracker.font.MeasureString(text);
-            Vector2 position = new Vector2(10f, sb.GraphicsDevice.Viewport.Height - vector2.Y);
+            Vector2 position = new(10f, sb.GraphicsDevice.Viewport.Height - vector2.Y);
             if (os.traceTracker.active) position.Y -= vector2.Y + 14f; // display both if both are present
             sb.DrawString(TraceTracker.font, text, position, color);
             position.Y -= 25f;

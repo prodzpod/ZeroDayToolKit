@@ -7,7 +7,7 @@ namespace ZeroDayToolKit.Commands
     {
         public static new void Trigger(OS os, string[] args)
         {
-            if (!os.hasConnectionPermission(true)) { os.write("Insufficient Privileges to Perform Operation"); os.validCommand = false; }
+            if (!os.hasConnectionPermission(true)) { os.validCommand = false; os.write("Insufficient Privileges to Perform Operation"); os.validCommand = false; }
             else os.write(DateTime.Now.ToLongDateString());
         }
     }

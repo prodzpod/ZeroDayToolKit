@@ -26,6 +26,26 @@ namespace ZeroDayToolKit.Savedatas
             ZeroDayConditions.disabledCommands.Add(info.Attributes["command"]);
         }
     }
+    [SaveExecutor("HacknetSave.CommandAlias")]
+    public class CommandAliases : SaveLoader.SaveExecutor
+    {
+        [Event]
+        public static void Save(SaveEvent e)
+        {
+            foreach (var alias in ZeroDayConditions.aliases)
+            {
+                var el = new XElement("CommandAlias");
+                el.SetAttributeValue("command", alias.Key);
+                el.SetAttributeValue("expression", alias.Value);
+                e.Save.Add(el);
+            }
+        }
+        public override void Execute(EventExecutor exec, ElementInfo info) { Load(info); }
+        public void Load(ElementInfo info)
+        {
+            ZeroDayConditions.aliases[info.Attributes["command"]] = info.Attributes["expression"];        
+        }
+    }
 
     [HarmonyLib.HarmonyPatch(typeof(Hacknet.PlatformAPI.Storage.SaveFileManager), nameof(Hacknet.PlatformAPI.Storage.SaveFileManager.GetSaveReadStream))]
     public class InitializeDisabledCommands
@@ -33,6 +53,7 @@ namespace ZeroDayToolKit.Savedatas
         public static void Prefix()
         {
             ZeroDayConditions.disabledCommands.Clear();
+            ZeroDayConditions.aliases.Clear();
         }
     }
 }

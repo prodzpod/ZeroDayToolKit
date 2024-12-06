@@ -7,8 +7,8 @@ namespace ZeroDayToolKit.Patches
     [HarmonyLib.HarmonyPatch(typeof(Helpfile), nameof(Helpfile.init))] 
     public class BetterHelp
     {
-        public static Dictionary<string, string> Usages = new Dictionary<string, string>();
-        public static Dictionary<string, string> Descriptions = new Dictionary<string, string>();
+        public static Dictionary<string, string> Usages = [];
+        public static Dictionary<string, string> Descriptions = [];
 
         public static void AddVanilla()
         {
@@ -37,6 +37,8 @@ namespace ZeroDayToolKit.Patches
             Add("clear", "", "Clears the terminal");
             Add("addNote", "[NOTE]", "Add Note");
             Add("append", "[FILENAME] [DATA]", "Appends a line containing [DATA] to [FILENAME]");
+            Add("remline", "[filename]", "Removes a line to [FILENAME]");
+            Add("reloadtheme", "", "Reloads the current x-server.sys file");
             Add("shell", "", "Opens a remote access shell on target machine with Proxy overload\n and IP trap capabilities");
         }
 
@@ -48,7 +50,7 @@ namespace ZeroDayToolKit.Patches
 
         public static bool Prefix()
         {
-            Helpfile.help = new List<string>();
+            Helpfile.help = [];
             Helpfile.postfix = "help " + LocaleTerms.Loc("[PAGE NUMBER]") + "\n " + LocaleTerms.Loc("Displays the specified page of commands.") + "\n---------------------------------\n";
             string ln = "\n    ";
             foreach (string k in Usages.Keys)
