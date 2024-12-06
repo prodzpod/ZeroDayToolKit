@@ -16,7 +16,7 @@ namespace ZeroDayToolKit.Patches
     [HarmonyLib.HarmonyPatch(typeof(OS), nameof(OS.threadExecute))] // hook tracker update
     public class Piping
     {
-        public static List<string> ConsumeAllCommands = ["alias", "echo", "expr", "send", "touch", "addnote", "append", "replace", "solve"];
+        public static List<string> ConsumeAllCommands = ["alias", "echo", "send", "touch", "addnote", "append", "replace", "solve"];
         public static string LastCommandOutput = "";
         static bool Prefix(OS __instance, object threadText) // sorry for nuking but i didnt wanted to do this shit:tm: in ilmanip :v
         {
