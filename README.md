@@ -207,6 +207,7 @@ You can create custom tones for `<OnIRCMessageTone>` or edit existing tones usin
 - Tracking Logs are smarter. (does not count connect/disconnect logs UNLESS `<EnableStrictLog>` is enabled for that device.)
 
 ## Changelog
+- 1.0.1: added `sleep` command
 - 1.0.0:
   - File System (`0DTK_IMAGE`/`STUXNET_RADIO`)
   - new irc attachment types: file, image, radio
