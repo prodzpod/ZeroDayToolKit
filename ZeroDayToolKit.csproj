@@ -84,6 +84,7 @@
     <Compile Include="Commands\Copy.cs" />
     <Compile Include="Commands\Ping.cs" />
     <Compile Include="Commands\RMDir.cs" />
+    <Compile Include="Commands\Sleep.cs" />
     <Compile Include="Commands\Shutdown.cs" />
     <Compile Include="Commands\Unalias.cs" />
     <Compile Include="Commands\Alias.cs" />

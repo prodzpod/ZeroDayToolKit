@@ -30,6 +30,7 @@ Some commands are DISABLED BY DEFAULT as it can either ruin the immersion, or va
 - `send <message...>`: Send chat in IRC/DHS. use `\n` to send newlines. (DISABLED BY DEFAULT)
   - aliases: `/ <message>`, `> <message>`, `irc <message>`
 - `shutdown <time in seconds OR "now">`: reboots this pc after a given time has passed.
+- `sleep <time in seconds>`: halts execution for a given seconds (for `source` usage).
 - `source <file>`: execute the file as a newline-delimited list of commands. You can se `$0`~`$9`, `$#` and `$*` to pass parameters. (DISABLED BY DEFAULT)
 - `touch <filename> [content...]`: Create a file.
 - `wc <file>`: prints line, word and byte count for this file.
