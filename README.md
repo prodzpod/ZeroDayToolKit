@@ -1,4 +1,8 @@
-ZeroDayToolKit - Fanmade Hacknet Expansion
+ZeroDayToolKit - Fanmade Hacknet Expansio
+
+https://github.com/user-attachments/assets/302571f5-1af1-40e5-8b3a-57be57e4a1f3
+
+n
 ===
 a [Hacknet](https://store.steampowered.com/app/365450/Hacknet/) [Pathfinder](https://github.com/Arkhist/Hacknet-Pathfinder) mod that aims to provide tools for better immersion and tighter gameplay.
 
