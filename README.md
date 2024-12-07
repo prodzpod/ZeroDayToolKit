@@ -5,6 +5,8 @@ https://github.com/user-attachments/assets/0c2d327e-6e0c-4b74-893f-b83644e8917e
 
 a [Hacknet](https://store.steampowered.com/app/365450/Hacknet/) [Pathfinder](https://github.com/Arkhist/Hacknet-Pathfinder) mod that aims to provide tools for better immersion and tighter gameplay.
 
+See [How to Install](./INSTALL.md) for installation instructions.
+
 Please DM or mention **@pr_d** on discord if you encounter any bugs or weirdness using the mod.
 
 ## New Commands
