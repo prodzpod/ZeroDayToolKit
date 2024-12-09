@@ -100,9 +100,11 @@
     <Compile Include="Commands\Who.cs" />
     <Compile Include="Commands\Source.cs" />
     <Compile Include="Commands\WordCount.cs" />
+    <Compile Include="Compat\ModCompats.cs" />
     <Compile Include="Compat\Stuxnet\LoadedRadio.cs" />
     <Compile Include="Compat\Stuxnet\RadioCommand.cs" />
     <Compile Include="Compat\Stuxnet\RadioFile.cs" />
+    <Compile Include="Compat\XMOD\XMODCompat.cs" />
     <Compile Include="Compat\Stuxnet\StuxnetCompat.cs" />
     <Compile Include="Conditions\SADisableStrictLog.cs" />
     <Compile Include="Conditions\SAEnableStrictLog.cs" />

@@ -20,17 +20,20 @@ using ZeroDayToolKit.Patches;
 using Hacknet;
 using Hacknet.PlatformAPI.Storage;
 using ZeroDayToolKit.Compat.Stuxnet;
+using ZeroDayToolKit.Compat.XMOD;
+using ZeroDayToolKit.Compat;
 
 namespace ZeroDayToolKit
 {
     [BepInPlugin(ModGUID, ModName, ModVer)]
-    [BepInDependency("autumnrivers.stuxnet", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency(StuxnetCompat.ID, BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency(XMODCompat.ID, BepInDependency.DependencyFlags.SoftDependency)]
     [Updater("https://api.github.com/repos/prodzpod/ZeroDayToolKit/releases", "ZeroDayToolKit.Release.zip", "BepInEx/plugins/ZeroDayToolKit.dll", false)]
     public class ZeroDayToolKit : HacknetPlugin
     {
         public const string ModGUID = "kr.o_r.prodzpod.zerodaytoolkit";
         public const string ModName = "ZeroDayToolKit";
-        public const string ModVer = "1.0.1";
+        public const string ModVer = "1.0.2";
         public new static ConfigFile Config;
         public static ZeroDayToolKit Instance;
         static public Random rnd;
@@ -144,8 +147,7 @@ namespace ZeroDayToolKit
             Console.WriteLine("////////////////////////////////// TOOLKIT /////////////////////////////////////");
             Console.WriteLine("");
             Console.ResetColor();
-
-            if (StuxnetCompat.Enabled) StuxnetCompat.Init();
+            ModCompats._Init();
             return true;
         }
     }
@@ -176,7 +178,6 @@ namespace ZeroDayToolKit
             ImageFile.Binaries.Clear();
             ImageFile.Textures.Clear();
             StuxnetCompat.RadioBinaries.Clear();
-            if (StuxnetCompat.Enabled) StuxnetCompat.Init();
         }
     }
 }

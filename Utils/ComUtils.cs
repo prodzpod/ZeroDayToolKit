@@ -5,6 +5,7 @@ using Pathfinder.Port;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using ZeroDayToolKit.Compat;
 using ZeroDayToolKit.Compat.Stuxnet;
 using ZeroDayToolKit.Patches;
 
@@ -70,7 +71,7 @@ namespace ZeroDayToolKit.Utils
                 if (image.EndsWith(".jpg") || image.EndsWith(".jpeg")) return ".jpg";
                 if (image.EndsWith(".gif")) return ".gif";
             }
-            if (StuxnetCompat.Enabled)
+            if (ModCompats.Enabled(nameof(StuxnetCompat)))
             {
                 var radio = StuxnetCompat.RadioBinaries.Keys.FirstOrDefault(x => StuxnetCompat.RadioBinaries[x] == data);
                 if (radio != null) return ".ogg";
