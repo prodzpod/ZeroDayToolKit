@@ -133,6 +133,8 @@ namespace ZeroDayToolKit.Patches
         {
             OS os = (OS)osObj;
             string[] args = data.Split(["#%#"], StringSplitOptions.RemoveEmptyEntries);
+            if (args.Length < 1)
+                return false;
             if (args[0] == "file")
             {
                 Vector2 labelSize = TextItem.doMeasuredTinyLabel(dpos, LocaleTerms.Loc(StuxnetCompat.IsRadioFile(args[2]) ? "AUDIO" : "FILE") + " : " + args[1], null);
