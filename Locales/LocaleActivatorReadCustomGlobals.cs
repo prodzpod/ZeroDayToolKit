@@ -21,6 +21,8 @@ namespace ZeroDayToolKit.Locales
                 foreach (var file in Directory.GetFiles("locales/Custom"))
                 {
                     Console.WriteLine("[ZeroDayToolKit] Reading Global Locale " + file);
+                    LocaleAddXmlFile(file, "default");
+                    LocaleAddXmlFile(file, "en-us");
                     LocaleAddXmlFile(file, localeCode);
                 }
                 ExtensionLoaderReadCustomLocale.LocaleKeys2.Sort((a, b) => b.Length - a.Length);

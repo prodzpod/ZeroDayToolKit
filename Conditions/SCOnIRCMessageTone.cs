@@ -1,6 +1,8 @@
 ﻿using Hacknet;
 using Pathfinder.Util;
+using System;
 using System.Linq;
+using ZeroDayToolKit.Locales;
 
 namespace ZeroDayToolKit.Conditions
 {

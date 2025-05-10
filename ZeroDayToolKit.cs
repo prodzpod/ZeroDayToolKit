@@ -33,7 +33,7 @@ namespace ZeroDayToolKit
     {
         public const string ModGUID = "kr.o_r.prodzpod.zerodaytoolkit";
         public const string ModName = "ZeroDayToolKit";
-        public const string ModVer = "1.0.2";
+        public const string ModVer = "1.0.3";
         public new static ConfigFile Config;
         public static ZeroDayToolKit Instance;
         static public Random rnd;
@@ -178,6 +178,7 @@ namespace ZeroDayToolKit
             ImageFile.Binaries.Clear();
             ImageFile.Textures.Clear();
             StuxnetCompat.RadioBinaries.Clear();
+            ModCompats._Init();
         }
     }
 }

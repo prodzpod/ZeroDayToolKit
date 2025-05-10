@@ -25,6 +25,8 @@ namespace ZeroDayToolKit.Locales
                 {
                     if (!filename.EndsWith(".xml")) return;
                     Console.WriteLine("[ZeroDayToolKit] Reading Extension Locale " + filename);
+                    LocaleActivatorReadCustomGlobals.LocaleAddXmlFile(filename, "default", true);
+                    LocaleActivatorReadCustomGlobals.LocaleAddXmlFile(filename, "en-us", true);
                     found |= LocaleActivatorReadCustomGlobals.LocaleAddXmlFile(filename, Settings.ActiveLocale, true);
                 });
                 if (info.Language == "dynamic")

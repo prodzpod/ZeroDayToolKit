@@ -70,7 +70,8 @@ namespace ZeroDayToolKit.Executibles
         public override void Completed()
         {
             base.Completed();
-            Programs.getComputer(os, targetIP).openPort(port, os.thisComputer.ip);
+            var c = Programs.getComputer(os, targetIP);
+            c.openPort(c.GetDisplayPortNumberFromCodePort(port), os.thisComputer.ip);
         }
 
         public virtual void incrementLife(float t)
