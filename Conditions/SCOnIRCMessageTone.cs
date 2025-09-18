@@ -17,7 +17,7 @@ namespace ZeroDayToolKit.Conditions
         {
             #region tone detection
             var t = tone ?? Tone;
-            foreach (var term in LocaleTerms.ActiveTerms.Where(x => x.Key.StartsWith("0dtk::tone_")))
+            foreach (var term in LocaleTerms.ActiveTerms.Where(x => x.Key.StartsWith("0dtk::tone_")).Union(ExtensionLoaderReadCustomLocale.ExtensionLocales.Where(x => x.Key.StartsWith("0dtk::tone_"))))
                 if (t == term.Key.Substring("0dtk::tone_".Length)) return checkForWord(msg, term.Value);
             if (t == ZeroDayConditions.choice.ToString() && checkForWord(msg, "last|latter|bottom")) return true;
             if (t == ((ZeroDayConditions.choice + 1) / 2).ToString() && checkForWord(msg, "any|whatever|random|middle|center")) return true;

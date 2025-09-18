@@ -18,6 +18,7 @@ namespace ZeroDayToolKit.Locales
             OS os = (OS)os_obj;
             ExtensionLocales.Clear();
             LocaleKeys.Clear();
+            ZeroDayToolKit.Instance.Log.LogInfo(info.FolderPath + ": " + Directory.Exists(info.FolderPath + "/Locales"));
             if (Directory.Exists(info.FolderPath + "/Locales"))
             {
                 bool found = false;

@@ -5,6 +5,7 @@ using Hacknet;
 using Hacknet.Daemons.Helpers;
 using MonoMod.Cil;
 using ZeroDayToolKit.Conditions;
+using ZeroDayToolKit.Locales;
 using ZeroDayToolKit.Patches;
 using ZeroDayToolKit.Utils;
 
@@ -23,7 +24,7 @@ namespace ZeroDayToolKit.Commands
                 return;
             }
             var msg = string.Join(" ", args.Skip(1));
-            if (LocaleTerms.ActiveTerms.ContainsKey("0dtk::allowed_messages")) {
+            if (ExtensionLocaleSupport.Contains("0dtk::allowed_messages")) {
                 var loc = LocaleTerms.Loc("0dtk::allowed_messages");
                 if (!SCOnIRCMessageAny.checkForWord(msg, loc))
                 {

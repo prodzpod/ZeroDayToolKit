@@ -115,6 +115,7 @@
     <Compile Include="Conditions\SCOnIRCAttachmentLink.cs" />
     <Compile Include="Conditions\SCOnIRCAttachment.cs" />
     <Compile Include="Executibles\TeleSmoothTalkEXE.cs" />
+    <Compile Include="Locales\ExtensionLocaleSupport.cs" />
     <Compile Include="Locales\LocaleActivatorSupportDynamicLocale.cs" />
     <Compile Include="Options\OptionSlider.cs" />
     <Compile Include="Options\ZeroDayToolKitOptions.cs" />
