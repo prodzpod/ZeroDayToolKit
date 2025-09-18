@@ -79,6 +79,7 @@ namespace ZeroDayToolKit.Patches
                 self.catTextRegion.Panel.PanelHeight = dest.Height;
                 self.catTextRegion.Panel.NumberOfPanels = 1;
                 self.catTextRegion.Panel.Draw((idx, dest, sb) => ImageFile.DrawImage(path, dest, sb), self.spriteBatch, dest);
+                self.catTextRegion.activeFontConfigName = "Image:" + path;
             });
             c.Emit(OpCodes.Br, ret);
         }
@@ -204,6 +205,7 @@ namespace ZeroDayToolKit.Patches
                 // ZeroDayToolKit.Instance.Log.LogInfo($"{mouse.X}, {mouse.Y}");
                 foreach (var b in ButtonsToDraw)
                 {
+                    //Console.WriteLine((b.Key.X + 8).ToString() + " " + (b.Key.Y + 8).ToString());
                     var id = 381023909 + b.Value + 1;
                     Button.drawModernButton(id, b.Key.X + 8, b.Key.Y + 8, 60, 30, "Download", null, Hacknet.Utils.white);
                     if (GuiData.hot == id && !GuiData.blockingInput && GuiData.active == id && (GuiData.mouseLeftUp() || GuiData.mouse.LeftButton == ButtonState.Released))

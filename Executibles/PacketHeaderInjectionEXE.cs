@@ -13,6 +13,7 @@ namespace ZeroDayToolKit.Executibles
         private const float PERIOD = 5f;
         public override void Draw(float t)
         {
+            base.Draw(t);
             float offset = (life % PERIOD) / PERIOD;
             bool flip = life % (PERIOD * 2) < PERIOD;
             float temp = (1f - (life / runTime));
@@ -36,7 +37,6 @@ namespace ZeroDayToolKit.Executibles
                 post = new Vector2(Bounds.X + (offset + i + 1f) * unitWidth, Bounds.Y + 14f + ((flip ^ (i % 2 == 0)) ? 0f : unitHeight));
             }
             drawLine(pre, new Vector2(Bounds.X + Bounds.Width, Bounds.Y + 14f + (flip ? ((1f - offset) * unitHeight) : (offset * unitHeight))), Color.White * fade);
-            base.Draw(t);
         }
     }
 }

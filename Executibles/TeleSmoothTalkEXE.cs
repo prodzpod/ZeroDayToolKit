@@ -58,6 +58,7 @@ namespace ZeroDayToolKit.Executibles
         public List<int> expos = [];
         public override void Draw(float t)
         {
+            base.Draw(t);
             var go = !done && !failed;
             if (go) drawT += t * drawTMult;
             Color color = failed ? os.brightLockedColor : (done ? os.brightUnlockedColor : (index % 2 == 0 ? os.unlockedColor : os.shellColor));
@@ -76,7 +77,6 @@ namespace ZeroDayToolKit.Executibles
                 Rectangle rect = new((int)(Bounds.X + (width * (i + .5f))), (int)(Bounds.Y + 14 + (Bounds.Height - 14 - (height / 2))), (int)(width), (int)(height));
                 spriteBatch.Draw(Hacknet.Utils.white, rect, new Rectangle?(), color, 0, new Vector2(0.5f, 0.5f), SpriteEffects.None, 0f);
             }
-            base.Draw(t);
         }
     }
 }

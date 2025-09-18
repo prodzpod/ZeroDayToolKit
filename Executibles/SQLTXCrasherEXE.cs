@@ -53,6 +53,7 @@ namespace ZeroDayToolKit.Executibles
 
         public override void Draw(float t)
         {
+            base.Draw(t);
             int minb = Math.Max(0, Math.Min(Bounds.Width, Bounds.Height - 14) / 2);
             Vector2 center = new(Bounds.X + (Bounds.Width / 2), Bounds.Y + 7 + (Bounds.Height / 2));
             Rectangle bound = new(Bounds.X, Bounds.Y + 14, Bounds.Width, Bounds.Height - 14);
@@ -82,7 +83,6 @@ namespace ZeroDayToolKit.Executibles
             spriteBatch.Draw(Hacknet.Utils.white, midbar, Color.Black * 0.5f * fade);
             if ((!done && (ZeroDayToolKit.rnd.NextDouble() < (life / runTime))) || (done && (ZeroDayToolKit.rnd.NextDouble() > ((life - runTime) / exitTime))))
                 TextItem.doCenteredFontLabel(midbar, LocaleTerms.Loc("-  " + (done ? "Completed." : "Crashing...") + "  -"), GuiData.smallfont, Color.White);
-            base.Draw(t);
         }
     }
 }

@@ -65,8 +65,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\PathfinderAPI.dll</HintPath>
     </Reference>
-    <Reference Include="Stuxnet_HN">
-      <HintPath>libs\StuxnetHN.dll</HintPath>
+    <Reference Include="StuxnetHN">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Hacknet\BepInEx\plugins\StuxnetHN.dll</HintPath>
+    </Reference>
+    <Reference Include="StuxnetHN.Audio">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Hacknet\BepInEx\plugins\StuxnetHN.Audio.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

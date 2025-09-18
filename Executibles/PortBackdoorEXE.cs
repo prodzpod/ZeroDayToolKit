@@ -59,6 +59,7 @@ namespace ZeroDayToolKit.Executibles
 
         public override void Draw(float t)
         {
+            base.Draw(t);
             // layer 1: concentric lines
             //float l1t = life * life / 16;
             //float[] r1big = { 0.8f, 0.6f, 0.4f };
@@ -101,7 +102,6 @@ namespace ZeroDayToolKit.Executibles
             TextItem.doFontLabel(DrawUtils.correctBounds(Bounds, new Vector2(-0.9f, -0.45f)), LocaleTerms.Loc(done ? "P R O C E S S" : "H A C K I N G"), GuiData.smallfont, Color.White * fade);
             TextItem.doFontLabel(DrawUtils.correctBounds(Bounds, new Vector2(-0.85f, -0.25f)), LocaleTerms.Loc(done ? "F I N I S H E D" : "I N"), GuiData.smallfont, Color.White * fade);
             TextItem.doFontLabel(DrawUtils.correctBounds(Bounds, new Vector2(-0.8f, -0.05f)), LocaleTerms.Loc(done ? "*kill this pls" : "P R O G R E S S . ."), GuiData.smallfont, Color.White * fade);
-            base.Draw(t);
         }
     }
 }
