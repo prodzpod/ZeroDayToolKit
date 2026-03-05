@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Text.RegularExpressions;
 using Hacknet;
 using Hacknet.Daemons.Helpers;
-using MonoMod.Cil;
 using ZeroDayToolKit.Conditions;
 using ZeroDayToolKit.Locales;
 using ZeroDayToolKit.Patches;

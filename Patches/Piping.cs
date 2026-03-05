@@ -1,15 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Hacknet;
-
-using ZeroDayToolKit.TraceV2;
+﻿using Hacknet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using ZeroDayToolKit.Commands;
 using ZeroDayToolKit.Conditions;
 using ZeroDayToolKit.Utils;
-using System.Text.RegularExpressions;
-using System.Windows.Forms.VisualStyles;
 
 namespace ZeroDayToolKit.Patches
 {

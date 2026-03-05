@@ -1,11 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Hacknet;
 
 namespace ZeroDayToolKit.Executibles
 {
     public class PacketHeaderInjectionEXE : ZeroDayEXE
     {
-        public PacketHeaderInjectionEXE(Rectangle location, OS operatingSystem, string[] args) : base(location, operatingSystem, args)
+        public PacketHeaderInjectionEXE() : base()
         {
             Init(80, 30f, 50, ":pkthdr::", "[pkthdr.exe] onLoad()::", "[pkthdr.exe] onComplete()::");
         }
@@ -14,9 +13,9 @@ namespace ZeroDayToolKit.Executibles
         public override void Draw(float t)
         {
             base.Draw(t);
-            float offset = (life % PERIOD) / PERIOD;
-            bool flip = life % (PERIOD * 2) < PERIOD;
-            float temp = (1f - (life / runTime));
+            float offset = (Lifetime % PERIOD) / PERIOD;
+            bool flip = Lifetime % (PERIOD * 2) < PERIOD;
+            float temp = (1f - (Lifetime / runTime));
             int bound = (int)(120f * (1f - (temp * temp))) + 1;
             float unitWidth = Bounds.Width / bound;
             float unitHeight = Bounds.Height - 14;

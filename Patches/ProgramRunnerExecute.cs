@@ -1,12 +1,7 @@
 ﻿using Hacknet;
 using Pathfinder.Command;
 using Pathfinder.Event.Gameplay;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using ZeroDayToolKit.Commands;
 using ZeroDayToolKit.Conditions;
-using ZeroDayToolKit.Utils;
 
 namespace ZeroDayToolKit.Patches
 {

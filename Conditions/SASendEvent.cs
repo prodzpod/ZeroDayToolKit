@@ -1,7 +1,6 @@
 ﻿using Hacknet;
 using Pathfinder.Util;
 using System.Collections.Generic;
-using ZeroDayToolKit.TraceV2;
 
 namespace ZeroDayToolKit.Conditions
 {

@@ -4,7 +4,6 @@ using Pathfinder.Executable;
 using Pathfinder.Port;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using ZeroDayToolKit.Compat;
 using ZeroDayToolKit.Compat.Stuxnet;
 using ZeroDayToolKit.Patches;

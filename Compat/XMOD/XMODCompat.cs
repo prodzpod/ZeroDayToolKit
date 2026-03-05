@@ -1,11 +1,4 @@
-﻿using BepInEx.Hacknet;
-using Hacknet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using ZeroDayToolKit.Commands;
-
-namespace ZeroDayToolKit.Compat.XMOD
+﻿namespace ZeroDayToolKit.Compat.XMOD
 {
     public class XMODCompat: ModCompats
     {

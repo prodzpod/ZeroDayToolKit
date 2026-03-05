@@ -4,7 +4,6 @@ using Hacknet;
 using Hacknet.Gui;
 
 using ZeroDayToolKit.Utils;
-using Hacknet.Localization;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ZeroDayToolKit.Executibles
@@ -17,7 +16,8 @@ namespace ZeroDayToolKit.Executibles
                                          "@@@@@@@@@@@@@@%+-.              .-=*@@@@@@@@@@@@@@\n@@@@@@@@@@#-.                        .:+%@@@@@@@@@\n@@@@@@@#-                                :#@@@@@@@\n@@@@@#. .+++=:                              +@@@@@\n@@@#.  .@@@@@@@##-  .---------..      ..:-----+@@@\n@@+    -@@@@@@@@@@@@@@@@@@@@@@@@@####@@@@@@@@@-:@@\n@-     .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@. .@\n+       *@@@@+--+#@@@@@@@@@@@@@@%##@@@@@@@@@@:   -\n         +@@.=%%%- #@@@@@@@@@@*.=*+=:-@@@@@%:     \n         -@@..*#+ =@@@@@@@@@%@= +@@# .@@@@+       \n         =@@@%++#@@# *@#*@@% =@%+--+%@@@@=        \n          @@@@@@@@@* -..- ++ *@@@@@@@@@@*         \n     #@@. -@@@@@@@@@###@@#++#@@@@@@@@@@=          \n.   *@@@+   +@@@@@@@@@@@@@@@@@@@@@@@@+.          .\n%.  %@@@*     -+%@@@@@@@@@@@@@@@@@*-             #\n@%. :@@@%        ..=%@@@@@@@@@@=:.              +@\n@@@+ *@@@@-     =%@@@@@@@@@@@@@@%*:           -@@@\n@@@@@+=@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:       -%@@@@\n@@@@@@@*##@@@@@@@@@@@@@@@@@@@@@@@@@@@+    +%@@@@@@\n@@@@@@@@@%+.#@@@@@@@@@@@@@@@@@@@@@@@@@:-#@@@@@@@@@",
                                          "@@@@@@@@@@@@@@%+-.              .-=*@@@@@@@@@@@@@@\n@@@@@@@@@@#-.                        .:+%@@@@@@@@@\n@@@@@@@#-                                :#@@@@@@@\n@@@@@#.                                     +@@@@@\n@@@#.                  -+                     +@@@\n@@+   **+++:           %+      .+##*   -#:     :@@\n@-    @*        . =+- .@:  :+=- .-   .+%@+.     .@\n+    :@#*#+. #%@# @#%@=@  =@=.@#:@-++ .@*.       -\n     -@+:--=:#%+##@*-.-@#+#@#*=  -=:  =@.         \n      .:-..      -@-                              \n                 .#.                         :=   \n       .=+-                 .%=      +#.     *@   \n     .*%:..                 +@.    ..@%:     @*   \n.    %#     -==: :--##- #*#*%#:#%@#+*@-#%@:=+@*  .\n%.  =@.   .@@=+@@@%@%+@:@+*@@%@++**-%#@%=#@@%@@  #\n@%.  +%+*#+%@##:=+ . .#.@#- +-+#*=. =+.--:  . . +@\n@@@+   ..               @+                    -@@@\n@@@@@+                  *@                  -%@@@@\n@@@@@@@+.               --                +%@@@@@@\n@@@@@@@@@%+.                           -#@@@@@@@@@"];
         public static SpriteFont font;
-        public GitTunnelEXE(Rectangle location, OS operatingSystem, string[] args) : base(location, operatingSystem, args)
+
+        public GitTunnelEXE() : base()
         {
             Init(9418, 5f, 30f, 255, "GitTunnel For Hacknet BETA", "", "[GitTunnel For Hacknet BETA] Operation Finished");
             if (font == null)
@@ -26,22 +26,18 @@ namespace ZeroDayToolKit.Executibles
                 font.LineSpacing += 2;
             }
         }
-        public override void Update(float t)
+        public override void OnSuccess()
         {
-            if (!done && life >= runTime)
-            {
-                done = true;
-                Computer c = Programs.getComputer(os, targetIP);
-                c.openPort(port, os.thisComputer.ip);
-                c.getFolderFromPath("log").files.Clear();
-            }
-            base.Update(t);
+            base.OnSuccess();
+            Computer c = Programs.getComputer(os, targetIP);
+            c.openPort(port, os.thisComputer.ip);
+            c.getFolderFromPath("log").files.Clear();
         }
 
         public override void Draw(float t)
-        {
+        {   
             base.Draw(t);
-            int frame = (int)Math.Floor((life / 0.3f) % (done ? 2 : 3)) + (done ? 3 : 0);
+            int frame = (int)Math.Floor((Lifetime / 0.3f) % (done ? 2 : 3)) + (done ? 3 : 0);
             TextItem.doFontLabel(DrawUtils.correctBounds(Bounds, new Vector2(-1 + (2f / ramCost), -1 + (24f / ramCost))), frames[frame], font, (done ? Color.Lime : Color.White) * fade);
         }
     }

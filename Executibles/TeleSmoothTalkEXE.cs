@@ -1,10 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Hacknet;
 using System.Linq;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using ZeroDayToolKit.Utils;
+using Pathfinder.Executable;
+using System.Security.Policy;
 
 namespace ZeroDayToolKit.Executibles
 {
@@ -16,32 +17,38 @@ namespace ZeroDayToolKit.Executibles
         public TeleSmoothTalkEXE child = null;
         public bool failed = false;
         public int index = 0;
-        public TeleSmoothTalkEXE(Rectangle location, OS operatingSystem, string[] args) : this(location, operatingSystem, args, 0) { }
-        public TeleSmoothTalkEXE(Rectangle location, OS operatingSystem, string[] args, int i) : base(location, operatingSystem, args)
-        { 
-            Init(23, RunTimes[i], 180 - RunTimes[i], RAMCosts.Sum(), "process: " + PID, "[teleSMOOTH] Starting task", ""); 
+        public TeleSmoothTalkEXE() : this(0) { }
+        public TeleSmoothTalkEXE(int i) : base()
+        {
             index = i;
-            if (index < RAMCosts.Length - 1)
-            {
-                child = new(location, operatingSystem, args, index + 1) { parent = this };
-                child.LoadContent();
-                os.exes.Add(child);
-            }
+            Init(23, RunTimes[index], 180 - RunTimes[index], RAMCosts.Sum(), "process: " + PID, "[teleSMOOTH] Starting task", ""); 
         }
-        public override void LoadContent()
+        public override void OnInitialize()
         {
             ramCost = RAMCosts[index];
-            base.LoadContent();
+            base.OnInitialize();
+            if (!needsRemoval && index < RAMCosts.Length - 1)
+            {
+                TeleSmoothTalkEXE child = new(index + 1) { parent = this };
+                child.Assign(bounds, os, Args);
+                os.AddGameExecutable(child);
+            }
         }
-        public override void Completed() { if (failed) return; if (parent == null) base.Completed(); else done = true; }
-        public override void incrementLife(float t) { if (!failed) base.incrementLife(t); }
-        public override void Killed()
+        public override void OnSuccess()
         {
+            if (failed) return;
+            if (parent == null) base.OnSuccess(); 
+            else done = true;
+        }
+        public override void IncrementLife(float t) { if (!failed) base.IncrementLife(t); }
+        public override void OnCompleteKilled()
+        {
+            base.OnCompleteKilled();
             if (failed) return;
             if (done && child == null)
             {
                 var p = parent;
-                while (p != null) { p.life = p.runTime - ((p.runTime - p.life) / 3); p = p.parent; }
+                while (p != null) { p.Lifetime = p.runTime - ((p.runTime - p.Lifetime) / 3); p = p.parent; }
                 if (parent != null) parent.child = null;
             }
             else

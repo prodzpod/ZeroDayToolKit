@@ -10,7 +10,7 @@ namespace ZeroDayToolKit.Executibles
 {
     public class SQLTXCrasherEXE : ZeroDayEXE
     {
-        public SQLTXCrasherEXE(Rectangle location, OS operatingSystem, string[] args) : base(location, operatingSystem, args)
+        public SQLTXCrasherEXE() : base()
         {
             Init(1433, 10f, 10f, 240, "THE_LAST_RESORT", "" +
                 "================================\n" +
@@ -26,31 +26,24 @@ namespace ZeroDayToolKit.Executibles
                 "\\\\                                            //\n" +
                 "================================");
         }
-        public override void Update(float t)
+        public override void OnSuccess()
         {
-            if (!done && life >= runTime)
+            base.OnSuccess();
+            Computer c = Programs.getComputer(os, targetIP);
+            if (c.hasProxy)
             {
-                done = true;
-                Computer c = Programs.getComputer(os, targetIP);
-                c.openPort(port, os.thisComputer.ip);
-                foreach (string line in endMessage.Split('\n')) os.write(line);
-                if (c.hasProxy)
-                {
-                    c.proxyOverloadTicks = c.startingOverloadTicks;
-                    c.proxyActive = true;
-                    os.write("THREAT DETECTED: Proxy Reenabled");
-                }
-                if (c.firewall != null)
-                {
-                    c.firewall.solution = Hacknet.Utils.FlipRandomChars(c.firewall.solution, 0.5);
-                    c.firewall.solved = false;
-                    c.firewall.resetSolutionProgress();
-                    os.write("THREAT DETECTED: Firewall Reenabled");
-                }
+                c.proxyOverloadTicks = c.startingOverloadTicks;
+                c.proxyActive = true;
+                os.write("THREAT DETECTED: Proxy Reenabled");
             }
-            base.Update(t);
+            if (c.firewall != null)
+            {
+                c.firewall.solution = Hacknet.Utils.FlipRandomChars(c.firewall.solution, 0.5);
+                c.firewall.solved = false;
+                c.firewall.resetSolutionProgress();
+                os.write("THREAT DETECTED: Firewall Reenabled");
+            }
         }
-
         public override void Draw(float t)
         {
             base.Draw(t);
@@ -60,7 +53,7 @@ namespace ZeroDayToolKit.Executibles
             spriteBatch.Draw(Hacknet.Utils.white, new Rectangle(Bounds.X, Bounds.Y + 7 + (Bounds.Height / 2) - 5, Bounds.Width, 10), (done ? os.unlockedColor : os.lockedColor) * 0.5f * fade);
             for (float q = 0.1f; q <= 1f; q += 0.1f)
             {
-                float angle = (float)Math.Sin((q * 4 + life) / 2.5f);
+                float angle = (float)Math.Sin((q * 4 + Lifetime) / 2.5f);
                 Color color = Color.Lerp(Color.White, done ? os.brightUnlockedColor : os.brightLockedColor, Math.Abs(angle)) * q * fade;
                 Color color2 = Color.Lerp(Color.White, done ? os.unlockedColor : os.lockedColor, Math.Abs(angle)) * q * fade;
                 Rectangle dest = new((int)center.X, (int)center.Y, minb, minb);
@@ -81,7 +74,7 @@ namespace ZeroDayToolKit.Executibles
             }
             Rectangle midbar = new(Bounds.X, Bounds.Y + 9 + (Bounds.Height / 3), Bounds.Width, Bounds.Height / 3);
             spriteBatch.Draw(Hacknet.Utils.white, midbar, Color.Black * 0.5f * fade);
-            if ((!done && (ZeroDayToolKit.rnd.NextDouble() < (life / runTime))) || (done && (ZeroDayToolKit.rnd.NextDouble() > ((life - runTime) / exitTime))))
+            if ((!done && (ZeroDayToolKit.rnd.NextDouble() < (Lifetime / runTime))) || (done && (ZeroDayToolKit.rnd.NextDouble() > ((Lifetime - runTime) / exitTime))))
                 TextItem.doCenteredFontLabel(midbar, LocaleTerms.Loc("-  " + (done ? "Completed." : "Crashing...") + "  -"), GuiData.smallfont, Color.White);
         }
     }

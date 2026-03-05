@@ -1,5 +1,4 @@
-﻿using BepInEx.Hacknet;
-using Hacknet;
+﻿using Hacknet;
 using System;
 using System.Collections.Generic;
 using System.Linq;

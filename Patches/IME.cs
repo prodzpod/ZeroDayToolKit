@@ -3,8 +3,6 @@ using Hacknet.Input;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace ZeroDayToolKit.Patches
 {

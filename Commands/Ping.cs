@@ -1,8 +1,5 @@
 ﻿using Hacknet;
 using System.Threading;
-using System;
-using ZeroDayToolKit.Conditions;
-using ZeroDayToolKit.Patches;
 
 namespace ZeroDayToolKit.Commands
 {

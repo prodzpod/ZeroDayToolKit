@@ -7,14 +7,14 @@ namespace ZeroDayToolKit.Executibles
 {
     public class SSHSwiftEXE : ZeroDayEXE
     {
-        public SSHSwiftEXE(Rectangle location, OS operatingSystem, string[] args) : base(location, operatingSystem, args)
+        public SSHSwiftEXE() : base()
         {
             Init(22, 4f, 200, ">S>.SSH.$w!f7.>S>", ">S> Let's do this. >S>", ">S> SSH? Swiftly Shafted. Thank me later. >S>");
         }
 
-        public override void incrementLife(float t)
+        public override void IncrementLife(float t)
         {
-            life += t * (float)ZeroDayToolKit.rnd.NextDouble() * 2;
+            Lifetime += t * (float)ZeroDayToolKit.rnd.NextDouble() * 2;
         }
 
         private const int WIDTH = 8;
@@ -31,7 +31,7 @@ namespace ZeroDayToolKit.Executibles
                 {
                     source.Y = Bounds.Y + 32 + (y * (Bounds.Height - 30) / HEIGHT);
                     Rectangle destination = source;
-                    float progress = Math.Max(0f, 1f - ((1f - ((float)(x + y) / (WIDTH + HEIGHT))) * 0.5f + (life / runTime)));
+                    float progress = Math.Max(0f, 1f - ((1f - ((float)(x + y) / (WIDTH + HEIGHT))) * 0.5f + (Lifetime / runTime)));
                     if (ZeroDayToolKit.rnd.NextDouble() < progress) progress = (float)ZeroDayToolKit.rnd.NextDouble();
                     Color color = Color.Lerp(os.unlockedColor, os.brightLockedColor, progress);
                     int num = (int)(progress * 99);

@@ -15,7 +15,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using ZeroDayToolKit.Compat.Stuxnet;
 using ZeroDayToolKit.Utils;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ZeroDayToolKit.Patches
 {

@@ -4,24 +4,21 @@ using Pathfinder.Util;
 using Pathfinder.Executable;
 
 using ZeroDayToolKit.Utils;
+using System;
 
 namespace ZeroDayToolKit.Executibles
 {
-    public abstract class ZeroDayEXE : BaseExecutable
+    public abstract class ZeroDayEXE : GameExecutable
     {
-        [System.Obsolete]
-        public override string GetIdentifier() => IdentifierName;
         public int originPort = 0;
         public int port;
         public string startMessage = "";
         public string endMessage = "";
-        public bool noProxy = true;
-        public bool noHostile = false;
-        public float life = 0f;
+        public bool isHostileAction = true;
         public float runTime = 5f;
         public float exitTime = 0f;
+        public ZeroDayEXE(): base() {}
         public bool done = false;
-        public ZeroDayEXE(Rectangle location, OS operatingSystem, string[] args) : base(location, operatingSystem, args) { }
         public void Init(int port, float runTime, int ramCost, string id, string startMessage, string endMessage) { Init(port, runTime, 0f, ramCost, id, startMessage, endMessage); }
         public void Init(int port, float runTime, float exitTime, int ramCost, string id, string startMessage, string endMessage)
         {
@@ -34,53 +31,58 @@ namespace ZeroDayToolKit.Executibles
             this.endMessage = endMessage;
         }
 
-        public override void LoadContent()
+        public override void OnInitialize()
         {
-            base.LoadContent();
+            base.OnInitialize();
             Computer c = ComputerLookup.FindByIp(targetIP);
             port = c.GetDisplayPortNumberFromCodePort(originPort);
-            int status = -1;
-            if (noProxy && c.proxyActive) status = 0;
-            else if (Args.Length <= 1) status = 1;
+            int status = 0;
+            if (Args.Length <= 1) status = 1;
             else if (!int.TryParse(Args[1], out _)) status = 2;
             else if (int.Parse(Args[1]) != port) status = ComUtils.isPortOpen(c, c.GetCodePortNumberFromDisplayPort(int.Parse(Args[1]))) ? 3 : 2;
             else if (!ComUtils.isPortOpen(c, originPort)) status = 2;
-            if (status != -1) 
+            if (status != 0) 
             {
-                os.write(new string[] {"Proxy Active", "No port number Provided", "Target Port is Closed", "Target Port running incompatible service for this executable"}[status]);
+                os.write(new string[] {"No port number Provided", "Target Port is Closed", "Target Port running incompatible service for this executable"}[status - 1]);
                 os.write("Execution failed");
                 needsRemoval = true;
             }
             else foreach (string line in startMessage.Split('\n')) os.write(line);
-            if (!noHostile) Programs.getComputer(os, targetIP).hostileActionTaken();
+            if (isHostileAction) Programs.getComputer(os, targetIP).hostileActionTaken();
         }
+        public override void OnProxyBypassFailure() { base.OnProxyBypassFailure(); needsRemoval = true; }
+        public override void OnNoAvailableRam() { base.OnNoAvailableRam(); needsRemoval = true; }
         public override void Update(float t)    
         {
-            if (!done && life >= runTime)
-            {
-                done = true;
-                Completed();
-                foreach (string line in endMessage.Split('\n')) os.write(line);
-            }
-            else if (!isExiting && life >= (runTime + exitTime)) isExiting = true;
-            incrementLife(t);
+            Lifetime -= t; IncrementLife(t);
             base.Update(t);
         }
-
-        public override void Completed()
+        public override void OnUpdate(float delta)
         {
-            base.Completed();
+            base.OnUpdate(delta);
+            if (!done && Lifetime >= runTime)
+            {
+                done = true;
+                OnSuccess();
+            }
+            else if (!isExiting && Lifetime >= (runTime + exitTime)) Result = CompletionResult.Success;
+        }
+
+        public virtual void OnSuccess()
+        {
             var c = Programs.getComputer(os, targetIP);
-            c.openPort(c.GetDisplayPortNumberFromCodePort(port), os.thisComputer.ip);
+            Console.Write(c.ports.Join(", "));
+            Console.Write(c.PortRemapping.Keys.Join(", "));
+            Console.Write(c.PortRemapping.Values.Join(", "));
+            Console.Write(port);
+            c.openPort(port, os.thisComputer.ip);
+            foreach (string line in endMessage.Split('\n')) os.write(line);
         }
 
-        public virtual void incrementLife(float t)
-        {
-            life += t;
-        }
+        public virtual void IncrementLife(float t) { Lifetime += t; }
         public override void Draw(float t)
         {
-            base.Draw(t); drawTarget(); drawOutline();
+            base.Draw(t); drawOutline(); drawTarget();
         }
         public void drawLine(Vector2 origin, Vector2 dest, Color c)
         {

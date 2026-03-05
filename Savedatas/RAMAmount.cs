@@ -2,10 +2,7 @@
 using Pathfinder.Meta.Load;
 using Pathfinder.Replacements;
 using Pathfinder.Util.XML;
-using System.Linq;
 using System.Xml.Linq;
-using ZeroDayToolKit.Patches;
-using ZeroDayToolKit.Utils;
 
 namespace ZeroDayToolKit.Savedatas
 {

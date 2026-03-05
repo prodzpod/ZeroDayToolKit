@@ -12,44 +12,33 @@ namespace ZeroDayToolKit.Executibles
 {
     public class PortBackdoorEXE : ZeroDayEXE
     {
-        public PortBackdoorEXE(Rectangle location, OS operatingSystem, string[] args) : base(location, operatingSystem, args)
+        public PortBackdoorEXE() : base()
         {
             Init(0, 40f, 5f, 400, "thanks from /el/ <3", "TOP TEXT", "BOTTOM TEXT");
         }
 
-        public override void LoadContent()
+        public override void OnInitialize()
         {
             Computer c = ComputerLookup.FindByIp(targetIP);
             port = c.GetDisplayPortNumberFromCodePort(originPort);
-            if (noProxy && c.proxyActive)
-            {
-                os.write("Proxy Active");
-                os.write("Execution failed");
-                needsRemoval = true;
-            }
-            else if ((Args.Length > 1 && (!int.TryParse(Args[1], out _) || int.Parse(Args[1]) != port)) || (Args.Length <= 1 && port != 0))
+            if ((Args.Length > 1 && (!int.TryParse(Args[1], out _) || int.Parse(Args[1]) != port)) || (Args.Length <= 1 && port != 0))
             { // if no args given, use 65535
                 os.write("Target Port is Closed");
                 os.write("Execution failed");
                 needsRemoval = true;
             }
             else foreach (string line in startMessage.Split('\n')) os.write(line);
-            if (!noHostile) Programs.getComputer(os, targetIP).hostileActionTaken();
+            if (isHostileAction) Programs.getComputer(os, targetIP).hostileActionTaken();
         }
-        public override void Update(float t)
+        public override void OnSuccess()
         {
-            if (!done && life >= runTime)
-            {
-                Computer c = Programs.getComputer(os, targetIP);
-                done = true;
-                foreach (PortState s in c.GetAllPortStates()) Console.WriteLine(s.Record.DefaultPortNumber);
-                if (!ComUtils.isPortOpen(c, originPort)) // now it has port 0
-                    c.AddPort(PortManager.GetPortRecordFromNumber(originPort).CreateState(c, true));
-                c.openPort(port, os.thisComputer.ip);
-                foreach (PortState s in c.GetAllPortStates()) Console.WriteLine(s.Record.DefaultPortNumber);
-                foreach (string line in endMessage.Split('\n')) os.write(line);
-            }
-            base.Update(t);
+            base.OnSuccess();
+            Computer c = Programs.getComputer(os, targetIP);
+            foreach (PortState s in c.GetAllPortStates()) Console.WriteLine(s.Record.DefaultPortNumber);
+            if (!ComUtils.isPortOpen(c, originPort)) // now it has port 0
+                c.AddPort(PortManager.GetPortRecordFromNumber(originPort).CreateState(c, true));
+            c.openPort(port, os.thisComputer.ip);
+            foreach (PortState s in c.GetAllPortStates()) Console.WriteLine(s.Record.DefaultPortNumber);
         }
 
         public static int[] edgeA = [3, 2, 6, 7, 1, 0, 3, 5, 4, 1, 6, 5, 14, 15, 10, 11, 10, 8, 9, 8, 12, 13, 12, 14, 9, 93, 94, 7, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 8, 93, 7, 107, 114, 117, 105, 98, 102, 107, 97, 99, 1, 3, 103, 213, 105, 13, 109, 118, 223, 112, 224, 111, 220, 116, 222, 96, 98, 100, 102, 104, 106, 107, 226, 216, 215, 221, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 198, 197, 202, 195, 203, 192, 200, 192, 201, 185, 204, 198, 206, 185, 209, 189, 211, 212, 176, 177, 210, 175, 207, 187, 214, 183, 203, 200, 202, 201, 205, 204, 205, 207, 206, 210, 209, 213, 211, 210, 212, 198, 197, 175, 193, 186, 195, 94, 181, 179, 191, 174, 183, 174, 182, 217, 215, 216, 223, 220, 222, 219, 218, 224, 226, 227, 221, 84, 90, 82, 222, 219];
@@ -60,36 +49,22 @@ namespace ZeroDayToolKit.Executibles
         public override void Draw(float t)
         {
             base.Draw(t);
-            // layer 1: concentric lines
-            //float l1t = life * life / 16;
-            //float[] r1big = { 0.8f, 0.6f, 0.4f };
-            //float[] r1small = { 0.75f, 0.3f, 0.2f };
-            //float[] r1rings = { 1.004f, 1.008f, 1.016f };
-            //for (var layer = 0; layer < r1big.Length; layer++) for (var i = 0f; i < 1; i += 1f / 48)
-            //{
-            //    Vector2 point = DrawUtils.toPolar(r1big[layer], (l1t + i) * 2 * (float)Math.PI);
-            //    Vector2 offset = DrawUtils.toPolar(r1small[layer], (l1t * r1rings[layer] + i) * 2 * (float)Math.PI - ((float)Math.PI * (layer / (r1big.Length - 1)) / 2));
-            //    DrawUtils.ClipLineSegmentsInRect(Bounds, 
-            //        DrawUtils.correctBounds(Bounds, point + offset), 
-            //        DrawUtils.correctBounds(Bounds, point - offset), out Vector2 r1a, out Vector2 r1b);
-            //    drawLine(r1a, r1b, DrawUtils.ColorFromHSV(i, 1, (layer + 1f) / r1big.Length));
-            //}
             for (var x = Bounds.X + 4; x < Bounds.X + Bounds.Width - 20; x += 16) for (var y = Bounds.Y + 18; y < Bounds.Y + Bounds.Height - 20; y += 16)
             {
-                float size = 0.8f - Math.Abs((life % 3f) - ((x - Bounds.X + y - Bounds.Y - 22) / 480f + 1));
+                float size = 0.8f - Math.Abs((Lifetime % 3f) - ((x - Bounds.X + y - Bounds.Y - 22) / 480f + 1));
                 if (size < 0) continue;
                 size = size * size;
                 spriteBatch.Draw(Hacknet.Utils.white, new Rectangle(x + 8 - (int)(8 * size), y + 8 - (int)(8 * size), (int)(16 * size), (int)(16 * size)), new Rectangle?(), DrawUtils.ColorFromHSV((float)ZeroDayToolKit.rnd.NextDouble(), 0.3f, 0.3f), 0, new Vector2(0, 0), SpriteEffects.None, 0f);
             }
             Color c;
-            if (life < 5) c = os.brightLockedColor * (life / 5);
-            else if (life < 10) c = new Color(
-                MathUtils.lerp(os.brightLockedColor.R, 1, (life - 5) / 5),
-                MathUtils.lerp(os.brightLockedColor.G, 1, (life - 5) / 5),
-                MathUtils.lerp(os.brightLockedColor.B, 1, (life - 5) / 5));
+            if (Lifetime < 5) c = os.brightLockedColor * (Lifetime / 5);
+            else if (Lifetime < 10) c = new Color(
+                MathUtils.lerp(os.brightLockedColor.R, 1, (Lifetime - 5) / 5),
+                MathUtils.lerp(os.brightLockedColor.G, 1, (Lifetime - 5) / 5),
+                MathUtils.lerp(os.brightLockedColor.B, 1, (Lifetime - 5) / 5));
             else if (done) c = os.brightUnlockedColor;
             else c = Color.White;
-            for (var i = 0; i < (life * 3 * fade); i++)
+            for (var i = 0; i < (Lifetime * 3 * fade); i++)
             {
                 int r = ZeroDayToolKit.rnd.Next(edgeA.Length);
                 drawLine(DrawUtils.correctBounds(Bounds, new Vector2(

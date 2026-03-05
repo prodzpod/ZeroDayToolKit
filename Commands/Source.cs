@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading;
 using Hacknet;
-using ZeroDayToolKit.Conditions;
 using ZeroDayToolKit.Utils;
 
 namespace ZeroDayToolKit.Commands

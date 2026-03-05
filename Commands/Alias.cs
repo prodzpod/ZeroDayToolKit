@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Hacknet;
 using HarmonyLib;
-using Pathfinder.Command;
 using ZeroDayToolKit.Conditions;
 using ZeroDayToolKit.Utils;
 

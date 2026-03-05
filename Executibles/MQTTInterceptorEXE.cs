@@ -1,11 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Hacknet;
-
-namespace ZeroDayToolKit.Executibles
+﻿namespace ZeroDayToolKit.Executibles
 {
     public class MQTTInterceptorEXE : ZeroDayEXE
     {
-        public MQTTInterceptorEXE(Rectangle location, OS operatingSystem, string[] args) : base(location, operatingSystem, args)
+        public MQTTInterceptorEXE() : base()
         {
             Init(1883, 20f, 375, "mqttpwn:r63", ". . . MQTTPWN . . . // Thank you for using our service.", "");
         }
